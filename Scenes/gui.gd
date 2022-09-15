@@ -16,24 +16,20 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	materialsLeft.text = str(Global.materials);
-	if Input.is_action_just_pressed("jump"):
-		if Global.lives > 0:
-			Global.lives -= 1;
-		if Global.lives == 0:
-			Global.lives -= 0;
+	if Global.lostLife:
 		if Global.lives == 2:
 			lives.play("3 Lives to 2 Lives");
+			Global.lostLife = false;
 		if Global.lives == 1:
 			lives.play("2 Lives to 1 life");
-	if Input.is_action_just_pressed("stacking_mode_enable"):
-		if Global.lives < 3:
-			Global.lives += 1;
-		if Global.lives == 3:
-			Global.lives += 0; 
+			Global.lostLife = false;
+	if Global.getlife:
 		if Global.lives == 2:
 			lives.play("1 Life to 2 Lives");
+			Global.getlife = false;
 		if Global.lives == 3:
 			lives.play("2 Lives to 3 Lives");
+			Global.getlife = false;
 	
 	
 

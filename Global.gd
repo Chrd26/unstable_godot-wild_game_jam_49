@@ -7,6 +7,11 @@ var lives = 3;
 var isonfloor = false;
 var isonMaterial = false;
 var materials = 10;
+var lostLife = false;
+var getlife = true;
+var takeDamage = false;
+var enemyGetPOS;
+var changeSide = false;
 
 
 

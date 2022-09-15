@@ -4,6 +4,7 @@
 [ext_resource path="res://Scenes/material_1.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10.0721, 10.4806 )
 
 [node name="Material1_Horizontal" type="Node2D"]
 
@@ -16,15 +17,15 @@ script = ExtResource( 2 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="material_1"]
-position = Vector2( 0, 9.536 )
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="material_1"]
+position = Vector2( -2.25, 9.5 )
 scale = Vector2( 7.074, 1.956 )
 shape = SubResource( 1 )
 
 [node name="Area2D" type="Area2D" parent="material_1"]
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="material_1/Area2D"]
-position = Vector2( 0, 9.536 )
+position = Vector2( -2.25, 9.5 )
 scale = Vector2( 7.074, 1.956 )
 shape = SubResource( 1 )
 

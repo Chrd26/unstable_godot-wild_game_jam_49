@@ -22,3 +22,9 @@ func _process(_delta):
 			var material = load("res://Scenes/Material2.tscn");
 			materialSpawn = material.instance();
 			add_child(materialSpawn);
+	if Global.lives == 0:
+		Global.lives = 3;
+		Global.materials = 10;
+		queue_free();
+		# warning-ignore:return_value_discarded
+		get_tree().change_scene("res://Scenes/gameplay.tscn");
