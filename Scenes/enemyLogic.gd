@@ -3,6 +3,7 @@ var istouchingwall = false;
 var istouchingFloor = false;
 var speed = 300;
 var hasShot = false;
+var stopMoving = false;
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -18,13 +19,13 @@ func _physics_process(_delta):
 	var getVertVel = get_linear_velocity().y;
 	var getColliderGroup = $RayCast2D.get_collider();
 	Global.enemyGetPOS = get_linear_velocity().x;
-	if !istouchingwall && istouchingFloor && !Global.changeSide:
+	if !istouchingwall && istouchingFloor && !Global.changeSide && !stopMoving:
 		$AnimatedSprite.play("enemyWalk");
 		$AnimatedSprite.flip_h = 1;
 		set_linear_velocity(Vector2(1 * speed, getVertVel));
 		$RayCast2D.rotation_degrees = -90;
 		
-	if !istouchingwall && istouchingFloor && Global.changeSide:
+	if !istouchingwall && istouchingFloor && Global.changeSide && !stopMoving:
 		$AnimatedSprite.play("enemyWalk");
 		$AnimatedSprite.flip_h = 0;
 		set_linear_velocity(Vector2(-1 * speed, getVertVel));
@@ -36,7 +37,11 @@ func _physics_process(_delta):
 			add_child(getCannonBallInstance);
 			hasShot = true;
 			print("shoot");
+			stopMoving = true;
+			$AnimatedSprite.play("EnemyIdle");
 			$Timer.start();
+	else:
+		stopMoving = false;
 
 
 func _on_Area2D_body_entered(body):
