@@ -73,6 +73,7 @@ __meta__ = {
 }
 
 [node name="Timer" type="Timer" parent="RigidBody2D"]
+wait_time = 2.0
 
 [connection signal="body_entered" from="RigidBody2D/Area2D" to="RigidBody2D" method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="RigidBody2D/Area2D" to="RigidBody2D" method="_on_Area2D_body_exited"]

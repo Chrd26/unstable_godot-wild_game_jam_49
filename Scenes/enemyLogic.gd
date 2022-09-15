@@ -31,14 +31,15 @@ func _physics_process(_delta):
 		set_linear_velocity(Vector2(-1 * speed, getVertVel));
 		$RayCast2D.rotation_degrees = 90;
 	if $RayCast2D.is_colliding():
+		if getColliderGroup.is_in_group("player"):
+			stopMoving = true;
+			$AnimatedSprite.play("EnemyIdle");
 		if !hasShot && getColliderGroup.is_in_group("player"):
 			var getCannonBall = load("res://Scenes/cannonball.tscn");
 			var getCannonBallInstance = getCannonBall.instance();
 			add_child(getCannonBallInstance);
 			hasShot = true;
 			print("shoot");
-			stopMoving = true;
-			$AnimatedSprite.play("EnemyIdle");
 			$Timer.start();
 	else:
 		stopMoving = false;
