@@ -11,17 +11,36 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(_delta):
-	if Global.materials > 0:
-		if Input.is_action_just_pressed("Material1") && Global.stackingMode:
-			print("mat1");
+	if Global.haspickedUpShape:
+		Global.materials += 1;
+		var GatherSound = load("res://Scenes/GlobalGather.tscn");
+		var playSoundGather = GatherSound.instance();
+		add_child(playSoundGather);
+		Global.haspickedUpShape = false;
+	if Input.is_action_just_pressed("Material1") && Global.stackingMode:
+		if Global.materials > 0:
+			var selection = load("res://Scenes/changeShape.tscn");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
 			var material = load("res://Scenes/Material_1.tscn");
 			materialSpawn = material.instance();
 			add_child(materialSpawn);
-		if Input.is_action_just_pressed("Material2") && Global.stackingMode:
-			print("mat2");
+		else:
+			var selection = load("res://Scenes/outofshapes.tscn");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
+	elif Input.is_action_just_pressed("Material2") && Global.stackingMode:
+		if Global.materials > 0:
+			var selection = load("res://Scenes/changeShape.tscn");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
 			var material = load("res://Scenes/Material2.tscn");
 			materialSpawn = material.instance();
 			add_child(materialSpawn);
+		else:
+			var selection = load("res://Scenes/outofshapes.tscn");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
 	if Global.lives == 0:
 		Global.lives = 3;
 		Global.materials = 10;

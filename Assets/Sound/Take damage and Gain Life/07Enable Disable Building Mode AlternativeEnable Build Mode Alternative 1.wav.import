@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/07Enable Disable Building Mode AlternativeEnable Build Mode Alternative 1.wav-de4bdd9890aa32866b53664686831148.sample"
+
+[deps]
+
+source_file="res://Assets/Sound/Take damage and Gain Life/07Enable Disable Building Mode AlternativeEnable Build Mode Alternative 1.wav"
+dest_files=[ "res://.import/07Enable Disable Building Mode AlternativeEnable Build Mode Alternative 1.wav-de4bdd9890aa32866b53664686831148.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

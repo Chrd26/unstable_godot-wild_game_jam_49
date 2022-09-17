@@ -8,11 +8,12 @@ var isonfloor = false;
 var isonMaterial = false;
 var materials = 10;
 var lostLife = false;
-var getlife = true;
+var getlife = false;
 var takeDamage = false;
 var enemyGetPOS;
 var changeSide = false;
-
+var hasActivatedBuilding = false;
+var haspickedUpShape = false;
 
 
 
@@ -24,12 +25,20 @@ func _process(_delta):
 	position = get_global_mouse_position();
 	
 	if Input.is_action_just_pressed("stacking_mode_enable"):
+		Global.hasActivatedBuilding = true;
+		var buildSound = load("res://Scenes/EnableDisableBuildMode.tscn");
+		var playbuildSound = buildSound.instance();
+		add_child(playbuildSound);
 		Global.stackingMode = true;
 		Global.movementEnabled = false;
 		print("stacking mode");
 	if Input.is_action_just_pressed("stacking_mode_enable") && stackingMode == true:
 		Global.buttonPresses += 1;
 	if buttonPresses == 2:
+		Global.hasActivatedBuilding = false;
+		var buildSound = load("res://Scenes/EnableDisableBuildMode.tscn");
+		var playbuildSound = buildSound.instance();
+		add_child(playbuildSound);
 		Global.stackingMode = false;
 		Global.movementEnabled = true;
 		print("resume movement");

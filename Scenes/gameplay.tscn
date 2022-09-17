@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Graphics/Background/Background.png" type="Texture" id=2]
 [ext_resource path="res://Scenes/gameplay.gd" type="Script" id=3]
 [ext_resource path="res://icon.png" type="Texture" id=4]
 [ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/shapeBuff.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/lifeup.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -55,8 +56,11 @@ offset = Vector2( 4.334, 0 )
 texture_scale = 12.66
 energy = 0.94
 
+[node name="shapeBuff" parent="Light2D" instance=ExtResource( 6 )]
+position = Vector2( -652, 192 )
+
 [node name="enemy" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1484, 461 )
 
 [node name="lifeup" parent="." instance=ExtResource( 7 )]
-position = Vector2( 274, 696 )
+position = Vector2( 240, 688 )

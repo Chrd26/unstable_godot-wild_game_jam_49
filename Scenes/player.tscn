@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_1-5.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_2-8.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_2-3.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_1-8.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_1-3.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sound/footsteps/02Footstep_Impactfootsteps.wav" type="AudioStream" id=7]
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_2-1.png" type="Texture" id=8]
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_2-7.png" type="Texture" id=9]
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_1-7.png" type="Texture" id=10]
@@ -19,8 +20,17 @@
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_2-9.png" type="Texture" id=18]
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_1-10.png" type="Texture" id=19]
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_2-6.png" type="Texture" id=20]
+[ext_resource path="res://Assets/Sound/footsteps/05MovingPartsfootsteps.wav" type="AudioStream" id=21]
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_2-4.png" type="Texture" id=22]
 [ext_resource path="res://Assets/Graphics/alternativeChar/Walking/Alternative_MC_Walking_2-2.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Sound/footsteps/Jump Impact1.wav" type="AudioStream" id=24]
+[ext_resource path="res://Assets/Sound/footsteps/Jump Movement.wav" type="AudioStream" id=25]
+[ext_resource path="res://Assets/Sound/footsteps/Jump Impact2.wav" type="AudioStream" id=26]
+[ext_resource path="res://Assets/Sound/Take damage and Gain Life/01Take DamageTake Damage 1.wav" type="AudioStream" id=27]
+[ext_resource path="res://Assets/Sound/Take damage and Gain Life/01Take DamageTake Damage 2.wav" type="AudioStream" id=28]
+[ext_resource path="res://Assets/Sound/Take damage and Gain Life/01Take DamageTake Damage 3.wav" type="AudioStream" id=29]
+[ext_resource path="res://Assets/Sound/Take damage and Gain Life/01Take DamageTake Damage 4.wav" type="AudioStream" id=30]
+[ext_resource path="res://Assets/Sound/Take damage and Gain Life/01Take DamageTake Damage 5.wav" type="AudioStream" id=31]
 [ext_resource path="res://Scenes/gui.tscn" type="PackedScene" id=112]
 
 [sub_resource type="CapsuleShape2D" id=3]
@@ -66,6 +76,9 @@ current = true
 smoothing_enabled = true
 smoothing_speed = 7.0
 
+[node name="Listener2D" type="Listener2D" parent="Camera2D"]
+current = true
+
 [node name="gui" parent="." instance=ExtResource( 112 )]
 position = Vector2( 1, 4 )
 scale = Vector2( 0.998718, 1 )
@@ -76,6 +89,52 @@ scale = Vector2( 0.998718, 1 )
 position = Vector2( 0, -8.97198 )
 scale = Vector2( 0.5, 0.5 )
 shape = SubResource( 3 )
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="JumpImpact1" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 24 )
+bus = "playerJump"
+
+[node name="JumpImpact2" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 26 )
+bus = "playerJump"
+
+[node name="JumpMovement" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 25 )
+bus = "PlayerMovement"
+
+[node name="Footsteps" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 7 )
+bus = "PlayerMovement"
+
+[node name="Movement" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 21 )
+bus = "PlayerMovement"
+
+[node name="landImpact" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 24 )
+bus = "Land"
+
+[node name="takeDamage1" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 27 )
+bus = "Take Damage"
+
+[node name="takeDamage2" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 28 )
+bus = "Take Damage"
+
+[node name="takeDamage3" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 29 )
+bus = "Take Damage"
+
+[node name="takeDamage4" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 30 )
+bus = "Take Damage"
+
+[node name="takeDamage5" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource( 31 )
+bus = "Take Damage"
 
 [connection signal="body_entered" from="playerArea" to="." method="_on_playerArea_body_entered"]
 [connection signal="body_exited" from="playerArea" to="." method="_on_playerArea_body_exited"]

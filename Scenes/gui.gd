@@ -25,9 +25,15 @@ func _process(_delta):
 			Global.lostLife = false;
 	if Global.getlife:
 		if Global.lives == 2:
+			var loadGather = load("res://Scenes/GlobalGather.tscn");
+			var playSound = loadGather.instance();
+			add_child(playSound);
 			lives.play("1 Life to 2 Lives");
 			Global.getlife = false;
 		if Global.lives == 3:
+			var loadGather = load("res://Scenes/GlobalGather.tscn");
+			var playSound = loadGather.instance();
+			add_child(playSound);
 			lives.play("2 Lives to 3 Lives");
 			Global.getlife = false;
 	

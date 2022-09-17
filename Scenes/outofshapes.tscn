@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scenes/outofshapes.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Sound/Shape SFX/01Out Of ShapesOut of Shapes 1.wav" type="AudioStream" id=2]
+[ext_resource path="res://Assets/Sound/Shape SFX/01Out Of ShapesOut of Shapes 2.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Sound/Shape SFX/01Out Of ShapesOut of Shapes 3.wav" type="AudioStream" id=4]
+[ext_resource path="res://Assets/Sound/Shape SFX/01Out Of ShapesOut of Shapes 4.wav" type="AudioStream" id=5]
+[ext_resource path="res://Assets/Sound/Shape SFX/01Out Of ShapesOut of Shapes 5.wav" type="AudioStream" id=6]
+
+[node name="outofshapes" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="outofShapes1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+bus = "OutofShapes"
+
+[node name="outofShapes2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "OutofShapes"
+
+[node name="outofShapes3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "OutofShapes"
+
+[node name="outofShapes4" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+bus = "OutofShapes"
+
+[node name="outofShapes5" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+bus = "OutofShapes"
+
+[connection signal="finished" from="outofShapes1" to="." method="_on_outofShapes1_finished"]
+[connection signal="finished" from="outofShapes2" to="." method="_on_outofShapes2_finished"]
+[connection signal="finished" from="outofShapes3" to="." method="_on_outofShapes3_finished"]
+[connection signal="finished" from="outofShapes4" to="." method="_on_outofShapes4_finished"]
+[connection signal="finished" from="outofShapes5" to="." method="_on_outofShapes5_finished"]

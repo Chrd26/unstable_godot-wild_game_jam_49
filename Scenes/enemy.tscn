@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-12.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-10.png" type="Texture" id=2]
@@ -18,6 +18,13 @@
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-11.png" type="Texture" id=16]
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-4.png" type="Texture" id=17]
 [ext_resource path="res://Scenes/enemyLogic.gd" type="Script" id=18]
+[ext_resource path="res://Assets/Sound/enemy shoot/Cannon Shoot1Fire02.wav" type="AudioStream" id=19]
+[ext_resource path="res://Assets/Sound/enemy shoot/Cannon Shoot 3Click01.wav" type="AudioStream" id=20]
+[ext_resource path="res://Assets/Sound/enemy shoot/Cannon Shoot 2Click01.wav" type="AudioStream" id=21]
+[ext_resource path="res://Assets/Sound/enemy shoot/Cannon Shoot 2Fire02.wav" type="AudioStream" id=22]
+[ext_resource path="res://Assets/Sound/enemy shoot/Cannon Shoot1Click01.wav" type="AudioStream" id=23]
+[ext_resource path="res://Assets/Sound/enemy shoot/Cannon Shoot 3Fire02.wav" type="AudioStream" id=24]
+[ext_resource path="res://Assets/Sound/enemy move/Enemy Move.wav" type="AudioStream" id=25]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -74,6 +81,36 @@ __meta__ = {
 
 [node name="Timer" type="Timer" parent="RigidBody2D"]
 wait_time = 2.0
+
+[node name="Audio" type="Node2D" parent="RigidBody2D"]
+
+[node name="CannonShotFire1" type="AudioStreamPlayer2D" parent="RigidBody2D/Audio"]
+stream = ExtResource( 19 )
+bus = "EnemyCannon"
+
+[node name="CannonShotFire2" type="AudioStreamPlayer2D" parent="RigidBody2D/Audio"]
+stream = ExtResource( 22 )
+bus = "EnemyCannon"
+
+[node name="CannonShotFire3" type="AudioStreamPlayer2D" parent="RigidBody2D/Audio"]
+stream = ExtResource( 24 )
+bus = "EnemyCannon"
+
+[node name="CannonShotClick1" type="AudioStreamPlayer2D" parent="RigidBody2D/Audio"]
+stream = ExtResource( 23 )
+bus = "EnemyCannon"
+
+[node name="CannonShotClick2" type="AudioStreamPlayer2D" parent="RigidBody2D/Audio"]
+stream = ExtResource( 21 )
+bus = "EnemyCannon"
+
+[node name="CannonShotClick3" type="AudioStreamPlayer2D" parent="RigidBody2D/Audio"]
+stream = ExtResource( 20 )
+bus = "EnemyCannon"
+
+[node name="movement" type="AudioStreamPlayer2D" parent="RigidBody2D/Audio"]
+stream = ExtResource( 25 )
+bus = "EnemyMovement"
 
 [connection signal="body_entered" from="RigidBody2D/Area2D" to="RigidBody2D" method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="RigidBody2D/Area2D" to="RigidBody2D" method="_on_Area2D_body_exited"]

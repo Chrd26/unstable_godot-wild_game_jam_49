@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets/Sound/Shape SFX/02Shape SelectionShape Selection 1.wav" type="AudioStream" id=1]
+[ext_resource path="res://Assets/Sound/Shape SFX/02Shape SelectionShape Selection 2.wav" type="AudioStream" id=2]
+[ext_resource path="res://Assets/Sound/Shape SFX/02Shape SelectionShape Selection 3.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Sound/Shape SFX/02Shape SelectionShape Selection 4.wav" type="AudioStream" id=4]
+[ext_resource path="res://Scenes/changeShape.gd" type="Script" id=5]
+
+[node name="changeShape" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="shapeSelect1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "ShapeSelection"
+
+[node name="shapeSelect2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+bus = "ShapeSelection"
+
+[node name="shapeSelect3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "ShapeSelection"
+
+[node name="shapeSelect4" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "ShapeSelection"
+
+[connection signal="finished" from="shapeSelect1" to="." method="_on_shapeSelect1_finished"]
+[connection signal="finished" from="shapeSelect2" to="." method="_on_shapeSelect2_finished"]
+[connection signal="finished" from="shapeSelect3" to="." method="_on_shapeSelect3_finished"]
+[connection signal="finished" from="shapeSelect4" to="." method="_on_shapeSelect4_finished"]

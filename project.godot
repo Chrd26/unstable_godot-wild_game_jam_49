@@ -17,6 +17,7 @@ config/icon="res://Assets/Graphics/Materials Button/Button.png"
 [autoload]
 
 Global="*res://Global.gd"
+Music="*res://Scenes/Musi.tscn"
 
 [gui]
 
