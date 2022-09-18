@@ -14,6 +14,9 @@ var enemyGetPOS;
 var changeSide = false;
 var hasActivatedBuilding = false;
 var haspickedUpShape = false;
+var chapterNumber = 0;
+var isTutorialFinished = false;
+var hasgameStarted = false;
 
 
 

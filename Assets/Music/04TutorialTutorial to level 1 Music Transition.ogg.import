@@ -11,5 +11,5 @@ dest_files=[ "res://.import/04TutorialTutorial to level 1 Music Transition.ogg-9
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

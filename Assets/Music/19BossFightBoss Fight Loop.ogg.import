@@ -11,5 +11,5 @@ dest_files=[ "res://.import/19BossFightBoss Fight Loop.ogg-7377db382180c356e97b5
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

@@ -1,8 +1,8 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-12.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-10.png" type="Texture" id=2]
-[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy-1.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-8.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-8.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-13.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-15.png" type="Texture" id=6]
@@ -25,17 +25,41 @@
 [ext_resource path="res://Assets/Sound/enemy shoot/Cannon Shoot1Click01.wav" type="AudioStream" id=23]
 [ext_resource path="res://Assets/Sound/enemy shoot/Cannon Shoot 3Fire02.wav" type="AudioStream" id=24]
 [ext_resource path="res://Assets/Sound/enemy move/Enemy Move.wav" type="AudioStream" id=25]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-6.png" type="Texture" id=26]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-14.png" type="Texture" id=27]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-5.png" type="Texture" id=28]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-7.png" type="Texture" id=29]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-12.png" type="Texture" id=30]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-13.png" type="Texture" id=31]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-10.png" type="Texture" id=32]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-11.png" type="Texture" id=33]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-1.png" type="Texture" id=34]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-2.png" type="Texture" id=35]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-4.png" type="Texture" id=36]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-3.png" type="Texture" id=37]
+[ext_resource path="res://Assets/Graphics/Enemy/idle/Enemy_Idle-9.png" type="Texture" id=38]
+[ext_resource path="res://Assets/Graphics/Enemy/Shoot/Enemy_Shoot-6.png" type="Texture" id=39]
+[ext_resource path="res://Assets/Graphics/Enemy/Shoot/Enemy_Shoot-5.png" type="Texture" id=40]
+[ext_resource path="res://Assets/Graphics/Enemy/Shoot/Enemy_Shoot-3.png" type="Texture" id=41]
+[ext_resource path="res://Assets/Graphics/Enemy/Shoot/Enemy_Shoot-1.png" type="Texture" id=42]
+[ext_resource path="res://Assets/Graphics/Enemy/Shoot/Enemy_Shoot-4.png" type="Texture" id=43]
+[ext_resource path="res://Assets/Graphics/Enemy/Shoot/Enemy_Shoot-2.png" type="Texture" id=44]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 3 ) ],
+"frames": [ ExtResource( 34 ), ExtResource( 35 ), ExtResource( 37 ), ExtResource( 36 ), ExtResource( 28 ), ExtResource( 26 ), ExtResource( 29 ), ExtResource( 3 ), ExtResource( 38 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 27 ) ],
 "loop": true,
 "name": "EnemyIdle",
-"speed": 5.0
+"speed": 60.0
 }, {
 "frames": [ ExtResource( 14 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 17 ), ExtResource( 10 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 4 ), ExtResource( 15 ), ExtResource( 2 ), ExtResource( 16 ), ExtResource( 1 ), ExtResource( 5 ), ExtResource( 13 ), ExtResource( 6 ), ExtResource( 7 ) ],
 "loop": true,
 "name": "enemyWalk",
+"speed": 60.0
+}, {
+"frames": [ ExtResource( 42 ), ExtResource( 44 ), ExtResource( 41 ), ExtResource( 43 ), ExtResource( 40 ), ExtResource( 39 ) ],
+"loop": true,
+"name": "shoot",
 "speed": 60.0
 } ]
 
@@ -55,7 +79,7 @@ script = ExtResource( 18 )
 position = Vector2( 0, -56 )
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 1 )
-animation = "EnemyIdle"
+animation = "shoot"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
 position = Vector2( -6.286, -2.842 )

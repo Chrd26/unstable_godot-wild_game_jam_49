@@ -1,5 +1,5 @@
 extends Node2D
-onready var lives = $CanvasLayer/AnimatedSprite;
+onready var lives = $CanvasLayer/Energy/AnimatedSprite;
 onready var materialsLeft = $CanvasLayer/materials_left;
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Font/Ms_Madi/MsMadi-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/Graphics/Energy Bar/2 Lives/Energy_Bar_2_Lives-10.png" type="Texture" id=2]
@@ -29,6 +29,10 @@ size = 35
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
+size = 35
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
 size = 35
 font_data = ExtResource( 1 )
 
@@ -81,22 +85,47 @@ margin_right = 88.0
 margin_bottom = 47.0
 custom_fonts/font = SubResource( 1 )
 text = "X"
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="materials_left" type="Label" parent="CanvasLayer"]
-margin_left = 8.0
-margin_right = 48.0
-margin_bottom = 47.0
+anchor_left = 0.008
+anchor_top = 0.013
+anchor_right = 0.139
+anchor_bottom = 0.078
+margin_left = -0.192
+margin_top = -7.8
+margin_right = -94.336
+margin_bottom = 0.200001
 custom_fonts/font = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="CanvasLayer"]
-position = Vector2( 944, 40 )
-scale = Vector2( 0.1, 0.1 )
-frames = SubResource( 3 )
-animation = "2 Lives to 3 Lives"
-
-[node name="Sprite" type="Sprite" parent="CanvasLayer"]
-position = Vector2( 123.26, 23.308 )
+[node name="Sprite" type="Sprite" parent="CanvasLayer/materials_left"]
+position = Vector2( 115, 23 )
 scale = Vector2( 0.029043, 0.020207 )
 texture = ExtResource( 23 )
 
-[connection signal="animation_finished" from="CanvasLayer/AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[node name="Energy" type="Label" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -281.0
+margin_top = 7.0
+margin_right = -119.0
+margin_bottom = 54.0
+rect_scale = Vector2( 0.988632, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "     "
+align = 1
+valign = 1
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="CanvasLayer/Energy"]
+position = Vector2( 239.725, 28 )
+scale = Vector2( 0.1, 0.1 )
+frames = SubResource( 3 )
+animation = "2 Lives to 3 Lives"
+offset = Vector2( -58.244, 0 )
+
+[connection signal="animation_finished" from="CanvasLayer/Energy/AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

@@ -42,6 +42,7 @@ func _physics_process(_delta):
 			$Audio/movement.stop();
 			$AnimatedSprite.play("EnemyIdle");
 		if !hasShot && getColliderGroup.is_in_group("player"):
+			$AnimatedSprite.play("shoot");
 			var getCannonBall = load("res://Scenes/cannonball.tscn");
 			var getCannonBallInstance = getCannonBall.instance();
 			add_child(getCannonBallInstance);

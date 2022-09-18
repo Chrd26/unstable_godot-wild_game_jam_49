@@ -41,6 +41,18 @@ func _process(_delta):
 			var selection = load("res://Scenes/outofshapes.tscn");
 			var playSelectionSound = selection.instance();
 			add_child(playSelectionSound);
+	elif Input.is_action_just_pressed("Material3") && Global.stackingMode:
+		if Global.materials > 0:
+			var selection = load("res://Scenes/changeShape.tscn");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
+			var material = load("res://Scenes/Material3.tscn");
+			materialSpawn = material.instance();
+			add_child(materialSpawn);
+		else:
+			var selection = load("res://Scenes/outofshapes.tscn");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
 	if Global.lives == 0:
 		Global.lives = 3;
 		Global.materials = 10;

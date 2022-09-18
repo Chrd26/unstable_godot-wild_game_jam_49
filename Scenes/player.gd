@@ -135,12 +135,12 @@ func _ready():
 	playerAnim.play("Idle");
 
 func _on_playerArea_body_entered(body):
-	if body.is_in_group("floor"):
+	if body.is_in_group("floor") || body.is_in_group("hand"):
 		isonfloor = true;
 		if !$Audio/landImpact.playing:
 			$Audio/landImpact.play();
 
 
 func _on_playerArea_body_exited(body):
-	if body.is_in_group("floor"):
+	if body.is_in_group("floor") || body.is_in_group("hand"):
 		isonfloor = false;

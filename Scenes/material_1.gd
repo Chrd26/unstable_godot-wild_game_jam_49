@@ -24,7 +24,7 @@ func _physics_process(_delta):
 		self.mode = 3;
 		global_position = get_global_mouse_position();
 		matPos = global_position;
-	if !Global.stackingMode && !isPlaced || Input.is_action_just_pressed("Material1") && !isPlaced || Input.is_action_just_pressed("Material2") && !isPlaced:
+	if !Global.stackingMode && !isPlaced || Input.is_action_just_pressed("Material1") && !isPlaced || Input.is_action_just_pressed("Material2") && !isPlaced || Input.is_action_just_pressed("Material3") && !isPlaced:
 		queue_free();
 	if Input.is_action_just_pressed("placeMaterial") && !isPlaced:
 		isPlaced = true;

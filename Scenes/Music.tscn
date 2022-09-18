@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Assets/Music/Intro LoopPiano Intro Loop03.ogg" type="AudioStream" id=1]
+[ext_resource path="res://Assets/Music/Tutorial IntroTutorial Intro05.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Assets/Music/04TutorialTutorial Loop.ogg" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Music/Intro Fade InPiano Intro Fade in02.ogg" type="AudioStream" id=4]
+[ext_resource path="res://Scenes/Music.gd" type="Script" id=5]
+[ext_resource path="res://Assets/Music/07Level 1Level 1 Intro .ogg" type="AudioStream" id=6]
+[ext_resource path="res://Assets/Music/07Level 1Level 1 Loop.ogg" type="AudioStream" id=7]
+
+[node name="Music" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="IntroFadeIn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+autoplay = true
+bus = "Music"
+
+[node name="IntroLoop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+bus = "Music"
+
+[node name="TutorialIntro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+bus = "Music"
+
+[node name="TutorialLoop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "Music"
+
+[node name="TutorialtoLevel1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+bus = "Music"
+
+[node name="Chapter1Intro" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+bus = "Music"
+
+[node name="Chapter1Loop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+bus = "Music"
+
+[node name="fadeoutTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="finished" from="IntroFadeIn" to="." method="_on_IntroFadeIn_finished"]
+[connection signal="finished" from="IntroLoop" to="." method="_on_IntroLoop_finished"]
+[connection signal="finished" from="TutorialIntro" to="." method="_on_TutorialIntro_finished"]
+[connection signal="finished" from="TutorialLoop" to="." method="_on_TutorialLoop_finished"]
+[connection signal="finished" from="TutorialtoLevel1" to="." method="_on_TutorialtoLevel1_finished"]
+[connection signal="finished" from="Chapter1Intro" to="." method="_on_Chapter1Intro_finished"]
+[connection signal="finished" from="Chapter1Loop" to="." method="_on_Chapter1Loop_finished"]
+[connection signal="timeout" from="fadeoutTimer" to="." method="_on_fadeoutTimer_timeout"]

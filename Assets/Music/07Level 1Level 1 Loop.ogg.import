@@ -11,5 +11,5 @@ dest_files=[ "res://.import/07Level 1Level 1 Loop.ogg-1eeecd8958e54a6696b216d68f
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0
