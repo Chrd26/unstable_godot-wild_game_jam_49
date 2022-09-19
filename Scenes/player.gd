@@ -9,11 +9,6 @@ var playJumpRandom = RandomNumberGenerator.new();
 var takeDamageRandom = RandomNumberGenerator.new();
 var randomPitch = RandomNumberGenerator.new();
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 func _physics_process(_delta):
 	var vertVel = get_linear_velocity().y;
 	if Global.movementEnabled:
@@ -133,6 +128,7 @@ func _physics_process(_delta):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	playerAnim.play("Idle");
+	$noisebackground.play("noiseanimated");
 
 func _on_playerArea_body_entered(body):
 	if body.is_in_group("floor") || body.is_in_group("hand"):

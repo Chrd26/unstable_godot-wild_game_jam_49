@@ -9,6 +9,21 @@ var materialSpawn;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.chapterNumber = 1;
+	if Global.checkpointIndex == 0:
+		var playerload = load("res://Scenes/player.tscn");
+		var addPlayer = playerload.instance();
+		addPlayer.position = Vector2(-192, 1543);
+		add_child(addPlayer);
+	elif Global.checkpointIndex == 1:
+		var playerload = load("res://Scenes/player.tscn");
+		var addPlayer = playerload.instance();
+		addPlayer.position = Vector2(1000, 1087);
+		add_child(addPlayer);
+	elif Global.checkpointIndex == 2:
+		var playerload = load("res://Scenes/player.tscn");
+		var addPlayer = playerload.instance();
+		addPlayer.position = Vector2(3129, 1343);
+		add_child(addPlayer);
 
 func _process(_delta):
 	if Global.haspickedUpShape:
@@ -54,10 +69,20 @@ func _process(_delta):
 		Global.materials = 10;
 		queue_free(); 
 		# warning-ignore:return_value_discarded
-		if Global.chapterNumber == 1:
-			get_tree().change_scene("res://Scenes/Chapter1.tscn");
+		get_tree().change_scene("res://Scenes/Chapter1.tscn");
+
 
 
 func _on_out_of_bounds_body_entered(body):
 	if body.is_in_group("player"):
 		Global.lives = 0;
+
+
+func _on_finishtutorial_body_entered(body):
+	if body.is_in_group("player"):
+		Global.checkpointIndex = 1;
+
+
+func _on_checkpoint2_body_entered(body):
+	if body.is_in_group("player"):
+		Global.checkpointIndex = 2;

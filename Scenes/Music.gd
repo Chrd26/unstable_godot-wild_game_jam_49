@@ -33,9 +33,9 @@ func _on_IntroFadeIn_finished():
 
 func _on_IntroLoop_finished():
 	if Global.hasgameStarted:
-		if Global.chapterNumber == 1 && !Global.isTutorialFinished:
+		if Global.chapterNumber == 1 && Global.checkpointIndex == 0:
 			$TutorialIntro.play();	
-		elif Global.chapterNumber == 1 && Global.isTutorialFinished:
+		elif Global.chapterNumber == 1 && Global.checkpointIndex == 1:
 			$Chapter1Intro.play();
 
 
@@ -44,9 +44,9 @@ func _on_TutorialIntro_finished():
 
 
 func _on_TutorialLoop_finished():
-	if Global.chapterNumber == 1 && !Global.isTutorialFinished:
+	if Global.chapterNumber == 1 && Global.checkpointIndex == 0:
 		$TutorialLoop.play();
-	elif Global.chapterNumber == 1 && Global.isTutorialFinished:
+	elif Global.chapterNumber == 1 && Global.checkpointIndex == 1:
 		$TutorialtoLevel1.play();
 
 func _on_Chapter1Intro_finished():
@@ -67,13 +67,13 @@ func _on_TutorialtoLevel1_finished():
 func _on_fadeoutTimer_timeout():
 	if $IntroFadeIn.playing:
 		$IntroFadeIn.stop();
-		if Global.chapterNumber == 1 && !Global.isTutorialFinished:
+		if Global.chapterNumber == 1 && Global.checkpointIndex == 0:
 			$TutorialIntro.play();	
-		elif Global.chapterNumber == 1 && Global.isTutorialFinished:
+		elif Global.chapterNumber == 1 && Global.checkpointIndex == 1:
 			$Chapter1Intro.play();
 	elif $IntroLoop.playing:
 		$IntroLoop.stop();
-		if Global.chapterNumber == 1 && !Global.isTutorialFinished:
+		if Global.chapterNumber == 1 && Global.checkpointIndex == 0:
 			$TutorialIntro.play();	
-		elif Global.chapterNumber == 1 && Global.isTutorialFinished:
+		elif Global.chapterNumber == 1 && Global.checkpointIndex == 1:
 			$Chapter1Intro.play();

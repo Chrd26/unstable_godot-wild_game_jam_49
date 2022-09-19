@@ -30,8 +30,8 @@ func _physics_process(_delta):
 		isPlaced = true;
 		self.mode = 0;
 		global_position = matPos;
-		Global.materials -= 1;
-
+		if Global.checkpointIndex == 1:
+			Global.materials -= 1;
 
 
 
