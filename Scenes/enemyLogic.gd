@@ -135,3 +135,18 @@ func _on_Area2D_body_exited(body):
 
 func _on_Timer_timeout():
 	hasShot = false;
+
+
+func _on_Area2D_area_entered(area):
+	if area.is_in_group("enemyBoundary"):
+		istouchingwall = true;
+		istouchingwall = false;
+		if Global.changeSide:
+			Global.changeSide = false;
+		else:
+			Global.changeSide = true;
+
+
+func _on_Area2D_area_exited(area):
+	if area.is_in_group("enemyBoundary"):
+		istouchingwall = false;

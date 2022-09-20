@@ -29,6 +29,11 @@ func _ready():
 		var addPlayer = playerload.instance();
 		addPlayer.position = Vector2(4838, 389.064);
 		add_child(addPlayer);
+	elif Global.checkpointIndex == 4:
+		var playerload = load("res://Scenes/player.tscn");
+		var addPlayer = playerload.instance();
+		addPlayer.position = Vector2(4288, -735);
+		add_child(addPlayer);
 
 func _process(_delta):
 	if Input.is_action_just_pressed("Reset"):
@@ -119,3 +124,8 @@ func _on_checkpoint3_body_entered(body):
 	if body.is_in_group("player"):
 		Global.checkpointIndex = 3;
 
+
+
+func _on_checkpoint4_body_entered(body):
+	if body.is_in_group("player"):
+		Global.checkpointIndex = 4;

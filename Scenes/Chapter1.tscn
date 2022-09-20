@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://Scenes/gameplay1.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-10.png" type="Texture" id=2]
@@ -14,7 +14,7 @@
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-2.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Graphics/filter/Noise-6.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Graphics/filter/Noise-4.png" type="Texture" id=14]
-[ext_resource path="res://Assets/Graphics/startingArea/Intro_Tunnel_.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/startingArea/Intro_Tunnel_.png" type="Texture" id=15]
 [ext_resource path="res://Assets/Graphics/filter/Noise-7.png" type="Texture" id=16]
 [ext_resource path="res://Assets/Graphics/filter/Noise-8.png" type="Texture" id=17]
 [ext_resource path="res://Assets/Graphics/filter/Noise-5.png" type="Texture" id=18]
@@ -29,9 +29,11 @@
 [ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Scenes/hand.tscn" type="PackedScene" id=28]
 [ext_resource path="res://Assets/Sound/Atmosphere/Game Atmosphere.wav" type="AudioStream" id=29]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part2/Chapter_1_Part_2-2.png" type="Texture" id=30]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part2/Chapter_1_Part_2-1.png" type="Texture" id=31]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part2/Chapter_1_Part_2.png" type="Texture" id=30]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part3/Chapter1prt3-1.png" type="Texture" id=31]
 [ext_resource path="res://Scenes/shapeBuff.tscn" type="PackedScene" id=32]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part3/Chapter1prt3-3.png" type="Texture" id=33]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part3/Chapter1prt3-2.png" type="Texture" id=34]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -59,28 +61,28 @@ polygon = PoolVector2Array( 1520, 1422, 1554, 1418, 1696, 1421, 1733, 1425, 1748
 polygon = PoolVector2Array( 1743, 1566, 1887, 1585, 1966, 1588, 2017, 1598, 2076, 1600, 2178, 1608, 2413, 1624, 2418, 1704, 1741, 1639 )
 
 [sub_resource type="OccluderPolygon2D" id=20]
-polygon = PoolVector2Array( 2414, 1617, 2417, 1487, 2431, 1443, 2792, 1412, 2916, 1454, 2906, 1458, 2904, 1629 )
+polygon = PoolVector2Array( 2414, 1617, 2417, 1487, 2431, 1443, 2787, 1443, 2916, 1454, 2906, 1458, 2904, 1629 )
 
 [sub_resource type="RectangleShape2D" id=8]
 
 [sub_resource type="OccluderPolygon2D" id=11]
 cull_mode = 2
-polygon = PoolVector2Array( 4261.52, 1324, 4264.52, 1433, 4266.52, 1501, 4260.52, 1515, 4259.52, 1594, 4237.52, 1591, 4231.52, 1445, 4236.52, 1416, 4236.52, 1340, 4238.52, 1314, 4140.51, 1301, 4142.51, 1403, 4140.51, 1439, 4138.51, 1505, 4139.51, 1583, 4117.5, 1585, 4121.51, 1548, 4117.5, 1520, 4116.5, 1406, 4117.5, 1300, 4011.49, 1290, 4005.49, 1392, 4009.49, 1470, 4009.49, 1586, 3987.49, 1584, 3983.49, 1389, 3974.49, 1291, 3917.48, 1285, 3916.48, 1149, 3913.48, 1058, 3906.48, 776, 4294.53, 952, 4300.53, 1317, 4262.52, 1316 )
+polygon = PoolVector2Array( 4261.52, 1620, 4226.52, 1613, 4238.52, 1314, 4140.51, 1301, 4137.51, 1619, 4114.51, 1618, 4117.5, 1300, 4011.49, 1290, 4008.49, 1609, 3984.49, 1605, 3974.49, 1291, 3941.48, 1284, 3934.48, 776, 4331.53, 949, 4333.53, 1312, 4262.52, 1316 )
+
+[sub_resource type="OccluderPolygon2D" id=16]
+polygon = PoolVector2Array( 2914, 1404, 3082, 1452, 3520, 1569, 3501, 2007, 2896, 1575 )
 
 [sub_resource type="OccluderPolygon2D" id=13]
-polygon = PoolVector2Array( 3803, 1616, 3819, 1585, 3840, 1575, 3874, 1574, 3919, 1572, 3962, 1571, 4075, 1582, 4181, 1572, 4290, 1590, 4308, 1601, 4364, 1618, 4383, 1632, 4392, 1650, 4387, 1685, 4375, 1736, 4379, 1833, 4372, 1911, 3791, 1905, 3798, 1794, 3795, 1679, 3792, 1640 )
+polygon = PoolVector2Array( 3785, 1610, 3947, 1596, 4220, 1600, 4346, 1626, 4375, 1736, 4379, 1833, 4372, 1911, 3791, 1905, 3790, 1794, 3793, 1679, 3792, 1640 )
 
 [sub_resource type="OccluderPolygon2D" id=14]
-polygon = PoolVector2Array( 4561, 1844, 4561, 1567, 4576, 1550, 4596, 1537, 4614, 1529, 4651, 1533, 4676, 1531, 4699, 1540, 4707, 1548, 4779, 1560, 4758, 1428, 4759, 1415, 4764, 1405, 4765, 1400, 4770, 1393, 4781, 1381, 4789, 1374, 4804, 1367, 4829, 1360, 4869, 1353, 4853, 1226, 4832, 1206, 4827, 1196, 4821, 1178, 4822, 1155, 4827, 1142, 4834, 1126, 4870, 1104, 4894, 1097, 4927, 1087, 4923, 1067, 4925, 1013, 4917, 940, 4918, 862, 4916, 793, 4916, 708, 4916, 586, 4862, 594, 4707, 613, 4493, 630, 4352, 640, 4324, 635, 4313, 628, 4301, 610, 4296, 594, 4296, 581, 4306, 561, 4312, 552, 4322, 546, 4337, 542, 4354, 537, 4367, 536, 4377, 539, 4486, 529, 4519, 533, 4895, 489, 4963, 490, 4963, 1067, 4962, 1203, 4964, 1711, 4964, 1852 )
+polygon = PoolVector2Array( 4538, 1859, 4452, 1452, 4753, 1416, 4749, 1158, 4894, 1097, 4906, 1085, 4916, 586, 4862, 594, 4707, 613, 4493, 630, 4352, 640, 4316, 645, 4287, 620, 4284, 582, 4318, 562, 4963, 498, 4963, 1067, 4962, 1203, 4964, 1711, 4964, 1852 )
+
+[sub_resource type="OccluderPolygon2D" id=17]
+polygon = PoolVector2Array( 3907, 776, 3914, 650, 4129, 801, 4463, 924, 4259, 919 )
 
 [sub_resource type="OccluderPolygon2D" id=15]
 polygon = PoolVector2Array( 3916, 627, 4247, 801, 4470, 905, 4481, 916, 4489, 930, 4490, 952, 4487, 970, 4482, 986, 4476, 991, 4472, 997, 4462, 997, 4458, 1003, 4442, 1007, 4427, 1008, 4415, 1008, 4408, 1001, 4398, 989, 4396, 982, 4362, 969, 4325, 955, 4293, 933, 4297, 1123, 4297, 1312, 4264, 1318, 4226, 1312, 4125, 1301, 3916, 1285, 3904, 766, 3846, 754, 3775, 753, 3597, 726, 3328, 739, 2969, 767, 2919, 769, 2907, 364, 2916, -5, 3764, 4, 3874, 7, 3902, 224, 3914, 389, 3920, 535 )
-
-[sub_resource type="OccluderPolygon2D" id=16]
-polygon = PoolVector2Array( 2922, 1409, 3082, 1452, 3123, 1468, 3530, 1565, 3571, 1576, 3575, 1607, 3569, 1636, 3565, 1709, 3561, 1753, 3560, 1857, 3544, 2036, 2896, 1575 )
-
-[sub_resource type="OccluderPolygon2D" id=17]
-polygon = PoolVector2Array( 3907, 776, 3917, 627, 4129, 801, 4440, 900, 4259, 919 )
 
 [sub_resource type="SpriteFrames" id=12]
 animations = [ {
@@ -90,6 +92,40 @@ animations = [ {
 "speed": 60.0
 } ]
 
+[sub_resource type="RectangleShape2D" id=21]
+
+[sub_resource type="Animation" id=23]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, -500 ) ]
+}
+
+[sub_resource type="Animation" id=22]
+resource_name = "platformMovement"
+length = 5.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2.2, 2.5, 4.6, 5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -500 ), Vector2( 0, 780 ), Vector2( 0, 800 ), Vector2( 0, -490 ), Vector2( 0, -500 ) ]
+}
+
 [node name="Chapter1" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -98,7 +134,7 @@ position = Vector2( 4911, 298 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 1
+frame = 5
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="."]
@@ -111,14 +147,15 @@ mode = 1
 polygon = PoolVector2Array( -1013, 2084, -100, 2090, -102, 2158, -1009, 2159 )
 
 [node name="IntroTunnel" type="Sprite" parent="Tutorial/floors"]
-position = Vector2( -356, 1284 )
+position = Vector2( -356, 1292 )
+rotation = 4.71239
 texture = ExtResource( 15 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="Tutorial/floors"]
 occluder = SubResource( 5 )
 
 [node name="floor2" type="CollisionPolygon2D" parent="Tutorial/floors"]
-polygon = PoolVector2Array( -97, 1611, -16, 1584, 638, 1587, -117, 1633 )
+polygon = PoolVector2Array( -97, 1611, -50, 1584, 638, 1587, 1295, 1972, -117, 1633 )
 
 [node name="Walls" type="RigidBody2D" parent="Tutorial" groups=["wall"]]
 mode = 1
@@ -155,9 +192,6 @@ mode = 1
 position = Vector2( 1932, 1260 )
 texture = ExtResource( 26 )
 
-[node name="floor1" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
-polygon = PoolVector2Array( 908, 1166, 1537, 1527, 1526, 1734, 906, 1307 )
-
 [node name="part1light" type="Light2D" parent="Chapter1part1/floors"]
 position = Vector2( 2079, 896 )
 scale = Vector2( 1.32227, 2.02539 )
@@ -169,29 +203,30 @@ shadow_enabled = true
 position = Vector2( -89, -1085 )
 occluder = SubResource( 6 )
 
-[node name="floor2" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
-polygon = PoolVector2Array( 1775, 1566, 2443, 1619, 2445, 1703, 1769, 1633 )
+[node name="floor1" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
+polygon = PoolVector2Array( 1772, 1561, 2443, 1619, 2445, 1703, 1769, 1633 )
 
-[node name="floor3" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
+[node name="floor2" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
 polygon = PoolVector2Array( 1543, 1421, 1570, 1414, 1760, 1420, 1771, 1426, 1780, 1432 )
 
-[node name="floor4" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
-polygon = PoolVector2Array( 2458, 1445, 2473, 1436, 2952, 1406, 2956, 1454 )
+[node name="floor3" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
+polygon = PoolVector2Array( 2458, 1445, 2473, 1436, 2933, 1416, 3580, 1602 )
 
-[node name="floor5" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
-polygon = PoolVector2Array( 1930, 1006, 2176, 1015, 2186, 1023, 2196, 1039, 1964, 1024, 1916, 1012 )
+[node name="floor4" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
+position = Vector2( 0, 24 )
+polygon = PoolVector2Array( 1905, 988, 2199, 1015, 2196, 1039, 1902, 1014 )
 
 [node name="walls" type="RigidBody2D" parent="Chapter1part1" groups=["wall"]]
 mode = 1
 
 [node name="wall1" type="CollisionPolygon2D" parent="Chapter1part1/walls"]
-polygon = PoolVector2Array( 1515, 1427, 1509, 1437, 1506, 1448, 1509, 1456, 1508, 1466, 1508, 1480, 1510, 1493, 1509, 1507, 1507, 1514, 1510, 1525, 1509, 1533, 1654, 1568, 1746, 1574, 1749, 1515, 1751, 1487, 1753, 1467, 1758, 1453, 1751, 1438 )
+polygon = PoolVector2Array( 1513, 1429, 1509, 1533, 1753, 1572, 1759, 1440 )
 
 [node name="wall2" type="CollisionPolygon2D" parent="Chapter1part1/walls"]
-polygon = PoolVector2Array( 2430, 1451, 2427, 1458, 2424, 1468, 2418, 1483, 2418, 1514, 2418, 1581, 2416, 1623, 2906, 1628, 2906, 1459, 2459, 1450 )
+polygon = PoolVector2Array( 2410, 1455, 2409, 1622, 3539, 1889, 3550, 1620, 2902, 1444, 2459, 1450 )
 
 [node name="wall3" type="CollisionPolygon2D" parent="Chapter1part1/walls"]
-polygon = PoolVector2Array( 1887, 1017, 1880, 1025, 1874, 1034, 1870, 1077, 1866, 1104, 1868, 1131, 1868, 1168, 1866, 1198, 1878, 1209, 1893, 1214, 1900, 1218, 1924, 1227, 1954, 1227, 2039, 1230, 2066, 1228, 2093, 1232, 2114, 1230, 2135, 1222, 2146, 1205, 2148, 1182, 2149, 1170, 2156, 1151, 2160, 1119, 2160, 1093, 2160, 1086, 2167, 1076, 2170, 1066, 2169, 1043, 2084, 1035, 1934, 1029 )
+polygon = PoolVector2Array( 1863, 1213, 2150, 1229, 2166, 1068, 1875, 1041 )
 
 [node name="chapter1part1Occluder1" type="LightOccluder2D" parent="Chapter1part1"]
 occluder = SubResource( 18 )
@@ -203,7 +238,7 @@ occluder = SubResource( 19 )
 occluder = SubResource( 20 )
 
 [node name="enemy1" parent="." instance=ExtResource( 27 )]
-position = Vector2( 2288, 1568.56 )
+position = Vector2( 2288, 1560.56 )
 rotation = 0.122173
 
 [node name="checkpoint1" type="Area2D" parent="."]
@@ -230,6 +265,14 @@ position = Vector2( 0, -72 )
 scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
+[node name="checkpoint4" type="Area2D" parent="."]
+position = Vector2( 4423, -734.46 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checkpoint4"]
+position = Vector2( 0, -72 )
+scale = Vector2( 6.61, 18.99 )
+shape = SubResource( 8 )
+
 [node name="hand" parent="." instance=ExtResource( 28 )]
 position = Vector2( 9540, 1759 )
 scale = Vector2( -1, 1 )
@@ -245,67 +288,70 @@ bus = "Atmos"
 mode = 1
 
 [node name="backgroundMain" type="Sprite" parent="Chapter1Part2/floor"]
-position = Vector2( 3939, 1015.7 )
+position = Vector2( 3923, 1023.7 )
 texture = ExtResource( 30 )
 
-[node name="backgroundLayer" type="Sprite" parent="Chapter1Part2/floor"]
-position = Vector2( 3968, 1040 )
-texture = ExtResource( 31 )
+[node name="platformFiller" type="Sprite" parent="Chapter1Part2/floor"]
+position = Vector2( 4915, 687 )
+rotation = -0.0872665
+scale = Vector2( 0.578, 0.228 )
+texture = ExtResource( 33 )
 
 [node name="Occluder1" type="LightOccluder2D" parent="Chapter1Part2/floor"]
+position = Vector2( -40, 0 )
 scale = Vector2( 0.999877, 1 )
 occluder = SubResource( 11 )
 
 [node name="floor1" type="CollisionPolygon2D" parent="Chapter1Part2/floor"]
-polygon = PoolVector2Array( 2915, 1413, 3557, 1573, 3567, 1579, 3514, 1603, 2914, 1459 )
+polygon = PoolVector2Array( 3785, 1623, 4371, 1670, 4355, 1629, 4226, 1602, 3930, 1593, 3791, 1610 )
 
 [node name="floor2" type="CollisionPolygon2D" parent="Chapter1Part2/floor"]
-polygon = PoolVector2Array( 3831, 1574, 4370, 1615, 4373, 1625, 3819, 1591 )
+position = Vector2( -88, -88 )
+polygon = PoolVector2Array( 4582, 1562, 4544, 1538, 4848, 1503 )
 
 [node name="floor3" type="CollisionPolygon2D" parent="Chapter1Part2/floor"]
-polygon = PoolVector2Array( 4563, 1559, 4577, 1545, 4595, 1535, 4781, 1564, 4792, 1627 )
+polygon = PoolVector2Array( 4746, 1159, 4909, 1088, 4940, 1177 )
 
 [node name="floor4" type="CollisionPolygon2D" parent="Chapter1Part2/floor"]
-polygon = PoolVector2Array( 4868, 1354, 4792, 1371, 4774, 1388, 4916, 1385 )
+polygon = PoolVector2Array( 3898, 639, 3918, 624, 3967.75, 672.488, 4463, 926, 4149, 815 )
 
 [node name="floor5" type="CollisionPolygon2D" parent="Chapter1Part2/floor"]
-polygon = PoolVector2Array( 4835, 1130, 4925, 1087, 4936, 1164 )
+polygon = PoolVector2Array( 4310, 553, 4966, 487, 5341, 503, 5468, 514, 5472, 537, 4285, 585 )
 
 [node name="floor6" type="CollisionPolygon2D" parent="Chapter1Part2/floor"]
-polygon = PoolVector2Array( 3920, 634, 4477, 911, 4149, 815 )
-
-[node name="floor7" type="CollisionPolygon2D" parent="Chapter1Part2/floor"]
-polygon = PoolVector2Array( 4314, 550, 4967, 492, 4944, 522, 4348, 573 )
+polygon = PoolVector2Array( 2899, 49, 2902, -5, 3870, 2, 3876, 43 )
 
 [node name="walls" type="RigidBody2D" parent="Chapter1Part2" groups=["wall"]]
 mode = 1
 
 [node name="wall1" type="CollisionPolygon2D" parent="Chapter1Part2/walls"]
-polygon = PoolVector2Array( 3567, 1580, 3571, 1591, 3573, 1602, 3570, 1607, 3567, 1628, 3565, 1639, 3564, 1673, 3564, 1712, 3559, 1755, 3557, 1809, 3557, 1850, 2932, 1824, 2927, 1460, 3496, 1599 )
-
-[node name="wall2" type="CollisionPolygon2D" parent="Chapter1Part2/walls"]
+visible = false
 polygon = PoolVector2Array( 3817, 1592, 3806, 1613, 3795, 1642, 3797, 1674, 3797, 1737, 3796, 1839, 4378, 1842, 4373, 1743, 4381, 1699, 4384, 1655, 4371, 1627 )
 
+[node name="wall2" type="CollisionPolygon2D" parent="Chapter1Part2/walls"]
+polygon = PoolVector2Array( 4458, 1462, 4495, 1607, 4532, 1861, 4831, 1853, 4714, 1434 )
+
 [node name="wall3" type="CollisionPolygon2D" parent="Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4774, 1388, 4766, 1399, 4790, 1621, 4939, 1616, 4916, 1386 )
+polygon = PoolVector2Array( 4746, 1161, 4760, 1417, 4947, 1394, 4942, 1179 )
 
 [node name="wall4" type="CollisionPolygon2D" parent="Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4564, 1560, 4555, 1584, 4555, 1690, 4559, 1797, 4562, 1846, 4873, 1848, 4790, 1623 )
+polygon = PoolVector2Array( 4902, 537, 4910, 1090, 4962, 1078, 4964, 748, 5465, 755, 5472, 544 )
 
 [node name="wall5" type="CollisionPolygon2D" parent="Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4835, 1131, 4830, 1138, 4826, 1146, 4823, 1158, 4823, 1169, 4823, 1177, 4824, 1188, 4827, 1196, 4832, 1203, 4837, 1208, 4840, 1215, 4847, 1219, 4854, 1224, 4869, 1354, 4921, 1389, 4934, 1163 )
+polygon = PoolVector2Array( 4491, 934, 4496, 947, 4492, 967, 4488, 976, 4483, 986, 4474, 996, 4461, 1006, 4438, 1018, 4410, 1018, 4378, 987, 4289, 947, 4294, 1034, 4296, 1219, 4299, 1313, 4219, 1311, 4130, 1301, 3916, 1284, 3908, 781 )
 
 [node name="wall6" type="CollisionPolygon2D" parent="Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4917, 586, 4918, 949, 4926, 1002, 4924, 1051, 4924, 1073, 4925, 1089, 4962, 1078, 4963, 630 )
+polygon = PoolVector2Array( 4283, 587, 4286, 612, 4307, 644, 4355, 643, 4435, 633, 4519, 629, 4724, 611, 4916, 586, 4962, 630, 4962, 492, 4944, 526, 4343, 574 )
 
 [node name="wall7" type="CollisionPolygon2D" parent="Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4475, 911, 4487, 923, 4491, 934, 4490, 939, 4494, 941, 4496, 947, 4493, 951, 4492, 967, 4488, 976, 4483, 986, 4474, 996, 4461, 1006, 4447, 1010, 4432, 1010, 4415, 1003, 4399, 990, 4395, 979, 4289, 931, 4294, 1034, 4296, 1219, 4299, 1313, 4219, 1311, 4130, 1301, 3916, 1284, 3908, 781 )
+polygon = PoolVector2Array( 3921, 627, 3917, 414, 3879, 43, 2902, 53, 2900, 775, 3523, 730, 3755, 750, 3904, 771 )
 
 [node name="wall8" type="CollisionPolygon2D" parent="Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4314, 551, 4308, 559, 4302, 570, 4298, 587, 4301, 603, 4316, 629, 4352, 638, 4435, 633, 4519, 629, 4724, 611, 4916, 586, 4962, 630, 4962, 492, 4944, 526, 4343, 574 )
+polygon = PoolVector2Array( 3779, 1882, 4371, 1905, 4367, 1662, 3785, 1623 )
 
-[node name="wall9" type="CollisionPolygon2D" parent="Chapter1Part2/walls"]
-polygon = PoolVector2Array( 3921, 627, 3917, 414, 3884, -12, 3682, -8, 2920, -3, 2917, 766, 3523, 730, 3755, 750, 3904, 771 )
+[node name="chapter1part2occluder1" type="LightOccluder2D" parent="Chapter1Part2"]
+position = Vector2( 24, 72 )
+occluder = SubResource( 16 )
 
 [node name="chapter1part2occluder2" type="LightOccluder2D" parent="Chapter1Part2"]
 occluder = SubResource( 13 )
@@ -313,14 +359,11 @@ occluder = SubResource( 13 )
 [node name="Chapter1part2occluder3" type="LightOccluder2D" parent="Chapter1Part2"]
 occluder = SubResource( 14 )
 
-[node name="Chapter1Part3Occluder" type="LightOccluder2D" parent="Chapter1Part2"]
-occluder = SubResource( 15 )
-
-[node name="chapter1part2occluder1" type="LightOccluder2D" parent="Chapter1Part2"]
-occluder = SubResource( 16 )
-
 [node name="chapter1part2occluder4" type="LightOccluder2D" parent="Chapter1Part2"]
 occluder = SubResource( 17 )
+
+[node name="Chapter1Part3Occluder" type="LightOccluder2D" parent="Chapter1Part2"]
+occluder = SubResource( 15 )
 
 [node name="SignLight" type="Light2D" parent="."]
 position = Vector2( 4113, 1050 )
@@ -333,11 +376,145 @@ shadow_enabled = true
 
 [node name="noiseEffect" type="AnimatedSprite" parent="."]
 modulate = Color( 1, 1, 1, 0.0784314 )
-position = Vector2( 5003, 428 )
+position = Vector2( 5004, 375 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 8
+frame = 7
 playing = true
+
+[node name="enemyBoundary1" type="Area2D" parent="." groups=["enemyBoundary"]]
+position = Vector2( 3410, -275 )
+scale = Vector2( 3.188, 1.524 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemyBoundary1"]
+position = Vector2( -128, 144 )
+scale = Vector2( 3.18, 4.124 )
+shape = SubResource( 21 )
+
+[node name="enemyBoundary2" type="Area2D" parent="." groups=["enemyBoundary"]]
+position = Vector2( 4180, -284 )
+scale = Vector2( 3.188, 1.524 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemyBoundary2"]
+position = Vector2( -128, 144 )
+scale = Vector2( 3.18, 4.124 )
+shape = SubResource( 21 )
+
+[node name="enemy" parent="." instance=ExtResource( 27 )]
+position = Vector2( 3401, -42 )
+
+[node name="Chapter1Part3" type="Node2D" parent="."]
+
+[node name="mapdesign" type="Sprite" parent="Chapter1Part3"]
+position = Vector2( 5508, -262 )
+texture = ExtResource( 31 )
+
+[node name="mapdesign2" type="Sprite" parent="Chapter1Part3"]
+position = Vector2( 5894, -427 )
+texture = ExtResource( 33 )
+
+[node name="mapdesign3" type="Sprite" parent="Chapter1Part3"]
+position = Vector2( 6534, 709 )
+scale = Vector2( 0.664, 0.528 )
+texture = ExtResource( 33 )
+
+[node name="platform1" type="Sprite" parent="Chapter1Part3"]
+position = Vector2( 6359, -482 )
+texture = ExtResource( 34 )
+
+[node name="platform2" type="Sprite" parent="Chapter1Part3"]
+position = Vector2( 5960, -480 )
+texture = ExtResource( 34 )
+
+[node name="platform3" type="Sprite" parent="Chapter1Part3"]
+position = Vector2( 5544, -480 )
+texture = ExtResource( 34 )
+
+[node name="platform4" type="Sprite" parent="Chapter1Part3"]
+position = Vector2( 5104, -480 )
+texture = ExtResource( 34 )
+
+[node name="platform5" type="Sprite" parent="Chapter1Part3"]
+position = Vector2( 4648, -480 )
+texture = ExtResource( 34 )
+
+[node name="movingplatform" type="RigidBody2D" parent="Chapter1Part3" groups=["floor"]]
+position = Vector2( 0, -500 )
+mode = 3
+
+[node name="platform6" type="Sprite" parent="Chapter1Part3/movingplatform"]
+position = Vector2( 4272, -976 )
+texture = ExtResource( 34 )
+
+[node name="floor8" type="CollisionPolygon2D" parent="Chapter1Part3/movingplatform"]
+position = Vector2( -2088, -496 )
+polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+
+[node name="wall7" type="CollisionPolygon2D" parent="Chapter1Part3/movingplatform"]
+position = Vector2( -1688, -496 )
+polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Chapter1Part3/movingplatform"]
+autoplay = "platformMovement"
+anims/RESET = SubResource( 23 )
+anims/platformMovement = SubResource( 22 )
+
+[node name="floor" type="RigidBody2D" parent="Chapter1Part3" groups=["floor"]]
+mode = 1
+
+[node name="floor1" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
+position = Vector2( -16, -80 )
+polygon = PoolVector2Array( 5744, 354, 5894, 401, 6029, 425, 6036, 346 )
+
+[node name="floor2" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
+polygon = PoolVector2Array( 6012, -196, 6494, -191, 6495, -160, 6017, -173 )
+
+[node name="floor3" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
+polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+
+[node name="floor4" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
+position = Vector2( -400, 0 )
+polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+
+[node name="floor5" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
+position = Vector2( -816, 0 )
+polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+
+[node name="floor6" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
+position = Vector2( -1257, 0 )
+polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+
+[node name="floor7" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
+position = Vector2( -1712, 0 )
+polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+
+[node name="wall" type="RigidBody2D" parent="Chapter1Part3" groups=["wall"]]
+mode = 1
+
+[node name="wall1" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
+polygon = PoolVector2Array( 5734, 277, 5698, 764, 6108, 763, 6093, 395, 6614, 376, 6613, 325, 6093, 329, 6092, 215, 6092, -129, 6532, -109, 6533, -158, 6015, -174, 6014, 303, 6009, 348 )
+
+[node name="wall2" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
+polygon = PoolVector2Array( 6499, -159, 6468, -834, 6465, -842, 5952, -811, 5938, -1015, 4869, -1024, 4872, -1211, 6096, -1249, 6098, -903, 6528, -900, 6535, -104, 6491, -102 )
+
+[node name="wall3" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
+polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
+
+[node name="wall7" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
+position = Vector2( 408, 0 )
+polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
+
+[node name="wall4" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
+position = Vector2( -416, 0 )
+polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
+
+[node name="wall5" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
+position = Vector2( -857, 1 )
+polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
+
+[node name="wall6" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
+position = Vector2( -1311, 0 )
+polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
 
 [node name="Collectables" type="Node2D" parent="."]
 
@@ -348,15 +525,25 @@ position = Vector2( 2596, 1332 )
 position = Vector2( 2776, 1325 )
 
 [node name="shapeBuff2" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( 4816, 1298 )
+position = Vector2( 4696, 1362 )
 
 [node name="shapeBuff3" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 4520, 436 )
 
 [node name="shapeBuff4" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( 4888, 1033 )
+position = Vector2( 4832, 1033 )
+
+[node name="shapeBuff5" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 5949, 184 )
+
+[node name="shapeBuff6" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 6216, -264 )
+
+[node name="shapeBuff7" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 4815, -690 )
 
 [connection signal="body_entered" from="out of bounds" to="." method="_on_out_of_bounds_body_entered"]
 [connection signal="body_entered" from="checkpoint1" to="." method="_on_finishtutorial_body_entered"]
 [connection signal="body_entered" from="checkpoint2" to="." method="_on_checkpoint2_body_entered"]
 [connection signal="body_entered" from="checkpoint3" to="." method="_on_checkpoint3_body_entered"]
+[connection signal="body_entered" from="checkpoint4" to="." method="_on_checkpoint4_body_entered"]

@@ -1,7 +1,7 @@
 extends RigidBody2D
 onready var playerAnim = $AnimatedSprite;
 const gravity = 60;
-const jumpForce = -550;
+const jumpForce = -1300;
 var isonfloor = false;
 var speed = 400;
 var movePos;

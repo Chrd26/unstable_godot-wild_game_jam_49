@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Chapter_1_Part_1.png-7820ba0f60ce4b23688a14a20c1fa7b0.stex"
+path="res://.import/Chapter1prt3-3.png-8a311d0633dcf80a2703779dc62c64ae.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/chapter1leveldesign/part1/Chapter_1_Part_1.png"
-dest_files=[ "res://.import/Chapter_1_Part_1.png-7820ba0f60ce4b23688a14a20c1fa7b0.stex" ]
+source_file="res://Assets/Graphics/chapter1leveldesign/part3/Chapter1prt3-3.png"
+dest_files=[ "res://.import/Chapter1prt3-3.png-8a311d0633dcf80a2703779dc62c64ae.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

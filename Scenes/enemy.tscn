@@ -135,6 +135,8 @@ bus = "EnemyCannon"
 stream = ExtResource( 25 )
 bus = "EnemyMovement"
 
+[connection signal="area_entered" from="RigidBody2D/Area2D" to="RigidBody2D" method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="RigidBody2D/Area2D" to="RigidBody2D" method="_on_Area2D_area_exited"]
 [connection signal="body_entered" from="RigidBody2D/Area2D" to="RigidBody2D" method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="RigidBody2D/Area2D" to="RigidBody2D" method="_on_Area2D_body_exited"]
 [connection signal="timeout" from="RigidBody2D/Timer" to="RigidBody2D" method="_on_Timer_timeout"]

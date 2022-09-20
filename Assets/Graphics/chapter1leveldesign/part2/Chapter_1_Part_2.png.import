@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Chapter_1_Part_2-2.png-18df074910f157bf9178bbcca930646b.stex"
+path="res://.import/Chapter_1_Part_2.png-558fab2e10f3a666173f504156edfcde.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/chapter1leveldesign/part2/Chapter_1_Part_2-2.png"
-dest_files=[ "res://.import/Chapter_1_Part_2-2.png-18df074910f157bf9178bbcca930646b.stex" ]
+source_file="res://Assets/Graphics/chapter1leveldesign/part2/Chapter_1_Part_2.png"
+dest_files=[ "res://.import/Chapter_1_Part_2.png-558fab2e10f3a666173f504156edfcde.stex" ]
 
 [params]
 

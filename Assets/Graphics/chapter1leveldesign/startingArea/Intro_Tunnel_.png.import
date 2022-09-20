@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Intro_Tunnel_.png-5714d0209c29048ad72d415b2f2d89fc.stex"
+path="res://.import/Intro_Tunnel_.png-9a7c894f20f7bb7b7a6954c9a407198c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/startingArea/Intro_Tunnel_.png"
-dest_files=[ "res://.import/Intro_Tunnel_.png-5714d0209c29048ad72d415b2f2d89fc.stex" ]
+source_file="res://Assets/Graphics/chapter1leveldesign/startingArea/Intro_Tunnel_.png"
+dest_files=[ "res://.import/Intro_Tunnel_.png-9a7c894f20f7bb7b7a6954c9a407198c.stex" ]
 
 [params]
 

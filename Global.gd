@@ -15,7 +15,7 @@ var changeSide = false;
 var hasActivatedBuilding = false;
 var haspickedUpShape = false;
 var chapterNumber = 0;
-var checkpointIndex= 0;
+var checkpointIndex= 4;
 var hasgameStarted = false;
 var isjumping = false;
 
