@@ -6,7 +6,8 @@
 [node name="material3" type="Node2D"]
 
 [node name="material_1" type="RigidBody2D" parent="." groups=["material"]]
-gravity_scale = 3.0
+mass = 3.0
+gravity_scale = 5.0
 linear_damp = -0.5
 script = ExtResource( 2 )
 
@@ -14,13 +15,15 @@ script = ExtResource( 2 )
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="material_1"]
+position = Vector2( 1, 0 )
+polygon = PoolVector2Array( -20, -18, -17, 42, -72, 46, -70, 83, 68, 76, 65, 34, 19, 38, 16, -20 )
+
 [node name="Area2D" type="Area2D" parent="material_1"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="material_1/Area2D"]
-polygon = PoolVector2Array( -17, -16, -14, 42, -69, 48, -67, 79, 67, 72, 65, 36, 19, 38, 15, -18 )
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="material_1"]
-polygon = PoolVector2Array( -17, -16, -14, 42, -69, 48, -67, 79, 67, 72, 65, 36, 19, 38, 15, -18 )
+position = Vector2( 1, 0 )
+polygon = PoolVector2Array( -20, -18, -17, 42, -72, 46, -70, 83, 68, 76, 65, 34, 19, 38, 16, -20 )
 
 [connection signal="body_entered" from="material_1/Area2D" to="material_1" method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="material_1/Area2D" to="material_1" method="_on_Area2D_body_exited"]

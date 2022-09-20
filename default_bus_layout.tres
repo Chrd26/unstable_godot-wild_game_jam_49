@@ -148,5 +148,5 @@ bus/13/name = "Atmos"
 bus/13/solo = false
 bus/13/mute = false
 bus/13/bypass_fx = false
-bus/13/volume_db = -19.3281
+bus/13/volume_db = -16.0924
 bus/13/send = "Master"

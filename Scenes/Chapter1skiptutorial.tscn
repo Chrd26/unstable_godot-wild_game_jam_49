@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://Scenes/gameplay1.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-10.png" type="Texture" id=2]
@@ -65,12 +65,6 @@ closed = false
 cull_mode = 2
 polygon = PoolVector2Array( 1589, 1852, 1646, 1331, 2514, 1346, 2865, 2816, 2240, 1812, 2168, 1735, 2106, 1777, 1420, 2672, 1588, 1851 )
 
-[sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 10, 13.4477 )
-
-[sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 146.5, 104.5 )
-
 [sub_resource type="OccluderPolygon2D" id=12]
 polygon = PoolVector2Array( 1905, 1217, 2190, 1219, 2073, 1242, 1961, 1242 )
 
@@ -88,22 +82,36 @@ position = Vector2( 4911, 298 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 10
 playing = true
 
-[node name="Tunnel" type="RigidBody2D" parent="." groups=["floor"]]
+[node name="tutorialtunnel" type="Node2D" parent="."]
+
+[node name="tunnelfloor" type="RigidBody2D" parent="tutorialtunnel" groups=["floor"]]
 position = Vector2( 248, -416 )
 mode = 1
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Tunnel"]
-polygon = PoolVector2Array( -1005, 2098, -798, 2089, -674, 2087, -491, 2091, -284, 2090, -112, 2091, -106, 2014, -102, 1978, -107, 1927, -103, 1855, -133, 1740, -129, 1642, -102, 1615, -48, 1587, 36, 1583, 659, 1583, 667, 2008, 674, 2310, -510, 2311, -1390, 2310, -1381, 1997, -1380, 1118, -960, 1083, -991, 1204, -975, 1360, -965, 1541, -969, 1691, -977, 1890 )
+[node name="floor1" type="CollisionPolygon2D" parent="tutorialtunnel/tunnelfloor"]
+polygon = PoolVector2Array( -1003, 2088, -113, 2090, -106, 2249, -1006, 2258 )
 
-[node name="IntroTunnel" type="Sprite" parent="Tunnel"]
+[node name="IntroTunnel" type="Sprite" parent="tutorialtunnel/tunnelfloor"]
 position = Vector2( -356, 1284 )
 texture = ExtResource( 15 )
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="Tunnel"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="tutorialtunnel/tunnelfloor"]
 occluder = SubResource( 5 )
+
+[node name="floor2" type="CollisionPolygon2D" parent="tutorialtunnel/tunnelfloor"]
+polygon = PoolVector2Array( -105, 1619, -53, 1581, 87, 1583, 234, 1578, 425, 1576, 546, 1576, 646, 1591, 646, 1694, -115, 1631 )
+
+[node name="tunnelwall" type="RigidBody2D" parent="tutorialtunnel" groups=["wall"]]
+position = Vector2( 248, -416 )
+mode = 1
+
+[node name="wall1" type="CollisionPolygon2D" parent="tutorialtunnel/tunnelwall"]
+polygon = PoolVector2Array( -62, 1631, -120, 1634, -129, 1654, -132, 1688, -127, 1746, -110, 1813, -103, 1835, -106, 1870, -107, 1928, -105, 1962, -103, 1985, -108, 2041, -105, 2083, 173, 2087 )
+
+[node name="wall2" type="CollisionPolygon2D" parent="tutorialtunnel/tunnelwall"]
+polygon = PoolVector2Array( -990, 1210, -980, 1358, -970, 1525, -969, 1685, -981, 1954, -1005, 2103, -1029, 2154, -1150, 2151, -1133, 1245 )
 
 [node name="playerNode" parent="." instance=ExtResource( 13 )]
 position = Vector2( -192, 1543 )
@@ -133,56 +141,55 @@ energy = 3.0
 shadow_enabled = true
 shadow_filter_smooth = 0.8
 
-[node name="part1" type="RigidBody2D" parent="." groups=["floor"]]
+[node name="chapter1Part1" type="Node2D" parent="."]
+
+[node name="part1floor" type="RigidBody2D" parent="chapter1Part1" groups=["floor"]]
 position = Vector2( -28, 5 )
 mode = 1
 
-[node name="part1sprite" type="Sprite" parent="part1"]
+[node name="part1sprite" type="Sprite" parent="chapter1Part1/part1floor"]
 position = Vector2( 1932, 1260 )
 texture = ExtResource( 26 )
 
-[node name="part1colission" type="CollisionPolygon2D" parent="part1"]
-polygon = PoolVector2Array( 924, 1163, 1521, 1516, 1544, 1539, 1538, 1419, 1770, 1422, 1780, 1445, 1779, 1555, 1820, 1559, 2451, 1626, 2447, 1449, 2479, 1421, 2945, 1415, 2960, 2248, 932, 2258 )
+[node name="floor1" type="CollisionPolygon2D" parent="chapter1Part1/part1floor"]
+polygon = PoolVector2Array( 913, 1171, 1532, 1518, 1527, 1774, 911, 1707 )
 
-[node name="part1light" type="Light2D" parent="part1"]
+[node name="part1light" type="Light2D" parent="chapter1Part1/part1floor"]
 position = Vector2( 2079, 896 )
 scale = Vector2( 1.32227, 2.02539 )
 texture = ExtResource( 25 )
 energy = 1.72
 shadow_enabled = true
 
-[node name="part1LightOccluder" type="LightOccluder2D" parent="part1"]
+[node name="part1LightOccluder" type="LightOccluder2D" parent="chapter1Part1/part1floor"]
 position = Vector2( -89, -1085 )
 occluder = SubResource( 6 )
 
-[node name="wall" type="RigidBody2D" parent="part1" groups=["wall"]]
-position = Vector2( 1661, 1560 )
-mode = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="part1/wall"]
-position = Vector2( 1, 32 )
-scale = Vector2( 13.154, 7.872 )
-shape = SubResource( 9 )
-
-[node name="wall2" type="RigidBody2D" parent="part1" groups=["wall"]]
-position = Vector2( 1613, 1592 )
-mode = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="part1/wall2"]
-position = Vector2( 959, 40 )
-scale = Vector2( 13.154, 7.872 )
-shape = SubResource( 9 )
-
-[node name="RigidBody2D" type="RigidBody2D" parent="part1" groups=["floor"]]
-position = Vector2( 2054, 1109 )
-mode = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="part1/RigidBody2D"]
-position = Vector2( -5.5, 2.5 )
-shape = SubResource( 10 )
-
-[node name="LightOccluder2D" type="LightOccluder2D" parent="part1"]
+[node name="LightOccluder2D" type="LightOccluder2D" parent="chapter1Part1/part1floor"]
 occluder = SubResource( 12 )
+
+[node name="floor2" type="CollisionPolygon2D" parent="chapter1Part1/part1floor"]
+polygon = PoolVector2Array( 1777, 1571, 2026, 1589, 2217, 1612, 2437, 1617, 2464, 1893, 1755, 1832 )
+
+[node name="floor3" type="CollisionPolygon2D" parent="chapter1Part1/part1floor"]
+polygon = PoolVector2Array( 1538, 1428, 1551, 1414, 1598, 1414, 1719, 1419, 1749, 1417, 1773, 1425, 1787, 1440 )
+
+[node name="floor4" type="CollisionPolygon2D" parent="chapter1Part1/part1floor"]
+polygon = PoolVector2Array( 2455, 1444, 2494, 1430, 2582, 1426, 2726, 1412, 2825, 1409, 2867, 1412, 2955, 1416, 2932, 1428 )
+
+[node name="floor5" type="CollisionPolygon2D" parent="chapter1Part1/part1floor"]
+polygon = PoolVector2Array( 1907, 1013, 1931, 1009, 1948, 1003, 2121, 1016, 2135, 1009, 2159, 1011, 2168, 1017, 2179, 1022, 2193, 1033, 1907, 1019 )
+
+[node name="walls" type="RigidBody2D" parent="chapter1Part1" groups=["part1walls"]]
+mode = 1
+
+[node name="wall1" type="CollisionPolygon2D" parent="chapter1Part1/walls"]
+polygon = PoolVector2Array( 1756, 1448, 1762, 1460, 1753, 1463, 1751, 1568, 1507, 1545, 1508, 1461, 1507, 1439, 1510, 1433 )
+
+[node name="wall2" type="CollisionPolygon2D" parent="chapter1Part1/walls"]
+polygon = PoolVector2Array( 2427, 1451, 2422, 1467, 2418, 1500, 2424, 1615, 2411, 1620, 2416, 1668, 2915, 1659, 2920, 1449 )
+
+[node name="wall3" type="CollisionPolygon2D" parent="chapter1Part1/walls"]
 
 [node name="enemy1" parent="." instance=ExtResource( 27 )]
 position = Vector2( 2288, 1568.56 )
@@ -234,7 +241,7 @@ scale = Vector2( 0.999877, 1 )
 occluder = SubResource( 11 )
 
 [node name="SignLight" type="Light2D" parent="."]
-position = Vector2( 4296, 1182 )
+position = Vector2( 4296, 1181 )
 scale = Vector2( 5.95268, 1.74609 )
 texture = ExtResource( 25 )
 shadow_enabled = true

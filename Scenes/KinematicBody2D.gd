@@ -19,8 +19,8 @@ func _ready():
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("player"):
 		Global.getlife = true;
-		queue_free();
 		if Global.lives <= 2:
 			Global.lives += 1;
 		else:
 			pass;
+		queue_free();

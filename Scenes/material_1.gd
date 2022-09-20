@@ -24,13 +24,13 @@ func _physics_process(_delta):
 		self.mode = 3;
 		global_position = get_global_mouse_position();
 		matPos = global_position;
-	if !Global.stackingMode && !isPlaced || Input.is_action_just_pressed("Material1") && !isPlaced || Input.is_action_just_pressed("Material2") && !isPlaced || Input.is_action_just_pressed("Material3") && !isPlaced:
+	if !Global.stackingMode && !isPlaced || Input.is_action_just_pressed("Material1") && !isPlaced || Input.is_action_just_pressed("Material2") && !isPlaced || Input.is_action_just_pressed("Material3") && !isPlaced || Input.is_action_just_pressed("Material4") && !isPlaced:
 		queue_free();
 	if Input.is_action_just_pressed("placeMaterial") && !isPlaced:
 		isPlaced = true;
 		self.mode = 0;
 		global_position = matPos;
-		if Global.checkpointIndex == 1:
+		if Global.checkpointIndex > 0:
 			Global.materials -= 1;
 
 
@@ -38,6 +38,7 @@ func _physics_process(_delta):
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("player"):
 		Global.isonMaterial = true;
+		Global.isjumping = false;
 		#print("isonMaterial");
 
 

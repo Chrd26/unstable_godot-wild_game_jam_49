@@ -85,7 +85,7 @@ position = Vector2( 4911, 298 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 6
+frame = 2
 playing = true
 
 [node name="Tunnel" type="RigidBody2D" parent="." groups=["floor"]]

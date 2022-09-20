@@ -15,7 +15,28 @@ func _physics_process(_delta):
 		self.mode = 2;
 		if Input.is_action_pressed("move_right") || Input.is_action_pressed("movement_left") && Input.is_action_just_pressed("move_right"):
 			set_linear_velocity(Vector2(speed, vertVel));
-			if isonfloor || Global.isonMaterial:
+			if Input.is_action_just_pressed("jump") && isonfloor || Global.isonMaterial && Input.is_action_just_pressed("jump") :
+				$Audio/Footsteps.stop();
+				$Audio/Movement.stop();
+				Global.isjumping = true;
+				apply_impulse(Vector2(), Vector2(0, jumpForce));
+				playJumpRandom.randomize();
+				var randomNumber = playJumpRandom.randi_range(0, 1);
+				if randomNumber == 1:
+					randomPitch.randomize();
+					var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+					$Audio/JumpImpact1.pitch_scale = randomPitchNumber;
+					$Audio/JumpMovement.pitch_scale = randomPitchNumber;
+					$Audio/JumpImpact1.play();
+					$Audio/JumpMovement.play();
+				else:
+					randomPitch.randomize();
+					var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+					$Audio/JumpImpact2.pitch_scale = randomPitchNumber;
+					$Audio/JumpMovement.pitch_scale = randomPitchNumber;
+					$Audio/JumpImpact2.play();
+					$Audio/JumpMovement.play();
+			if isonfloor && !Global.isjumping || Global.isonMaterial && !Global.isjumping:
 				playerAnim.play("Walk");
 				playerAnim.flip_h = 0;
 				if !$Audio/Footsteps.playing:
@@ -25,12 +46,33 @@ func _physics_process(_delta):
 					$Audio/Movement.pitch_scale = randomPitchNumber;
 					$Audio/Footsteps.play();
 					$Audio/Movement.play();
-				if !isonfloor && !Global.isonMaterial:
-					playerAnim.play("Idle");
-					playerAnim.flip_h = 0;
+			if !isonfloor && !Global.isonMaterial:
+				playerAnim.play("Idle");
+				playerAnim.flip_h = 0;
 		elif Input.is_action_pressed("movement_left") || Input.is_action_pressed("move_right") && Input.is_action_just_pressed("movement_left"):
 			set_linear_velocity(Vector2(-speed, vertVel));
-			if isonfloor || Global.isonMaterial:
+			if Input.is_action_just_pressed("jump") && isonfloor || Global.isonMaterial && Input.is_action_just_pressed("jump"):
+				$Audio/Footsteps.stop();
+				$Audio/Movement.stop();
+				Global.isjumping = true;
+				apply_impulse(Vector2(), Vector2(0, jumpForce));
+				playJumpRandom.randomize();
+				var randomNumber = playJumpRandom.randi_range(0, 1);
+				if randomNumber == 1:
+					randomPitch.randomize();
+					var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+					$Audio/JumpImpact1.pitch_scale = randomPitchNumber;
+					$Audio/JumpMovement.pitch_scale = randomPitchNumber;
+					$Audio/JumpImpact1.play();
+					$Audio/JumpMovement.play();
+				else:
+					randomPitch.randomize();
+					var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+					$Audio/JumpImpact2.pitch_scale = randomPitchNumber;
+					$Audio/JumpMovement.pitch_scale = randomPitchNumber;
+					$Audio/JumpImpact2.play();
+					$Audio/JumpMovement.play();
+			if isonfloor && !Global.isjumping || Global.isonMaterial && !Global.isjumping:
 				playerAnim.play("Walk");
 				playerAnim.flip_h = 1;
 				if !$Audio/Footsteps.playing:
@@ -56,6 +98,7 @@ func _physics_process(_delta):
 			$Audio/Footsteps.stop();
 			$Audio/Movement.stop();
 		elif Input.is_action_just_pressed("jump") && isonfloor || Global.isonMaterial && Input.is_action_just_pressed("jump") :
+			Global.isjumping = true;
 			apply_impulse(Vector2(), Vector2(0, jumpForce));
 			playJumpRandom.randomize();
 			var randomNumber = playJumpRandom.randi_range(0, 1);
@@ -73,7 +116,6 @@ func _physics_process(_delta):
 				$Audio/JumpMovement.pitch_scale = randomPitchNumber;
 				$Audio/JumpImpact2.play();
 				$Audio/JumpMovement.play();
-			
 		else:
 			set_linear_velocity(Vector2(0, vertVel));
 		if Input.is_action_just_pressed("jump") && Input.is_action_pressed("movement_left"):
@@ -128,13 +170,13 @@ func _physics_process(_delta):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	playerAnim.play("Idle");
-	$noisebackground.play("noiseanimated");
 
 func _on_playerArea_body_entered(body):
 	if body.is_in_group("floor") || body.is_in_group("hand"):
 		isonfloor = true;
-		if !$Audio/landImpact.playing:
+		if !$Audio/landImpact.playing && Global.isjumping:
 			$Audio/landImpact.play();
+			Global.isjumping = false;
 
 
 func _on_playerArea_body_exited(body):

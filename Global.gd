@@ -17,7 +17,7 @@ var haspickedUpShape = false;
 var chapterNumber = 0;
 var checkpointIndex= 0;
 var hasgameStarted = false;
-
+var isjumping = false;
 
 
 # Called when the node enters the scene tree for the first time.

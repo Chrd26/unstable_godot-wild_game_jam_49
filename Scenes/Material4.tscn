@@ -6,26 +6,26 @@
 [node name="Material2" type="Node2D"]
 
 [node name="material_2" type="RigidBody2D" parent="." groups=["material"]]
-gravity_scale = 3.0
+mass = 3.0
+gravity_scale = 5.0
 linear_damp = -0.5
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="material_2"]
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 1 )
-flip_h = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="material_2"]
 position = Vector2( -0.787325, 2.31817 )
-scale = Vector2( -1.019, 1.061 )
-polygon = PoolVector2Array( -12.5489, -23.8626, -74.338, -22.9285, -76.2636, -57.8141, 60.0713, -64.3904, 66.9408, 34.5729, -5.67942, 40.2279 )
+scale = Vector2( 1.03867, 1.06061 )
+polygon = PoolVector2Array( -8.86968, -24.8142, -74.338, -22.9285, -76.2636, -57.8141, 61.4125, -64.414, 66.2264, 34.5856, -3.09307, 40.2427 )
 
 [node name="Area2D" type="Area2D" parent="material_2"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="material_2/Area2D"]
 position = Vector2( -0.787325, 2.31817 )
-scale = Vector2( -1.019, 1.061 )
-polygon = PoolVector2Array( -12.5489, -23.8626, -74.338, -22.9285, -76.2636, -57.8141, 60.0713, -64.3904, 66.9408, 34.5729, -5.67942, 40.2279 )
+scale = Vector2( 1.03867, 1.06061 )
+polygon = PoolVector2Array( -8.86968, -24.8142, -74.338, -22.9285, -76.2636, -57.8141, 61.4125, -64.414, 66.2264, 34.5856, -3.09307, 40.2427 )
 
 [connection signal="body_entered" from="material_2/Area2D" to="material_2" method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="material_2/Area2D" to="material_2" method="_on_Area2D_body_exited"]
