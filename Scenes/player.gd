@@ -160,10 +160,10 @@ func _physics_process(_delta):
 				$Audio/takeDamage5.pitch_scale = randomPitchNumber;
 				$Audio/takeDamage5.play()
 		movePos = get_linear_velocity().x
-		if Global.enemyGetPOS < 0 && movePos > 0 || Global.enemyGetPOS < 0 && movePos < 0 || Global.enemyGetPOS < 0 && movePos == 0 || !Global.changeSide && Global.enemyGetPOS == 0 && movePos < 0 ||!Global.changeSide && Global.enemyGetPOS == 0 && movePos > 0:
+		if Global.enemyGetPOS < 0 && movePos > 0 || Global.enemyGetPOS < 0 && movePos < 0 || Global.enemyGetPOS < 0 && movePos == 0:
 			apply_impulse(Vector2(), Vector2(-10000, -jumpForce));
 			Global.takeDamage = false;
-		elif Global.enemyGetPOS > 0 && movePos < 0 || Global.enemyGetPOS > 0 && movePos > 0 || Global.enemyGetPOS > 0 && movePos == 0 || Global.changeSide && Global.enemyGetPOS == 0 && movePos < 0 || Global.changeSide && Global.enemyGetPOS == 0 && movePos > 0:
+		elif Global.enemyGetPOS > 0 && movePos < 0 || Global.enemyGetPOS > 0 && movePos > 0 || Global.enemyGetPOS > 0 && movePos == 0:
 			apply_impulse(Vector2(), Vector2(10000, -jumpForce));
 			Global.takeDamage = false;
 

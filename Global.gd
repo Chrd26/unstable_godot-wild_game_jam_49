@@ -11,7 +11,6 @@ var lostLife = false;
 var getlife = false;
 var takeDamage = false;
 var enemyGetPOS;
-var changeSide = false;
 var hasActivatedBuilding = false;
 var haspickedUpShape = false;
 var chapterNumber = 0;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://Assets/Graphics/Character/Walking/Alternative_MC_Walking_1-5.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Graphics/Character/Walking/Alternative_MC_Walking_2-8.png" type="Texture" id=2]
@@ -33,6 +33,11 @@
 [ext_resource path="res://Assets/Sound/Take damage and Gain Life/01Take DamageTake Damage 5.wav" type="AudioStream" id=31]
 [ext_resource path="res://Scenes/gui.tscn" type="PackedScene" id=112]
 
+[sub_resource type="PhysicsMaterial" id=5]
+friction = 0.6
+bounce = 1.0
+absorbent = true
+
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 15 ) ],
@@ -52,8 +57,10 @@ polygon = PoolVector2Array( 12, -52, 12, -49, 14, -46, 14, -41, 13, -39, 12, -38
 [node name="playerNode" type="RigidBody2D" groups=["player"]]
 position = Vector2( 512, 300 )
 mode = 2
-mass = 2.04082
+mass = 2.0
+physics_material_override = SubResource( 5 )
 gravity_scale = 20.0
+continuous_cd = 2
 script = ExtResource( 11 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

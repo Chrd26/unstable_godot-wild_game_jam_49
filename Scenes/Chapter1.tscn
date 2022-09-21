@@ -1,6 +1,6 @@
 [gd_scene load_steps=53 format=2]
 
-[ext_resource path="res://Scenes/gameplay1.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/movingplatform.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-10.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-9.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-7.png" type="Texture" id=4]
@@ -34,6 +34,140 @@
 [ext_resource path="res://Scenes/shapeBuff.tscn" type="PackedScene" id=32]
 [ext_resource path="res://Assets/Graphics/chapter1leveldesign/part3/Chapter1prt3-3.png" type="Texture" id=33]
 [ext_resource path="res://Assets/Graphics/chapter1leveldesign/part3/Chapter1prt3-2.png" type="Texture" id=34]
+
+[sub_resource type="GDScript" id=24]
+script/source = "extends Node2D
+var materialSpawn;
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	Global.chapterNumber = 1;
+	if Global.checkpointIndex == 0:
+		var playerload = load(\"res://Scenes/player.tscn\");
+		var addPlayer = playerload.instance();
+		addPlayer.position = Vector2(-192, 1543);
+		add_child(addPlayer);
+	elif Global.checkpointIndex == 1:
+		var playerload = load(\"res://Scenes/player.tscn\");
+		var addPlayer = playerload.instance();
+		addPlayer.position = Vector2(1000, 1087);
+		add_child(addPlayer);
+	elif Global.checkpointIndex == 2:
+		var playerload = load(\"res://Scenes/player.tscn\");
+		var addPlayer = playerload.instance();
+		addPlayer.position = Vector2(3129, 1343);
+		add_child(addPlayer);
+	elif Global.checkpointIndex == 3:
+		var playerload = load(\"res://Scenes/player.tscn\");
+		var addPlayer = playerload.instance();
+		addPlayer.position = Vector2(4838, 389.064);
+		add_child(addPlayer);
+	elif Global.checkpointIndex == 4:
+		var playerload = load(\"res://Scenes/player.tscn\");
+		var addPlayer = playerload.instance();
+		addPlayer.position = Vector2(4288, -735);
+		add_child(addPlayer);
+
+func _process(_delta):
+	if Input.is_action_just_pressed(\"Reset\"):
+		Global.lives = 3;
+		Global.materials = 10;
+		queue_free(); 
+		# warning-ignore:return_value_discarded
+		get_tree().change_scene(\"res://Scenes/Chapter1.tscn\");
+	if Global.haspickedUpShape:
+		Global.materials += 5;
+		var GatherSound = load(\"res://Scenes/GlobalGather.tscn\");
+		var playSoundGather = GatherSound.instance();
+		add_child(playSoundGather);
+		Global.haspickedUpShape = false;
+	if Input.is_action_just_pressed(\"Material1\") && Global.stackingMode:
+		if Global.materials > 0:
+			var selection = load(\"res://Scenes/changeShape.tscn\");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
+			var material = load(\"res://Scenes/Material_1.tscn\");
+			materialSpawn = material.instance();
+			add_child(materialSpawn);
+		else:
+			var selection = load(\"res://Scenes/outofshapes.tscn\");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
+	elif Input.is_action_just_pressed(\"Material2\") && Global.stackingMode:
+		if Global.materials > 0:
+			var selection = load(\"res://Scenes/changeShape.tscn\");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
+			var material = load(\"res://Scenes/Material2.tscn\");
+			materialSpawn = material.instance();
+			add_child(materialSpawn);
+		else:
+			var selection = load(\"res://Scenes/outofshapes.tscn\");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
+	elif Input.is_action_just_pressed(\"Material4\") && Global.stackingMode:
+		if Global.materials > 0:
+			var selection = load(\"res://Scenes/changeShape.tscn\");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
+			var material = load(\"res://Scenes/Material3.tscn\");
+			materialSpawn = material.instance();
+			add_child(materialSpawn);
+		else:
+			var selection = load(\"res://Scenes/outofshapes.tscn\");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
+	elif Input.is_action_just_pressed(\"Material3\") && Global.stackingMode:
+		if Global.materials > 0:
+			var selection = load(\"res://Scenes/changeShape.tscn\");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
+			var material = load(\"res://Scenes/Material4.tscn\");
+			materialSpawn = material.instance();
+			add_child(materialSpawn);
+		else:
+			var selection = load(\"res://Scenes/outofshapes.tscn\");
+			var playSelectionSound = selection.instance();
+			add_child(playSelectionSound);
+	if Global.lives == 0:
+		Global.lives = 3;
+		Global.materials = 10;
+		queue_free(); 
+		# warning-ignore:return_value_discarded
+		get_tree().change_scene(\"res://Scenes/Chapter1.tscn\");
+
+
+
+func _on_out_of_bounds_body_entered(body):
+	if body.is_in_group(\"player\"):
+		Global.lives = 0;
+
+
+func _on_finishtutorial_body_entered(body):
+	if body.is_in_group(\"player\"):
+		Global.checkpointIndex = 1;
+
+
+func _on_checkpoint2_body_entered(body):
+	if body.is_in_group(\"player\"):
+		Global.checkpointIndex = 2;
+
+
+func _on_checkpoint3_body_entered(body):
+	if body.is_in_group(\"player\"):
+		Global.checkpointIndex = 3;
+
+
+
+func _on_checkpoint4_body_entered(body):
+	if body.is_in_group(\"player\"):
+		Global.checkpointIndex = 4;
+"
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -94,47 +228,19 @@ animations = [ {
 
 [sub_resource type="RectangleShape2D" id=21]
 
-[sub_resource type="Animation" id=23]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, -500 ) ]
-}
-
-[sub_resource type="Animation" id=22]
-resource_name = "platformMovement"
-length = 5.0
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 2.2, 2.5, 4.6, 5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, -500 ), Vector2( 0, 780 ), Vector2( 0, 800 ), Vector2( 0, -490 ), Vector2( 0, -500 ) ]
-}
+[sub_resource type="PhysicsMaterial" id=25]
+rough = true
+absorbent = true
 
 [node name="Chapter1" type="Node2D"]
-script = ExtResource( 1 )
+script = SubResource( 24 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 4911, 298 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 5
+frame = 6
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="."]
@@ -204,7 +310,7 @@ position = Vector2( -89, -1085 )
 occluder = SubResource( 6 )
 
 [node name="floor1" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
-polygon = PoolVector2Array( 1772, 1561, 2443, 1619, 2445, 1703, 1769, 1633 )
+polygon = PoolVector2Array( 1771, 1563, 2441, 1613, 2445, 1703, 1769, 1633 )
 
 [node name="floor2" type="CollisionPolygon2D" parent="Chapter1part1/floors"]
 polygon = PoolVector2Array( 1543, 1421, 1570, 1414, 1760, 1420, 1771, 1426, 1780, 1432 )
@@ -220,7 +326,7 @@ polygon = PoolVector2Array( 1905, 988, 2199, 1015, 2196, 1039, 1902, 1014 )
 mode = 1
 
 [node name="wall1" type="CollisionPolygon2D" parent="Chapter1part1/walls"]
-polygon = PoolVector2Array( 1513, 1429, 1509, 1533, 1753, 1572, 1759, 1440 )
+polygon = PoolVector2Array( 1513, 1429, 1509, 1533, 1753, 1581, 1759, 1440 )
 
 [node name="wall2" type="CollisionPolygon2D" parent="Chapter1part1/walls"]
 polygon = PoolVector2Array( 2410, 1455, 2409, 1622, 3539, 1889, 3550, 1620, 2902, 1444, 2459, 1450 )
@@ -379,7 +485,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 5004, 375 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 7
+frame = 1
 playing = true
 
 [node name="enemyBoundary1" type="Area2D" parent="." groups=["enemyBoundary"]]
@@ -399,9 +505,6 @@ scale = Vector2( 3.188, 1.524 )
 position = Vector2( -128, 144 )
 scale = Vector2( 3.18, 4.124 )
 shape = SubResource( 21 )
-
-[node name="enemy" parent="." instance=ExtResource( 27 )]
-position = Vector2( 3401, -42 )
 
 [node name="Chapter1Part3" type="Node2D" parent="."]
 
@@ -438,9 +541,11 @@ texture = ExtResource( 34 )
 position = Vector2( 4648, -480 )
 texture = ExtResource( 34 )
 
-[node name="movingplatform" type="RigidBody2D" parent="Chapter1Part3" groups=["floor"]]
-position = Vector2( 0, -500 )
+[node name="movingplatform" type="RigidBody2D" parent="Chapter1Part3" groups=["floor", "platform"]]
+position = Vector2( 0, -104.768 )
 mode = 3
+physics_material_override = SubResource( 25 )
+script = ExtResource( 1 )
 
 [node name="platform6" type="Sprite" parent="Chapter1Part3/movingplatform"]
 position = Vector2( 4272, -976 )
@@ -448,16 +553,16 @@ texture = ExtResource( 34 )
 
 [node name="floor8" type="CollisionPolygon2D" parent="Chapter1Part3/movingplatform"]
 position = Vector2( -2088, -496 )
-polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+polygon = PoolVector2Array( 5938, -619.232, 5987, -587.232, 6144, -590, 6206, -610.232, 6205, -619.232 )
 
 [node name="wall7" type="CollisionPolygon2D" parent="Chapter1Part3/movingplatform"]
 position = Vector2( -1688, -496 )
 polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Chapter1Part3/movingplatform"]
-autoplay = "platformMovement"
-anims/RESET = SubResource( 23 )
-anims/platformMovement = SubResource( 22 )
+[node name="Tween" type="Tween" parent="Chapter1Part3/movingplatform"]
+repeat = true
+playback_process_mode = 0
+playback/repeat = true
 
 [node name="floor" type="RigidBody2D" parent="Chapter1Part3" groups=["floor"]]
 mode = 1
@@ -470,7 +575,7 @@ polygon = PoolVector2Array( 5744, 354, 5894, 401, 6029, 425, 6036, 346 )
 polygon = PoolVector2Array( 6012, -196, 6494, -191, 6495, -160, 6017, -173 )
 
 [node name="floor3" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
-polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+polygon = PoolVector2Array( 5937, -620, 5951, -595, 6196, -588, 6202, -619 )
 
 [node name="floor4" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
 position = Vector2( -400, 0 )
@@ -478,15 +583,15 @@ polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
 
 [node name="floor5" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
 position = Vector2( -816, 0 )
-polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+polygon = PoolVector2Array( 5939, -618, 6004, -585, 6147, -589, 6204, -617 )
 
 [node name="floor6" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
 position = Vector2( -1257, 0 )
-polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6206, -616 )
 
 [node name="floor7" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
 position = Vector2( -1712, 0 )
-polygon = PoolVector2Array( 5939, -618, 6004, -585, 6144, -590, 6203, -615 )
+polygon = PoolVector2Array( 5937, -621, 5984, -588, 6155, -587, 6206, -618 )
 
 [node name="wall" type="RigidBody2D" parent="Chapter1Part3" groups=["wall"]]
 mode = 1
@@ -501,20 +606,20 @@ polygon = PoolVector2Array( 6499, -159, 6468, -834, 6465, -842, 5952, -811, 5938
 polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
 
 [node name="wall7" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
-position = Vector2( 408, 0 )
-polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
+position = Vector2( 397, 0 )
+polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5747, -599, 5586, -598 )
 
 [node name="wall4" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
-position = Vector2( -416, 0 )
-polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
+position = Vector2( -416, -1 )
+polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -614, 5745, -596, 5590, -596 )
 
 [node name="wall5" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
 position = Vector2( -857, 1 )
-polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
+polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5802, -617, 5748, -591, 5592, -597 )
 
 [node name="wall6" type="CollisionPolygon2D" parent="Chapter1Part3/wall"]
 position = Vector2( -1311, 0 )
-polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5805, -610, 5748, -591, 5589, -587 )
+polygon = PoolVector2Array( 5537, -620, 5537, -478, 5808, -479, 5802, -615, 5748, -591, 5589, -587 )
 
 [node name="Collectables" type="Node2D" parent="."]
 
@@ -541,6 +646,9 @@ position = Vector2( 6216, -264 )
 
 [node name="shapeBuff7" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 4815, -690 )
+
+[node name="enemy2" parent="." instance=ExtResource( 27 )]
+position = Vector2( 3480, -45 )
 
 [connection signal="body_entered" from="out of bounds" to="." method="_on_out_of_bounds_body_entered"]
 [connection signal="body_entered" from="checkpoint1" to="." method="_on_finishtutorial_body_entered"]
