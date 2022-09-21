@@ -12,20 +12,18 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(_delta):
-	if Global.hasgameStarted && !hastimerStarted:
-		$fadeoutTimer.start();
-		hastimerStarted = true;
-	if Global.hasgameStarted && hastimerStarted:
-		if $IntroFadeIn.playing:
-			if loopi < 160:
-				$IntroFadeIn.volume_db = -1 * loopi /2;
-				#print($IntroFadeIn.volume_db)
-				loopi += 1;
-		else:
-			if loopi < 160:
-				$IntroLoop.volume_db = -1 * loopi /2;
-				#print($IntroLoop.volume_db);
-				loopi += 1;
+	print($IntroFadeIn.volume_db);
+	if Global.hasgameStarted:
+		if Global.haspressedBegin:
+			if $IntroFadeIn.playing:
+				$musicTween.interpolate_property($IntroFadeIn, "volume_db", 0, -50, 3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
+				$musicTween.start()
+				Global.haspressedBegin = false;
+			else:
+				$musicTween.interpolate_property($IntroLoop, "volume_db", 0, -50, 3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
+				$musicTween.start();
+				Global.haspressedBegin = false;
+
 func _on_IntroFadeIn_finished():
 	if !Global.hasgameStarted:
 		$IntroLoop.play();
@@ -33,6 +31,9 @@ func _on_IntroFadeIn_finished():
 		$TutorialIntro.play();	
 	elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
 		$Chapter1Intro.play();
+	elif Global.chapterNumber == 0 && Global.checkpointIndex == 0:
+		$IntroLoop.play();
+
 
 
 
@@ -42,6 +43,8 @@ func _on_IntroLoop_finished():
 			$TutorialIntro.play();	
 		elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
 			$Chapter1Intro.play();
+		elif Global.chapterNumber == 0 && Global.checkpointIndex == 0:
+			$IntroLoop.play();
 
 
 func _on_TutorialIntro_finished():
@@ -69,7 +72,7 @@ func _on_TutorialtoLevel1_finished():
 		$Chapter1Intro.play();
 
 
-func _on_fadeoutTimer_timeout():
+func _on_musicTween_tween_all_completed():
 	if $IntroFadeIn.playing:
 		$IntroFadeIn.stop();
 		if Global.chapterNumber == 1 && Global.checkpointIndex == 0:
@@ -82,3 +85,4 @@ func _on_fadeoutTimer_timeout():
 			$TutorialIntro.play();	
 		elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
 			$Chapter1Intro.play();
+

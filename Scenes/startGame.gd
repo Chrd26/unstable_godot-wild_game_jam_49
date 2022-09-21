@@ -21,6 +21,7 @@ func _on_Button_pressed():
 	Global.lives = 3;
 	Global.chapterNumber = 1;
 	Global.hasgameStarted = true;
+	Global.haspressedBegin = true;
 	# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://Scenes/Chapter1.tscn");
 	

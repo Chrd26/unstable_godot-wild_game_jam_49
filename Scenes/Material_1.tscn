@@ -1,13 +1,19 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Assets/Graphics/Materials/Materials-1.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/material_1.gd" type="Script" id=2]
+
+[sub_resource type="PhysicsMaterial" id=1]
+rough = true
+absorbent = true
 
 [node name="Material1_Horizontal" type="Node2D"]
 
 [node name="material_1" type="RigidBody2D" parent="." groups=["material"]]
 mass = 20.0
+physics_material_override = SubResource( 1 )
 gravity_scale = 5.0
+continuous_cd = 2
 linear_damp = -0.5
 script = ExtResource( 2 )
 

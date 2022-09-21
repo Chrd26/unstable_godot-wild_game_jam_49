@@ -2,7 +2,7 @@
 
 [sub_resource type="AudioEffectReverb" id=4]
 resource_name = "Reverb"
-room_size = 0.1
+room_size = 0.2
 damping = 0.6
 wet = 0.15
 

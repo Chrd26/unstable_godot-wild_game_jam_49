@@ -42,9 +42,7 @@ bus = "Music"
 stream = ExtResource( 7 )
 bus = "Music"
 
-[node name="fadeoutTimer" type="Timer" parent="."]
-wait_time = 1.5
-one_shot = true
+[node name="musicTween" type="Tween" parent="."]
 
 [connection signal="finished" from="IntroFadeIn" to="." method="_on_IntroFadeIn_finished"]
 [connection signal="finished" from="IntroLoop" to="." method="_on_IntroLoop_finished"]
@@ -53,4 +51,4 @@ one_shot = true
 [connection signal="finished" from="TutorialtoLevel1" to="." method="_on_TutorialtoLevel1_finished"]
 [connection signal="finished" from="Chapter1Intro" to="." method="_on_Chapter1Intro_finished"]
 [connection signal="finished" from="Chapter1Loop" to="." method="_on_Chapter1Loop_finished"]
-[connection signal="timeout" from="fadeoutTimer" to="." method="_on_fadeoutTimer_timeout"]
+[connection signal="tween_all_completed" from="musicTween" to="." method="_on_musicTween_tween_all_completed"]
