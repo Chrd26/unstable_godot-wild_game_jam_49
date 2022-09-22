@@ -12,7 +12,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(_delta):
-	print($IntroFadeIn.volume_db);
+	#print($IntroFadeIn.volume_db);
 	if Global.hasgameStarted:
 		if Global.haspressedBegin:
 			if $IntroFadeIn.playing:

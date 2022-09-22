@@ -1,8 +1,8 @@
 extends RigidBody2D
 onready var playerAnim = $AnimatedSprite;
 const gravity = 60;
-const jumpForce = -1300;
-var isonfloor = false;
+const jumpForce = -1200;
+var isonfloor = true;
 var speed = 400;
 var movePos;
 var playJumpRandom = RandomNumberGenerator.new();
@@ -12,7 +12,9 @@ var randomPitch = RandomNumberGenerator.new();
 func _physics_process(_delta):
 	var vertVel = get_linear_velocity().y;
 	if Global.movementEnabled:
-		self.mode = 2;
+		#self.mode = 2;
+		#$CollisionShape2D.disabled = 0;
+		#$playerArea/CollisionShape2D.disabled = 0;
 		if Input.is_action_pressed("move_right") || Input.is_action_pressed("movement_left") && Input.is_action_just_pressed("move_right"):
 			set_linear_velocity(Vector2(speed, vertVel));
 			if Input.is_action_just_pressed("jump") && isonfloor || Global.isonMaterial && Input.is_action_just_pressed("jump") :
@@ -125,7 +127,10 @@ func _physics_process(_delta):
 			playerAnim.play("Idle");
 			playerAnim.flip_h = 0;
 	else:
-		self.mode = 1;
+		pass;
+		#self.mode = 3;
+		#$CollisionShape2D.disabled = 1;
+		#$playerArea/CollisionShape2D.disabled = 1;
 	if Global.takeDamage:
 		takeDamageRandom.randomize();
 		var damagePlay = takeDamageRandom.randi_range(0, 4); 

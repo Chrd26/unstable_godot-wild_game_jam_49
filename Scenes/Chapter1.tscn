@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=2]
+[gd_scene load_steps=72 format=2]
 
 [ext_resource path="res://Scenes/movingplatform.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-10.png" type="Texture" id=2]
@@ -14,7 +14,7 @@
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-2.png" type="Texture" id=12]
 [ext_resource path="res://Assets/Graphics/filter/Noise-6.png" type="Texture" id=13]
 [ext_resource path="res://Assets/Graphics/filter/Noise-4.png" type="Texture" id=14]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/startingArea/Intro_Tunnel_.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/1. startingArea/Intro_Tunnel_.png" type="Texture" id=15]
 [ext_resource path="res://Assets/Graphics/filter/Noise-7.png" type="Texture" id=16]
 [ext_resource path="res://Assets/Graphics/filter/Noise-8.png" type="Texture" id=17]
 [ext_resource path="res://Assets/Graphics/filter/Noise-5.png" type="Texture" id=18]
@@ -25,15 +25,25 @@
 [ext_resource path="res://Assets/Graphics/filter/Noise-1.png" type="Texture" id=23]
 [ext_resource path="res://Scenes/lifeup.tscn" type="PackedScene" id=24]
 [ext_resource path="res://Assets/Graphics/light image/light.png" type="Texture" id=25]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part1/Chapter_1_Part_1.png" type="Texture" id=26]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/2. part1/Chapter_1_Part_1.png" type="Texture" id=26]
 [ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=27]
 [ext_resource path="res://Scenes/hand.tscn" type="PackedScene" id=28]
 [ext_resource path="res://Assets/Sound/Atmosphere/Game Atmosphere.wav" type="AudioStream" id=29]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part2/Chapter_1_Part_2.png" type="Texture" id=30]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part3/Chapter1prt3-1.png" type="Texture" id=31]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/3. part2/Chapter_1_Part_2.png" type="Texture" id=30]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/4. part3/Chapter1prt3-1.png" type="Texture" id=31]
 [ext_resource path="res://Scenes/shapeBuff.tscn" type="PackedScene" id=32]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part3/Chapter1prt3-3.png" type="Texture" id=33]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/part3/Chapter1prt3-2.png" type="Texture" id=34]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/4. part3/Chapter1prt3-3.png" type="Texture" id=33]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/4. part3/Chapter1prt3-2.png" type="Texture" id=34]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/5. part 4/Chapter_1_Part_4-2.png" type="Texture" id=35]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/5. part 4/Chapter_1_Part_4-3.png" type="Texture" id=36]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/4. part3/Chapter1prt3-3 2.png" type="Texture" id=37]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/5. part 4/Chapter_1_Part_4-1.png" type="Texture" id=38]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/6. Part 5/Chapter_1_Part_5-6.png" type="Texture" id=39]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/6. Part 5/Chapter_1_Part_5-3.png" type="Texture" id=40]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/6. Part 5/Chapter_1_Part_5-1.png" type="Texture" id=41]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/6. Part 5/Chapter_1_Part_5-5.png" type="Texture" id=42]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/7. Part 6/Chapter_1_Part_6.png" type="Texture" id=43]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/8. Part 7/Chapter_1_Part_7.png" type="Texture" id=44]
 
 [sub_resource type="GDScript" id=24]
 script/source = "extends Node2D
@@ -152,22 +162,26 @@ func _on_out_of_bounds_body_entered(body):
 func _on_finishtutorial_body_entered(body):
 	if body.is_in_group(\"player\"):
 		Global.checkpointIndex = 1;
+		$checkpoint1.queue_free();
 
 
 func _on_checkpoint2_body_entered(body):
 	if body.is_in_group(\"player\"):
 		Global.checkpointIndex = 2;
+		$checkpoint2.queue_free();
 
 
 func _on_checkpoint3_body_entered(body):
 	if body.is_in_group(\"player\"):
 		Global.checkpointIndex = 3;
+		$checkpoint3.queue_free();
 
 
 
 func _on_checkpoint4_body_entered(body):
 	if body.is_in_group(\"player\"):
 		Global.checkpointIndex = 4;
+		$checkpoint4.queue_free();
 
 
 func _on_Area2D_body_entered(body):
@@ -195,10 +209,11 @@ animations = [ {
 } ]
 
 [sub_resource type="PhysicsMaterial" id=37]
-friction = 0.0
+friction = 0.3
+rough = true
 
 [sub_resource type="OccluderPolygon2D" id=5]
-polygon = PoolVector2Array( 668, 1574, 500, 1561, 353, 1555, 148, 1560, 39, 1561, -1, 1571, -42, 1582, -125, 1635, -154, 1677, -149, 1713, -135, 1726, -119, 1790, -101, 1852, -106, 2074, -235, 2055, -575, 2064, -832, 2077, -1009, 2092, -972, 1784, -992, 1200, -1014, 788, -394, 732, 672, 676 )
+polygon = PoolVector2Array( 668, 1574, 500, 1561, 353, 1555, 148, 1560, 39, 1561, -1, 1571, -42, 1582, -125, 1635, -154, 1677, -149, 1713, -135, 1726, -119, 1790, -101, 1852, -106, 2074, -235, 2055, -575, 2064, -832, 2077, -1009, 2092, -972, 1784, -992, 1200, -1007, 987, 670, 913 )
 
 [sub_resource type="PhysicsMaterial" id=32]
 friction = 0.0
@@ -207,7 +222,7 @@ friction = 0.0
 extents = Vector2( 5715.5, 159.5 )
 
 [sub_resource type="PhysicsMaterial" id=38]
-friction = 0.0
+rough = true
 
 [sub_resource type="OccluderPolygon2D" id=6]
 closed = false
@@ -232,7 +247,7 @@ polygon = PoolVector2Array( 1932, 1169, 2012, 1230, 2112, 1179, 2148, 1048, 1905
 [sub_resource type="RectangleShape2D" id=8]
 
 [sub_resource type="PhysicsMaterial" id=39]
-friction = 0.0
+rough = true
 
 [sub_resource type="OccluderPolygon2D" id=11]
 cull_mode = 2
@@ -280,11 +295,11 @@ friction = 0.0
 script = SubResource( 24 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 4911, 298 )
-scale = Vector2( 3, 3 )
+position = Vector2( 5511, 290 )
+scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 5
+frame = 9
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="."]
@@ -453,10 +468,6 @@ position = Vector2( 0, -72 )
 scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
-[node name="hand" parent="." instance=ExtResource( 28 )]
-position = Vector2( 9540, 1759 )
-scale = Vector2( -1, 1 )
-
 [node name="Atmosphere" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 29 )
 autoplay = true
@@ -467,6 +478,7 @@ bus = "Atmos"
 [node name="floor" type="RigidBody2D" parent="Chapter1Part2" groups=["floor"]]
 mode = 1
 physics_material_override = SubResource( 39 )
+gravity_scale = 0.3
 
 [node name="platformFiller3" type="Sprite" parent="Chapter1Part2/floor"]
 position = Vector2( 3043, 1635 )
@@ -599,13 +611,14 @@ shadow_enabled = true
 
 [node name="noiseEffect" type="AnimatedSprite" parent="."]
 modulate = Color( 1, 1, 1, 0.0784314 )
-position = Vector2( 5020, 365 )
+position = Vector2( 5024, 369 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
+frame = 6
 playing = true
 
 [node name="enemyBoundary1" type="Area2D" parent="." groups=["enemyBoundary"]]
-position = Vector2( 3431, -283 )
+position = Vector2( 3334, -275 )
 scale = Vector2( 3.188, 1.524 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemyBoundary1"]
@@ -614,7 +627,7 @@ scale = Vector2( 3.18, 4.124 )
 shape = SubResource( 21 )
 
 [node name="enemyBoundary2" type="Area2D" parent="." groups=["enemyBoundary"]]
-position = Vector2( 4180, -298 )
+position = Vector2( 4308, -298 )
 scale = Vector2( 3.188, 1.524 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemyBoundary2"]
@@ -683,6 +696,7 @@ playback/repeat = true
 
 [node name="floor" type="RigidBody2D" parent="Chapter1Part3" groups=["floor"]]
 mode = 1
+mass = 0.3
 physics_material_override = SubResource( 40 )
 
 [node name="floor1" type="CollisionPolygon2D" parent="Chapter1Part3/floor"]
@@ -780,6 +794,129 @@ position = Vector2( 4815, -690 )
 
 [node name="enemy2" parent="." instance=ExtResource( 27 )]
 position = Vector2( 3480, -54 )
+
+[node name="Chapter1part4" type="Node2D" parent="."]
+position = Vector2( 2418, 59 )
+
+[node name="sprites" type="Node2D" parent="Chapter1part4"]
+
+[node name="Chapter1Part4-1" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -454, -670 )
+texture = ExtResource( 38 )
+
+[node name="Chapter1Part4-3" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -2202, -673 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+texture = ExtResource( 38 )
+
+[node name="Chapter1Part4-2" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -453, -666 )
+texture = ExtResource( 35 )
+
+[node name="Chapter1Part4-4" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -2214, -668 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+texture = ExtResource( 36 )
+
+[node name="Chapter1Part4-5" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -453, -1650 )
+texture = ExtResource( 35 )
+
+[node name="Chapter1Part4-6" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -2214, -1652 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+texture = ExtResource( 36 )
+
+[node name="Chapter1prt3-3 2" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -4389, 592 )
+rotation = 1.5708
+scale = Vector2( 50, 1 )
+texture = ExtResource( 37 )
+
+[node name="Chapter1prt3-3 8" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( 192, -831.566 )
+rotation = 0.0174533
+scale = Vector2( 3.368, 1.794 )
+texture = ExtResource( 37 )
+
+[node name="Chapter1prt3-3 3" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -3165.33, 1064 )
+scale = Vector2( 0.72, 0.99 )
+texture = ExtResource( 37 )
+
+[node name="Chapter1prt3-3 7" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( 1114.67, 744 )
+scale = Vector2( 0.722, 0.666 )
+texture = ExtResource( 37 )
+
+[node name="Chapter1prt3-3 4" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -1677.33, 1304 )
+scale = Vector2( 1.598, 1.102 )
+texture = ExtResource( 37 )
+
+[node name="Chapter1prt3-3 5" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -1671.33, 1272 )
+scale = Vector2( 1.598, 1.102 )
+texture = ExtResource( 37 )
+
+[node name="Chapter1prt3-3 6" type="Sprite" parent="Chapter1part4/sprites"]
+position = Vector2( -2176.33, 1392 )
+scale = Vector2( 1.598, 1.26 )
+texture = ExtResource( 37 )
+
+[node name="floor" type="RigidBody2D" parent="Chapter1part4" groups=["floor"]]
+mode = 1
+
+[node name="wall" type="RigidBody2D" parent="Chapter1part4" groups=["wall"]]
+mode = 1
+
+[node name="Chapter1Part5" type="Node2D" parent="."]
+position = Vector2( 7207, -645 )
+
+[node name="sprites" type="Node2D" parent="Chapter1Part5"]
+
+[node name="Chapter1Part5-1" type="Sprite" parent="Chapter1Part5/sprites"]
+position = Vector2( -141, 344 )
+texture = ExtResource( 41 )
+
+[node name="Chapter1Part5-3" type="Sprite" parent="Chapter1Part5/sprites"]
+position = Vector2( 141, 1664 )
+texture = ExtResource( 40 )
+
+[node name="Chapter1Part5-5" type="Sprite" parent="Chapter1Part5/sprites"]
+position = Vector2( 162, 1664 )
+texture = ExtResource( 42 )
+
+[node name="Chapter1Part5-6" type="Sprite" parent="Chapter1Part5/sprites"]
+position = Vector2( 161, 1666 )
+texture = ExtResource( 39 )
+
+[node name="chapter1Part6" type="Node2D" parent="."]
+position = Vector2( 8611, 970 )
+
+[node name="Chapter1Part6" type="Sprite" parent="chapter1Part6"]
+position = Vector2( 725, -102 )
+texture = ExtResource( 43 )
+
+[node name="Chapter1Part7" type="Node2D" parent="."]
+
+[node name="Chapter1Part7" type="Sprite" parent="Chapter1Part7"]
+position = Vector2( 11079, 861 )
+texture = ExtResource( 44 )
+
+[node name="Chapter1Prt3-32" type="Sprite" parent="Chapter1Part7"]
+position = Vector2( 10362, 1024 )
+rotation = -0.0401426
+scale = Vector2( 0.012, 0.1 )
+texture = ExtResource( 37 )
+
+[node name="hand" parent="." instance=ExtResource( 28 )]
+position = Vector2( 12561, 1736 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
 
 [connection signal="body_entered" from="Tutorial/ReverbArea" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="Tutorial/ReverbArea" to="." method="_on_ReverbArea_body_exited"]

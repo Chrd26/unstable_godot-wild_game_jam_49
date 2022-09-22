@@ -4,7 +4,7 @@ var materialsLeft;
 var stackingMode = false;
 var buttonPresses = 0;
 var lives = 3;
-var isonfloor = false;
+var isonfloor = true;
 var isonMaterial = false;
 var materials = 10;
 var lostLife = false;
