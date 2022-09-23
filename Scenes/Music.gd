@@ -38,13 +38,14 @@ func _on_IntroFadeIn_finished():
 
 
 func _on_IntroLoop_finished():
-	if Global.hasgameStarted:
-		if Global.chapterNumber == 1 && Global.checkpointIndex == 0:
-			$TutorialIntro.play();	
-		elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
-			$Chapter1Intro.play();
-		elif Global.chapterNumber == 0 && Global.checkpointIndex == 0:
-			$IntroLoop.play();
+	if !Global.hasgameStarted:
+		$IntroLoop.play();
+	elif Global.chapterNumber == 1 && Global.checkpointIndex == 0:
+		$TutorialIntro.play();	
+	elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
+		$Chapter1Intro.play();
+	elif Global.chapterNumber == 0 && Global.checkpointIndex == 0:
+		$IntroLoop.play();
 
 
 func _on_TutorialIntro_finished():

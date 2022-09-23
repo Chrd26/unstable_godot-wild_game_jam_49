@@ -6,6 +6,10 @@ var endPos = Vector2(0, 950);
 # var a = 2
 # var b = "text"
 
+func _physics_process(_delta):
+	if Global.checkpointIndex == 5:
+		queue_free();
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

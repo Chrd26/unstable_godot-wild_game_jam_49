@@ -36,13 +36,14 @@ func _physics_process(_delta):
 
 
 func _on_Area2D_body_entered(body):
-	if body.is_in_group("player"):
-		Global.isonMaterial = true;
-		Global.isjumping = false;
+	if Global.movementEnabled:
+		if body.is_in_group("player"):
+			Global.isonMaterial = true;
+			Global.isjumping = false;
 		#print("isonMaterial");
 
 
 func _on_Area2D_body_exited(body):
-	if body.is_in_group("player"):
-		Global.isonMaterial = false;
-		#print("isnotonmaterial");
+	if Global.movementEnabled:
+		if body.is_in_group("player"):
+			Global.isonMaterial = false;

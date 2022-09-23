@@ -8,20 +8,30 @@ var movePos;
 var playJumpRandom = RandomNumberGenerator.new();
 var takeDamageRandom = RandomNumberGenerator.new();
 var randomPitch = RandomNumberGenerator.new();
+var isonPlatform = false;
 
 func _physics_process(_delta):
+	if Global.stackingMode:
+		$Light2D/AnimationPlayer.play("light");
+	else:
+		$Light2D/AnimationPlayer.stop();
+		$Light2D.energy = 0;
 	var vertVel = get_linear_velocity().y;
 	if Global.movementEnabled:
-		#self.mode = 2;
-		#$CollisionShape2D.disabled = 0;
-		#$playerArea/CollisionShape2D.disabled = 0;
+		self.mode = 2;
 		if Input.is_action_pressed("move_right") || Input.is_action_pressed("movement_left") && Input.is_action_just_pressed("move_right"):
-			set_linear_velocity(Vector2(speed, vertVel));
+			if !isonPlatform:
+				set_linear_velocity(Vector2(speed, vertVel));
+			else:
+				set_linear_velocity(Vector2(Global.getPlatformVelocity.x + speed, vertVel));
 			if Input.is_action_just_pressed("jump") && isonfloor || Global.isonMaterial && Input.is_action_just_pressed("jump") :
 				$Audio/Footsteps.stop();
 				$Audio/Movement.stop();
 				Global.isjumping = true;
-				apply_impulse(Vector2(), Vector2(0, jumpForce));
+				if !isonPlatform:
+					apply_impulse(Vector2(), Vector2(0, jumpForce));
+				else:
+					apply_impulse(Vector2(), Vector2(0, Global.getPlatformVelocity.y + jumpForce))
 				playJumpRandom.randomize();
 				var randomNumber = playJumpRandom.randi_range(0, 1);
 				if randomNumber == 1:
@@ -52,12 +62,18 @@ func _physics_process(_delta):
 				playerAnim.play("Idle");
 				playerAnim.flip_h = 0;
 		elif Input.is_action_pressed("movement_left") || Input.is_action_pressed("move_right") && Input.is_action_just_pressed("movement_left"):
-			set_linear_velocity(Vector2(-speed, vertVel));
+			if !isonPlatform:
+				set_linear_velocity(Vector2(-speed, vertVel));
+			else:
+				set_linear_velocity(Vector2(Global.getPlatformVelocity.x + speed * -1, vertVel));
 			if Input.is_action_just_pressed("jump") && isonfloor || Global.isonMaterial && Input.is_action_just_pressed("jump"):
 				$Audio/Footsteps.stop();
 				$Audio/Movement.stop();
 				Global.isjumping = true;
-				apply_impulse(Vector2(), Vector2(0, jumpForce));
+				if !isonPlatform:
+					apply_impulse(Vector2(), Vector2(0, jumpForce));
+				else:
+					apply_impulse(Vector2(), Vector2(0, Global.getPlatformVelocity.y + jumpForce));
 				playJumpRandom.randomize();
 				var randomNumber = playJumpRandom.randi_range(0, 1);
 				if randomNumber == 1:
@@ -100,8 +116,13 @@ func _physics_process(_delta):
 			$Audio/Footsteps.stop();
 			$Audio/Movement.stop();
 		elif Input.is_action_just_pressed("jump") && isonfloor || Global.isonMaterial && Input.is_action_just_pressed("jump") :
+			$Audio/Footsteps.stop();
+			$Audio/Movement.stop();
 			Global.isjumping = true;
-			apply_impulse(Vector2(), Vector2(0, jumpForce));
+			if !isonPlatform:
+				apply_impulse(Vector2(), Vector2(0, jumpForce));
+			else:
+				apply_impulse(Vector2(), Vector2(0, Global.getPlatformVelocity.y + jumpForce));
 			playJumpRandom.randomize();
 			var randomNumber = playJumpRandom.randi_range(0, 1);
 			if randomNumber == 1:
@@ -119,7 +140,12 @@ func _physics_process(_delta):
 				$Audio/JumpImpact2.play();
 				$Audio/JumpMovement.play();
 		else:
-			set_linear_velocity(Vector2(0, vertVel));
+			if !isonPlatform:
+				if Global.isjumping || !isonfloor:
+					set_linear_velocity(Vector2(0, vertVel));
+			else:
+				if Global.isjumping || !isonfloor:
+					set_linear_velocity(Vector2(0, Global.getPlatformVelocity.y + vertVel));
 		if Input.is_action_just_pressed("jump") && Input.is_action_pressed("movement_left"):
 			playerAnim.play("Idle");
 			playerAnim.flip_h = 1;
@@ -127,10 +153,11 @@ func _physics_process(_delta):
 			playerAnim.play("Idle");
 			playerAnim.flip_h = 0;
 	else:
-		pass;
-		#self.mode = 3;
-		#$CollisionShape2D.disabled = 1;
-		#$playerArea/CollisionShape2D.disabled = 1;
+		self.mode = 3;
+		if $AnimatedSprite.playing:
+			playerAnim.stop();
+			$Audio/Footsteps.stop();
+			$Audio/Movement.stop();
 	if Global.takeDamage:
 		takeDamageRandom.randomize();
 		var damagePlay = takeDamageRandom.randi_range(0, 4); 
@@ -140,30 +167,35 @@ func _physics_process(_delta):
 				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
 				$Audio/takeDamage1.pitch_scale = randomPitchNumber;
 				$Audio/takeDamage1.play()
+				Global.takeDamage = false;
 		elif damagePlay == 1:
 			if !$Audio/takeDamage1.playing || !$Audio/takeDamage2.playing  || !$Audio/takeDamage3.playing || !$Audio/takeDamage4.playing || !$Audio/takeDamage5.playing:
 				randomPitch.randomize();
 				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
 				$Audio/takeDamage2.pitch_scale = randomPitchNumber;
 				$Audio/takeDamage2.play()
+				Global.takeDamage = false;
 		elif damagePlay == 2:
 			if !$Audio/takeDamage1.playing || !$Audio/takeDamage2.playing  || !$Audio/takeDamage3.playing || !$Audio/takeDamage4.playing || !$Audio/takeDamage5.playing:
 				randomPitch.randomize();
 				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
 				$Audio/takeDamage3.pitch_scale = randomPitchNumber;
 				$Audio/takeDamage3.play()
+				Global.takeDamage = false;
 		elif damagePlay == 3:
 			if !$Audio/takeDamage1.playing || !$Audio/takeDamage2.playing  || !$Audio/takeDamage3.playing || !$Audio/takeDamage4.playing || !$Audio/takeDamage5.playing:
 				randomPitch.randomize();
 				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
 				$Audio/takeDamage4.pitch_scale = randomPitchNumber;
 				$Audio/takeDamage4.play()
+				Global.takeDamage = false;
 		else:
 			if !$Audio/takeDamage1.playing || !$Audio/takeDamage2.playing  || !$Audio/takeDamage3.playing || !$Audio/takeDamage4.playing || !$Audio/takeDamage5.playing:
 				randomPitch.randomize();
 				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
 				$Audio/takeDamage5.pitch_scale = randomPitchNumber;
 				$Audio/takeDamage5.play()
+				Global.takeDamage = false;
 		movePos = get_linear_velocity().x
 		if Global.enemyGetPOS < 0 && movePos > 0 || Global.enemyGetPOS < 0 && movePos < 0 || Global.enemyGetPOS < 0 && movePos == 0:
 			apply_impulse(Vector2(), Vector2(-10000, -jumpForce));
@@ -177,13 +209,40 @@ func _ready():
 	playerAnim.play("Idle");
 
 func _on_playerArea_body_entered(body):
-	if body.is_in_group("floor") || body.is_in_group("hand"):
-		isonfloor = true;
-		if !$Audio/landImpact.playing && Global.isjumping:
-			$Audio/landImpact.play();
-			Global.isjumping = false;
+	if Global.movementEnabled:
+		if body.is_in_group("platform"):
+			print("platform");
+			isonPlatform = true;
+			isonfloor = true;
+			if !$Audio/landImpact.playing && Global.isjumping:
+				$Audio/landImpact.play();
+				Global.isjumping = false;
+		if body.is_in_group("floor") || body.is_in_group("hand"):
+			isonfloor = true;
+			gravity_scale = 20;
+			if !$Audio/landImpact.playing && Global.isjumping:
+				$Audio/landImpact.play();
+				Global.isjumping = false;
+		if body.is_in_group("wall"):
+			physics_material_override.friction = 0;
 
 
 func _on_playerArea_body_exited(body):
-	if body.is_in_group("floor") || body.is_in_group("hand"):
-		isonfloor = false;
+	if Global.movementEnabled:
+		if body.is_in_group("platform"):
+			print("exitplatform");
+			isonPlatform = false;
+			isonfloor = false;
+			if !Global.isjumping:
+				gravity_scale = 40;
+			else:
+				gravity_scale = 20;
+		if body.is_in_group("floor") || body.is_in_group("hand") || body.is_in_group("material"):
+			print("exitfloor")
+			isonfloor = false;
+			if !Global.isjumping:
+				gravity_scale = 40;
+			else:
+				gravity_scale = 20;
+		if body.is_in_group("wall"):
+			physics_material_override.friction = 0.3;

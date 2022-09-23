@@ -14,10 +14,12 @@ var enemyGetPOS;
 var hasActivatedBuilding = false;
 var haspickedUpShape = false;
 var chapterNumber = 0;
-var checkpointIndex= 0;
+var checkpointIndex= 5;
 var hasgameStarted = false;
 var isjumping = false;
 var haspressedBegin = false;
+var getPlatformVelocity;
+var getPlatformPosition;
 
 
 # Called when the node enters the scene tree for the first time.
