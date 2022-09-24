@@ -1,7 +1,7 @@
 extends RigidBody2D
 onready var tween = get_node("Tween");
 var startPos = Vector2(0, -108);
-var endPos = Vector2(0, 950);
+var endPos = Vector2(0, 880);
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"

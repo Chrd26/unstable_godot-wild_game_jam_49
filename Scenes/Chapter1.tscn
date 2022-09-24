@@ -678,8 +678,6 @@ scale = Vector2( 8.91413, 4.17232 )
 texture = ExtResource( 25 )
 texture_scale = 0.57
 color = Color( 0.909804, 0.329412, 0.329412, 0.839216 )
-energy = 3.0
-mode = 2
 range_z_min = 0
 range_z_max = 0
 shadow_enabled = true
@@ -697,7 +695,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 3
+frame = 9
 playing = true
 script = ExtResource( 60 )
 
@@ -708,7 +706,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 7
+frame = 4
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -944,7 +942,7 @@ position = Vector2( 4648, -480 )
 texture = ExtResource( 34 )
 
 [node name="movingplatform" type="RigidBody2D" parent="MapDesign/Chapter1Part3" groups=["platform2"]]
-position = Vector2( 0, -104.768 )
+position = Vector2( 0, 880 )
 mode = 3
 physics_material_override = SubResource( 25 )
 script = ExtResource( 1 )
@@ -1606,6 +1604,10 @@ position = Vector2( 12253, 1855 )
 
 [node name="enemy14" parent="Enemies" groups=["enemy"] instance=ExtResource( 27 )]
 position = Vector2( 12795, -53 )
+
+[node name="enemy11" parent="Enemies" instance=ExtResource( 58 )]
+position = Vector2( 3282, 1407 )
+rotation = 0.261799
 
 [node name="Checkpoints" type="Node2D" parent="."]
 
