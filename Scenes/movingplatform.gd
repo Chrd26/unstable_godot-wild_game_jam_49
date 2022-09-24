@@ -7,6 +7,7 @@ var endPos = Vector2(0, 950);
 # var b = "text"
 
 func _physics_process(_delta):
+	Global.getPlatform2Velocity = linear_velocity;
 	if Global.checkpointIndex == 5:
 		queue_free();
 

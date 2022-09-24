@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Assets/Graphics/Character/Walking/Alternative_MC_Walking_1-5.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Graphics/Character/Walking/Alternative_MC_Walking_2-8.png" type="Texture" id=2]
@@ -35,9 +35,7 @@
 [ext_resource path="res://Scenes/gui.tscn" type="PackedScene" id=112]
 
 [sub_resource type="PhysicsMaterial" id=5]
-friction = 0.7
-bounce = 0.1
-absorbent = true
+rough = true
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -52,8 +50,7 @@ animations = [ {
 "speed": 30.0
 } ]
 
-[sub_resource type="OccluderPolygon2D" id=4]
-polygon = PoolVector2Array( 12, -52, 12, -49, 14, -46, 14, -41, 13, -39, 12, -38, 12, -26, 12, -24, 11, -23, 6, -23, 4, -23, 4, -22, 4, -19, 4, -18, 8, -18, 10, -17, 12, -10, 13, 9, 12, 19, 12, 29, 14, 37, 14, 65, 13, 67, 11, 66, 6, 67, 4, 67, 4, 82, 5, 92, 9, 95, 18, 101, 18, 102, 2, 103, 2, 101, 0, 102, -1, 68, -8, 67, -10, 36, -10, 32, -8, 32, -12, 2, -12, -15, -9, -18, -4, -18, -4, -20, -5, -22, -4, -23, -11, -24, -11, -24, -13, -26, -13, -41, -13, -53, -11, -54, -3, -54, -3, -54, -3, -54, -3, -56, -4, -61, -7, -66, -5, -67, -4, -65, -3, -62, -2, -60, -1, -56, -1, -54, 10, -54, 12, -53 )
+[sub_resource type="CapsuleShape2D" id=8]
 
 [sub_resource type="Animation" id=7]
 length = 0.001
@@ -98,11 +95,15 @@ tracks/0/keys = {
 "values": [ 0.0, 2.0, 0.0 ]
 }
 
+[sub_resource type="OccluderPolygon2D" id=4]
+polygon = PoolVector2Array( 12, -52, 12, -49, 14, -46, 14, -41, 13, -39, 12, -38, 12, -26, 12, -24, 11, -23, 6, -23, 4, -23, 4, -22, 4, -19, 4, -18, 8, -18, 10, -17, 12, -10, 13, 9, 12, 19, 12, 29, 14, 37, 14, 65, 13, 67, 11, 66, 6, 67, 4, 67, -1, 68, -8, 67, -10, 36, -10, 32, -8, 32, -12, 2, -12, -15, -9, -18, -4, -18, -4, -20, -5, -22, -4, -23, -11, -24, -11, -24, -13, -26, -13, -41, -13, -53, -11, -54, -3, -54, -3, -54, -3, -54, -3, -56, -4, -61, -7, -66, -5, -67, -4, -65, -3, -62, -2, -60, -1, -56, -1, -54, 10, -54, 12, -53 )
+
 [node name="playerNode" type="RigidBody2D" groups=["player"]]
 position = Vector2( 512, 300 )
 mode = 2
-mass = 2.0
+mass = 5.0
 physics_material_override = SubResource( 5 )
+gravity_scale = 30.0
 continuous_cd = 2
 contact_monitor = true
 script = ExtResource( 11 )
@@ -129,17 +130,17 @@ current = true
 position = Vector2( 1, 4 )
 scale = Vector2( 0.998718, 1 )
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
-position = Vector2( 0, 21.78 )
-scale = Vector2( 1.98, 4 )
-polygon = PoolVector2Array( -6.06061, -12.195, -6.06061, -17.195, -6.06061, -18.195, -5.05051, -18.195, 5.05051, -17.945, 6.06061, -17.695, 7.07071, -16.695, 7.07071, -15.945, 6.56564, -14.945, 6.06061, -14.445, 5.55554, -11.695, 2.0202, -11.445, 2.0202, -9.945, 4.54544, -9.695, 6.06061, -7.945, 6.06061, 1.305, 6.56564, 5.055, 7.07071, 9.305, 6.06061, 10.555, 3.0303, 10.805, 10.606, 20.305, -6.56566, 20.305, -0.505035, 11.055, -3.0303, 10.805, -4.04041, 9.805, -4.54546, 3.555, -4.54546, 2.555, -6.06061, -4.945, -6.56566, -8.695, -5.55556, -9.445, -1.51514, -9.945, -1.51514, -11.195, -5.55556, -11.695 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 21.488 )
+scale = Vector2( 2.42, 4.35 )
+shape = SubResource( 8 )
 
 [node name="playerArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="playerArea"]
-position = Vector2( 0, 21.78 )
-scale = Vector2( 1.98, 4 )
-polygon = PoolVector2Array( -6.06061, -12.195, -6.06061, -17.195, -6.06061, -18.195, -5.05051, -18.195, 5.05051, -17.945, 6.06061, -17.695, 7.07071, -16.695, 7.07071, -15.945, 6.56564, -14.945, 6.06061, -14.445, 5.55554, -11.695, 2.0202, -11.445, 2.0202, -9.945, 4.54544, -9.695, 6.06061, -7.945, 6.06061, 1.305, 6.56564, 5.055, 7.07071, 9.305, 6.06061, 10.555, 3.0303, 10.805, 10.606, 20.305, -6.56566, 20.305, -0.505035, 11.055, -3.0303, 10.805, -4.04041, 9.805, -4.54546, 3.555, -4.54546, 2.555, -6.06061, -4.945, -6.56566, -8.695, -5.55556, -9.445, -1.51514, -9.945, -1.51514, -11.195, -5.55556, -11.695 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="playerArea"]
+position = Vector2( 0, 21.488 )
+scale = Vector2( 2.42, 4.35 )
+shape = SubResource( 8 )
 
 [node name="Audio" type="Node2D" parent="."]
 
@@ -187,10 +188,6 @@ bus = "Take Damage"
 stream = ExtResource( 31 )
 bus = "Take Damage"
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-position = Vector2( 1, 0 )
-occluder = SubResource( 4 )
-
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( -8, -70 )
 texture = ExtResource( 32 )
@@ -200,6 +197,10 @@ color = Color( 1, 0.72, 0.72, 1 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Light2D"]
 anims/RESET = SubResource( 7 )
 anims/light = SubResource( 6 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2( 1, 0 )
+occluder = SubResource( 4 )
 
 [connection signal="body_entered" from="playerArea" to="." method="_on_playerArea_body_entered"]
 [connection signal="body_exited" from="playerArea" to="." method="_on_playerArea_body_exited"]

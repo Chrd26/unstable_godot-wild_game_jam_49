@@ -13,7 +13,6 @@ absorbent = true
 mass = 20.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 5.0
-continuous_cd = 2
 linear_damp = -0.5
 script = ExtResource( 2 )
 
@@ -34,6 +33,3 @@ polygon = PoolVector2Array( 2.17142, -41.7702, -63.5793, -37.0577, -64.5607, -70
 position = Vector2( -0.787325, 2.31817 )
 scale = Vector2( -1.019, 1.061 )
 polygon = PoolVector2Array( 2.17142, -41.7702, -63.5793, -37.0577, -64.5607, -70.0454, 63.9967, -77.5855, 71.8476, 21.3778, 7.07819, 22.3203 )
-
-[connection signal="body_entered" from="material_2/Area2D" to="material_2" method="_on_Area2D_body_entered"]
-[connection signal="body_exited" from="material_2/Area2D" to="material_2" method="_on_Area2D_body_exited"]

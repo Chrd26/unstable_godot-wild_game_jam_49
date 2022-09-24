@@ -12,6 +12,18 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(_delta):
+	if Global.hasEnteredMenu:
+		if $TutorialIntro.playing:
+			$TutorialIntro.stop();
+		elif $TutorialLoop.playing:
+			$TutorialLoop.stop();
+		elif $TutorialtoLevel1.playing:
+			$TutorialtoLevel1.stop();
+		elif $Chapter1Intro.playing:
+			$Chapter1Intro.stop();
+		elif $Chapter1Loop.playing:
+			$Chapter1Loop.stop();
+		Global.hasEnteredMenu = false;
 	#print($IntroFadeIn.volume_db);
 	if Global.hasgameStarted:
 		if Global.haspressedBegin:
@@ -53,22 +65,34 @@ func _on_TutorialIntro_finished():
 
 
 func _on_TutorialLoop_finished():
+	if Global.chapterNumber == 0:
+		$IntroFadeIn.play();
+		$IntroFadeIn.volume_db = 0;
 	if Global.chapterNumber == 1 && Global.checkpointIndex == 0:
 		$TutorialLoop.play();
 	elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
 		$TutorialtoLevel1.play();
 
 func _on_Chapter1Intro_finished():
+	if Global.chapterNumber == 0:
+		$IntroFadeIn.play();
+		$IntroFadeIn.volume_db = 0;
 	if Global.chapterNumber == 1:
 		$Chapter1Loop.play();
 
 
 func _on_Chapter1Loop_finished():
+	if Global.chapterNumber == 0:
+		$IntroFadeIn.play();
+		$IntroFadeIn.volume_db = 0;
 	if Global.chapterNumber == 1:
 		$Chapter1Loop.play();
 
 
 func _on_TutorialtoLevel1_finished():
+	if Global.chapterNumber == 0:
+		$IntroFadeIn.play();
+		$IntroFadeIn.volume_db = 0;
 	if Global.chapterNumber == 1:
 		$Chapter1Intro.play();
 

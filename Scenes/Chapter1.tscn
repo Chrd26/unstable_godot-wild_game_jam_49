@@ -1,4 +1,4 @@
-[gd_scene load_steps=95 format=2]
+[gd_scene load_steps=115 format=2]
 
 [ext_resource path="res://Scenes/movingplatform.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-10.png" type="Texture" id=2]
@@ -34,11 +34,11 @@
 [ext_resource path="res://Scenes/shapeBuff.tscn" type="PackedScene" id=32]
 [ext_resource path="res://Assets/Graphics/chapter1leveldesign/4. part3/Chapter1prt3-3.png" type="Texture" id=33]
 [ext_resource path="res://Assets/Graphics/chapter1leveldesign/4. part3/Chapter1prt3-2.png" type="Texture" id=34]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/5. part 4/Chapter_1_Part_4-2.png" type="Texture" id=35]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/5. part 4/Chapter_1_Part_4-3.png" type="Texture" id=36]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/6. Part 5/Chapter_1_Part_5-4.png" type="Texture" id=35]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/5. part 4/Chapter_1_Part_4-2.png" type="Texture" id=36]
 [ext_resource path="res://Assets/Graphics/chapter1leveldesign/4. part3/Chapter1prt3-3 2.png" type="Texture" id=37]
 [ext_resource path="res://Assets/Graphics/chapter1leveldesign/5. part 4/Chapter_1_Part_4-1.png" type="Texture" id=38]
-[ext_resource path="res://Assets/Graphics/chapter1leveldesign/6. Part 5/Chapter_1_Part_5-6.png" type="Texture" id=39]
+[ext_resource path="res://Assets/Graphics/chapter1leveldesign/6. Part 5/Chapter_1_Part_5-2.png" type="Texture" id=39]
 [ext_resource path="res://Assets/Graphics/chapter1leveldesign/6. Part 5/Chapter_1_Part_5-3.png" type="Texture" id=40]
 [ext_resource path="res://Assets/Graphics/chapter1leveldesign/6. Part 5/Chapter_1_Part_5-1.png" type="Texture" id=41]
 [ext_resource path="res://Assets/Graphics/chapter1leveldesign/6. Part 5/Chapter_1_Part_5-5.png" type="Texture" id=42]
@@ -54,14 +54,27 @@
 [ext_resource path="res://Assets/Graphics/CheckPoint/Checkpoint Deactivated/Checkpoint_Deactivated.png" type="Texture" id=52]
 [ext_resource path="res://Assets/Graphics/CheckPoint/Checkpoint Activated & Activation Animation/Checkpoint_Activation_Anim-3.png" type="Texture" id=53]
 [ext_resource path="res://Assets/Graphics/CheckPoint/Checkpoint Activated & Activation Animation/Checkpoint_Activation_Anim-2.png" type="Texture" id=54]
+[ext_resource path="res://Assets/Graphics/hand/Hand.png" type="Texture" id=55]
 [ext_resource path="res://Scenes/enemyStaticR.tscn" type="PackedScene" id=56]
 [ext_resource path="res://Scenes/platformLogic.gd" type="Script" id=57]
 [ext_resource path="res://Scenes/enemyStaticL.tscn" type="PackedScene" id=58]
+[ext_resource path="res://Scenes/platform3.gd" type="Script" id=59]
+[ext_resource path="res://Scenes/AnimatedSprite.gd" type="Script" id=60]
+[ext_resource path="res://Scenes/Light2D2.gd" type="Script" id=61]
+[ext_resource path="res://Scenes/Light2D3.gd" type="Script" id=62]
+[ext_resource path="res://Scenes/Light2D4.gd" type="Script" id=63]
+[ext_resource path="res://Scenes/Light2D5.gd" type="Script" id=64]
+[ext_resource path="res://Scenes/Light2D6.gd" type="Script" id=65]
+[ext_resource path="res://Scenes/Light2D7.gd" type="Script" id=66]
+[ext_resource path="res://Scenes/Light2D8.gd" type="Script" id=67]
+[ext_resource path="res://Font/Ms_Madi/MsMadi-Regular.ttf" type="DynamicFontData" id=69]
+[ext_resource path="res://Scenes/Label.gd" type="Script" id=70]
 
 [sub_resource type="GDScript" id=24]
 script/source = "extends Node2D
 var materialSpawn;
 var getReverb = AudioServer.get_bus_effect(1,0);
+var hasStartedBallTimer = false;
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -71,7 +84,7 @@ var getReverb = AudioServer.get_bus_effect(1,0);
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Global.chapterNumber = 1;
-	
+	Global.hashand1Startedmoving = false;
 	match (Global.checkpointIndex):
 		0:
 			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
@@ -80,6 +93,7 @@ func _ready():
 			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
 			var playerload = load(\"res://Scenes/player.tscn\");
 			var addPlayer = playerload.instance();
 			addPlayer.position = Vector2(-192, 1543);
@@ -90,9 +104,10 @@ func _ready():
 			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
 			var playerload = load(\"res://Scenes/player.tscn\");
 			var addPlayer = playerload.instance();
-			addPlayer.position = Vector2(750, 1045);
+			addPlayer.position = Vector2(745, 1031);
 			add_child(addPlayer);
 			$Checkpoints/CheckpointAnim1.play(\"Activated\");
 		2:
@@ -101,9 +116,10 @@ func _ready():
 			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
 			var playerload = load(\"res://Scenes/player.tscn\");
 			var addPlayer = playerload.instance();
-			addPlayer.position = Vector2(2985, 1325);
+			addPlayer.position = Vector2(2922, 1279);
 			add_child(addPlayer);
 			$Checkpoints/CheckpointAnim2.play(\"Activated\");
 			$Checkpoints/checkpoint1.queue_free();
@@ -113,9 +129,10 @@ func _ready():
 			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
 			var playerload = load(\"res://Scenes/player.tscn\");
 			var addPlayer = playerload.instance();
-			addPlayer.position = Vector2(4702, 408);
+			addPlayer.position = Vector2(4702, 340);
 			add_child(addPlayer);
 			$Checkpoints/CheckpointAnim3.play(\"Activated\");
 			$Checkpoints/checkpoint1.queue_free();
@@ -126,9 +143,10 @@ func _ready():
 			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
 			var playerload = load(\"res://Scenes/player.tscn\");
 			var addPlayer = playerload.instance();
-			addPlayer.position = Vector2(4419, -737);
+			addPlayer.position = Vector2(4420, -734);
 			add_child(addPlayer);
 			$Checkpoints/CheckpointAnim4.play(\"Activated\");
 			$Checkpoints/checkpoint1.queue_free();
@@ -140,9 +158,10 @@ func _ready():
 			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
 			var playerload = load(\"res://Scenes/player.tscn\");
 			var addPlayer = playerload.instance();
-			addPlayer.position = Vector2(-615, -327);
+			addPlayer.position = Vector2(-528, -338);
 			add_child(addPlayer);
 			$Checkpoints/CheckpointAnim5.play(\"Activated\");
 			$Checkpoints/checkpoint1.queue_free();
@@ -155,14 +174,67 @@ func _ready():
 			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
 			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
+			var playerload = load(\"res://Scenes/player.tscn\");
+			var addPlayer = playerload.instance();
+			addPlayer.position = Vector2(5998, -1434);
+			add_child(addPlayer);
+			$Enemies/enemy4.queue_free();
+			$Checkpoints/CheckpointAnim6.play(\"Activated\");
 			$Checkpoints/checkpoint1.queue_free();
 			$Checkpoints/checkpoint2.queue_free();
 			$Checkpoints/checkpoint3.queue_free();
 			$Checkpoints/checkpoint4.queue_free();
 			$Checkpoints/checkpoint5.queue_free();
+		7:
+			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim2.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
+			var playerload = load(\"res://Scenes/player.tscn\");
+			var addPlayer = playerload.instance();
+			addPlayer.position = Vector2(8937, 827);
+			add_child(addPlayer);
+			$Enemies/enemy4.queue_free();
+			$Checkpoints/CheckpointAnim7.play(\"Activated\");
+			$Checkpoints/checkpoint1.queue_free();
+			$Checkpoints/checkpoint2.queue_free();
+			$Checkpoints/checkpoint3.queue_free();
+			$Checkpoints/checkpoint4.queue_free();
+			$Checkpoints/checkpoint5.queue_free();
+			$Checkpoints/checkpoint6.queue_free();
+		8:
+			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim2.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
+			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
+			var playerload = load(\"res://Scenes/player.tscn\");
+			var addPlayer = playerload.instance();
+			addPlayer.position = Vector2(12062, 1295);
+			add_child(addPlayer);
+			$Enemies/enemy4.queue_free();
+			$Checkpoints/CheckpointAnim8.play(\"Activated\");
+			$Checkpoints/checkpoint1.queue_free();
+			$Checkpoints/checkpoint2.queue_free();
+			$Checkpoints/checkpoint3.queue_free();
+			$Checkpoints/checkpoint4.queue_free();
+			$Checkpoints/checkpoint5.queue_free();
+			$Checkpoints/checkpoint6.queue_free();
+			$Checkpoints/checkpoint7.queue_free();
 
 func _process(_delta):
+	if Global.hashand1Startedmoving:
+		if !hasStartedBallTimer:
+			hasStartedBallTimer = true;
+			$cannonBallTimer.start();
+	if !Global.hashand1Startedmoving && hasStartedBallTimer:
+		hasStartedBallTimer = false;
+		$cannonBallTimer.stop();
 	#print($Checkpoints/CheckpointAnim1.animation);
 	if Input.is_action_just_pressed(\"Reset\"):
 		Global.lives = 3;
@@ -230,21 +302,22 @@ func _process(_delta):
 		queue_free(); 
 		# warning-ignore:return_value_discarded
 		get_tree().change_scene(\"res://Scenes/Chapter1.tscn\");
+	if Global.isChapter1Finished:
+		Global.hasEnteredMenu = true;
+		Global.chapterNumber = 0;
+		Global.lives = 3;
+		Global.materials = 10;
+		Global.checkpointIndex = 0;
+		# warning-ignore:return_value_discarded
+		get_tree().change_scene(\"res://Scenes/startGame.tscn\");
+		Global.isChapter1Finished = false;
+		queue_free();
 
 
 
 func _on_out_of_bounds_body_entered(body):
 	if body.is_in_group(\"player\"):
 		Global.lives = 0;
-
-
-func _on_finishtutorial_body_entered(body):
-	if body.is_in_group(\"player\"):
-		$Checkpoints/CheckpointAnim1.stop();
-		$Checkpoints/CheckpointAnim1.play(\"Activation\");
-		Global.checkpointIndex = 1;
-		$Checkpoints/checkpoint1.queue_free();
-
 
 func _on_checkpoint2_body_entered(body):
 	if body.is_in_group(\"player\"):
@@ -283,7 +356,7 @@ func _on_ReverbArea_body_exited(body):
 	if body.is_in_group(\"player\"):
 		$MapDesign/Tutorial/ReverbArea/Tween.interpolate_property(getReverb, \"room_size\" , 0.8, 0.2, 1, Tween.TRANS_QUAD,Tween.EASE_IN_OUT, 0.5);
 		$MapDesign/Tutorial/ReverbArea/Tween.interpolate_property(getReverb, \"damping\" , 0.3, 0.6, 1, Tween.TRANS_QUAD,Tween.EASE_IN_OUT, 0.5);
-		$MapDesign/Tutorial/ReverbArea/Tween.interpolate_property(getReverb, \"wet\" , 0.3, 0.1, 1, Tween.TRANS_QUAD,Tween.EASE_IN_OUT, 0.5);
+		$MapDesign/Tutorial/ReverbArea/Tween.interpolate_property(getReverb, \"wet\" , 0.3, 0.2, 1, Tween.TRANS_QUAD,Tween.EASE_IN_OUT, 0.5);
 		$MapDesign/Tutorial/ReverbArea/Tween.start();
 
 
@@ -297,6 +370,8 @@ func _on_checkpoint5_body_entered(body):
 
 func _on_checkpoint6_body_entered(body):
 	if body.is_in_group(\"player\"):
+		$Checkpoints/CheckpointAnim6.stop();
+		$Checkpoints/CheckpointAnim6.play(\"Activation\");
 		Global.checkpointIndex = 6;
 		$Checkpoints/checkpoint6.queue_free();
 
@@ -340,6 +415,58 @@ func _on_CheckpointAnim6_animation_finished():
 		$Checkpoints/CheckpointAnim1.play(\"Activated\");
 	else:
 		$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
+
+
+func _on_cannonBallTimer_timeout():
+	var loadBall = load(\"res://Scenes/cannonballDownwards.tscn\");
+	var ballInstance = loadBall.instance();
+	add_child(ballInstance);
+
+
+func _on_out_of_bounds3_body_entered(body):
+	if body.is_in_group(\"player\") && Global.hashand1Startedmoving:
+		Global.lives = 0;
+
+
+func _on_out_of_bounds2_body_entered(body):
+	if body.is_in_group(\"player\"):
+		Global.lives = 0;
+
+
+func _on_CheckpointAnim7_animation_finished():
+	if Global.checkpointIndex == 7:
+		$Checkpoints/CheckpointAnim7.play(\"Activated\");
+	else:
+		$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
+
+
+func _on_CheckpointAnim8_animation_finished():
+	$Checkpoints/CheckpointAnim8.play(\"Activated\");
+
+
+func _on_checkpoint7_body_entered(body):
+	if body.is_in_group(\"player\"):
+		$Checkpoints/CheckpointAnim7.stop();
+		$Checkpoints/CheckpointAnim7.play(\"Activation\");
+		Global.checkpointIndex = 7;
+		$Checkpoints/checkpoint7.queue_free();
+
+
+func _on_checkpoint8_body_entered(body):
+	if body.is_in_group(\"player\"):
+		$Checkpoints/CheckpointAnim6.stop();
+		$Checkpoints/CheckpointAnim6.play(\"Activation\");
+		Global.checkpointIndex = 8;
+		$Checkpoints/checkpoint8.queue_free();
+
+
+func _on_checkpoint1_body_entered(body):
+	if body.is_in_group(\"player\"):
+		$Checkpoints/CheckpointAnim1.stop();
+		$Checkpoints/CheckpointAnim1.play(\"Activation\");
+		Global.checkpointIndex = 1;
+		$Checkpoints/checkpoint1.queue_free();
+
 "
 
 [sub_resource type="Animation" id=41]
@@ -390,11 +517,11 @@ animations = [ {
 } ]
 
 [sub_resource type="PhysicsMaterial" id=37]
-friction = 0.3
 rough = true
 
 [sub_resource type="OccluderPolygon2D" id=5]
-polygon = PoolVector2Array( 668, 1574, 500, 1561, 353, 1555, 148, 1560, 39, 1561, -1, 1571, -42, 1582, -125, 1635, -154, 1677, -149, 1713, -135, 1726, -119, 1790, -101, 1852, -106, 2074, -235, 2055, -575, 2064, -832, 2077, -1009, 2092, -972, 1784, -992, 1200, -1007, 987, 670, 913 )
+cull_mode = 1
+polygon = PoolVector2Array( 670, 1552, -105, 1544, -115, 1638, -125, 1709, -121, 1793, -108, 1885, -108, 1957, -117, 2073, -235, 2055, -575, 2064, -832, 2077, -1009, 2092, -972, 1784, -992, 1200, -1007, 987, 670, 913 )
 
 [sub_resource type="PhysicsMaterial" id=32]
 friction = 0.0
@@ -405,7 +532,7 @@ rough = true
 [sub_resource type="OccluderPolygon2D" id=6]
 closed = false
 cull_mode = 2
-polygon = PoolVector2Array( 1589, 1852, 1646, 1331, 2514, 1346, 3330, 2822, 2250, 1778, 2168, 1735, 2097, 1762, 1065, 2439, 1588, 1851 )
+polygon = PoolVector2Array( 1589, 1852, 1646, 1331, 2514, 1346, 3086, 2853, 2250, 1778, 2168, 1735, 2097, 1762, 1416, 2671, 1588, 1851 )
 
 [sub_resource type="PhysicsMaterial" id=33]
 friction = 0.0
@@ -417,70 +544,96 @@ polygon = PoolVector2Array( 1519, 1419, 1551, 1415, 1696, 1419, 1733, 1422, 1752
 polygon = PoolVector2Array( 1743, 1566, 1884, 1576, 2333, 1611, 2415, 1613, 2418, 1704, 1741, 1639 )
 
 [sub_resource type="OccluderPolygon2D" id=20]
-polygon = PoolVector2Array( 2414, 1617, 2417, 1487, 2419, 1446, 2477, 1432, 2593, 1423, 2707, 1421, 2811, 1415, 2925, 1419, 3567, 1615, 3545, 1656, 2904, 1629 )
+polygon = PoolVector2Array( 2406, 1616, 2417, 1487, 2419, 1446, 2477, 1432, 2593, 1423, 2707, 1421, 2811, 1415, 2925, 1419, 3567, 1615, 3545, 1656, 2904, 1629 )
 
 [sub_resource type="OccluderPolygon2D" id=34]
-polygon = PoolVector2Array( 1932, 1169, 2012, 1230, 2112, 1179, 2148, 1048, 1905, 1037 )
+polygon = PoolVector2Array( 1883, 1175, 2158, 1177, 2090, 1072, 2020, 1042, 1948, 1068 )
 
 [sub_resource type="PhysicsMaterial" id=39]
 rough = true
 
 [sub_resource type="OccluderPolygon2D" id=11]
 cull_mode = 2
-polygon = PoolVector2Array( 4261.52, 1620, 4226.52, 1613, 4238.52, 1314, 4140.51, 1301, 4137.51, 1619, 4114.51, 1618, 4117.5, 1300, 4011.49, 1290, 4008.49, 1609, 3984.49, 1605, 3974.49, 1291, 3941.48, 1284, 3934.48, 776, 4331.53, 949, 4333.53, 1312, 4262.52, 1316 )
+polygon = PoolVector2Array( 4264.52, 1647, 4226.52, 1642, 4241.52, 1311, 4140.51, 1301, 4141.51, 1645, 4111.51, 1639, 4117.5, 1300, 4011.49, 1290, 4006.49, 1647, 3978.49, 1641, 3974.49, 1291, 3941.48, 1284, 3934.48, 776, 4331.53, 949, 4333.53, 1312, 4263.52, 1310 )
 
 [sub_resource type="PhysicsMaterial" id=35]
 friction = 0.0
 
 [sub_resource type="OccluderPolygon2D" id=16]
-polygon = PoolVector2Array( 2914, 1404, 3082, 1452, 3520, 1569, 3501, 2007, 2896, 1575 )
+polygon = PoolVector2Array( 2914, 1404, 3082, 1452, 3555, 1575, 3511, 1873, 2896, 1575 )
 
 [sub_resource type="OccluderPolygon2D" id=13]
-polygon = PoolVector2Array( 3785, 1610, 3947, 1596, 4220, 1600, 4346, 1626, 4375, 1736, 4379, 1833, 4372, 1911, 3791, 1905, 3790, 1794, 3793, 1679, 3792, 1640 )
+polygon = PoolVector2Array( 3785, 1610, 3947, 1596, 4220, 1600, 4377, 1621, 4375, 1736, 4379, 1833, 4372, 1911, 3791, 1905, 3790, 1794, 3793, 1679, 3792, 1640 )
 
 [sub_resource type="OccluderPolygon2D" id=14]
-polygon = PoolVector2Array( 4538, 1859, 4452, 1452, 4753, 1416, 4749, 1158, 4894, 1097, 4906, 1085, 4916, 586, 4862, 594, 4707, 613, 4493, 630, 4352, 640, 4316, 645, 4287, 620, 4284, 582, 4318, 562, 4901.6, 493.553, 4926.5, 490.632, 4966, 486, 5286, 488, 5479, 509, 5487, 529, 5472, 546, 5468, 762, 4943, 752, 4948, 1067, 4964, 1711, 4964, 1852 )
-
-[sub_resource type="OccluderPolygon2D" id=17]
-polygon = PoolVector2Array( 3907, 776, 3914, 650, 4129, 801, 4463, 924, 4259, 919 )
+polygon = PoolVector2Array( 4591, 1857, 4528, 1384, 4817, 1387, 4800, 1101, 4962, 1095, 4943, 546, 4375, 555, 4340, 485, 4347, 444, 5503, 445, 5518, 709, 4981, 704, 5004, 1072, 5004, 1850 )
 
 [sub_resource type="OccluderPolygon2D" id=15]
-polygon = PoolVector2Array( 3916, 627, 4247, 801, 4470, 905, 4489, 930, 4491, 962, 4483, 981, 4463, 1007, 4441, 1021, 4418, 1025, 4400, 1021, 4381, 998, 4289, 951, 4297, 1123, 4297, 1312, 4264, 1318, 4226, 1312, 4125, 1301, 3916, 1285, 3904, 766, 3846, 754, 3775, 753, 3597, 726, 3328, 739, 2969, 767, 2919, 769, 2907, 364, 2902, 32, 2952, 23, 3049, 12, 3160, 5, 3819, -7, 3878, 4, 3886, 17, 3879, 46, 3914, 389, 3920, 535 )
+polygon = PoolVector2Array( 3909, 572, 4510, 941, 4459, 989, 4310, 964, 4297, 1312, 4264, 1318, 4226, 1312, 4125, 1301, 3916, 1285, 3904, 766, 3846, 754, 3775, 753, 2969, 767, 2919, 769, 2907, 364, 2902, 32, 2952, 23, 3049, 12, 3160, 5, 3869, -1, 3879, 46 )
 
 [sub_resource type="PhysicsMaterial" id=25]
-friction = 0.0
+rough = true
 absorbent = true
 
 [sub_resource type="PhysicsMaterial" id=40]
-friction = 0.0
+rough = true
 
 [sub_resource type="PhysicsMaterial" id=36]
 friction = 0.0
 
 [sub_resource type="PhysicsMaterial" id=49]
-friction = 0.5
+rough = true
 
 [sub_resource type="PhysicsMaterial" id=50]
+friction = 0.0
 
 [sub_resource type="PhysicsMaterial" id=48]
-friction = 0.5
+rough = true
+absorbent = true
+
+[sub_resource type="PhysicsMaterial" id=51]
+rough = true
 absorbent = true
 
 [sub_resource type="OccluderPolygon2D" id=43]
 cull_mode = 1
-polygon = PoolVector2Array( -370, 1744, 26, 1766, 559, 1788, 583, 1796, 572, 2211, 551, 2674, -367, 2690, -354, 2523 )
+polygon = PoolVector2Array( -368, 1756, 559, 1788, 583, 1796, 572, 2211, 551, 2674, -367, 2690, -354, 2523 )
 
-[sub_resource type="OccluderPolygon2D" id=44]
-cull_mode = 1
-polygon = PoolVector2Array( 577, 1478, 586.005, 1481.32, 592, 1483, 595, 1486, 596.666, 1488.66, 598, 1496, 596, 1501, 593, 1505, 590, 1508, 585, 1510, 584, 1547, 579, 1585, -387, 1549, -393, 1509, -395, 1498, -398, 1496, -402, 1494, -406, 1491, -408, 1488, -410, 1485, -411, 1481, -411, 1477, -409, 1472, -407, 1469, -401, 1464, -397, 1461, -391, 1460, -350, 1461, -314, 1459, -280, 1458, -134, 1455, -34, 1456, 168, 1462, 245, 1467, 353, 1467, 416, 1471, 524.778, 1471.55, 549, 1471 )
+[sub_resource type="OccluderPolygon2D" id=52]
+polygon = PoolVector2Array( 602, 1510, 613, 1559, -405, 1531, -408, 1512 )
 
 [sub_resource type="OccluderPolygon2D" id=45]
 cull_mode = 1
-polygon = PoolVector2Array( 88, -312, 95, -14, 52, -23, -184, -14, -301, -4, -345, 5, -358, 18, -356, 36, -348, 55, -336, 67, -299, 59, 93, 51, 96, 521, 67, 515, -44, 507, -185, 502, -243, 504, -273, 507, -307, 516, -328, 529, -335, 535, -337, 541, -338.489, 546.609, -337, 551, -333, 555, -329, 558, -325, 563, -317, 575, -315, 594, -329, 1023, -85, 1013, -55, 1025, 112, 1022, 158, 1026, 186, 628, 184, 493, 181, 283, 161, -335, 155, -360, 150, -369, 102, -378, -38, -365, -233, -342, -258, -343, -357, -329, -379, -324, -386, -313, -386, -288, -367, -273 )
+polygon = PoolVector2Array( 88, -312, 95, -14, 52, -23, -184, -14, -301, -4, -345, 5, -358, 18, -356, 36, -348, 55, -336, 67, -299, 59, 93, 51, 103, 532, -335, 535, -337, 541, -338.489, 546.609, -337, 551, -333, 555, -329, 558, -325, 563, -317, 575, -315, 594, -329, 1023, -85, 1013, -55, 1025, 112, 1022, 158, 1026, 185, 628, 192, 484, 189, 267, 161, -335, 155, -360, 150, -369, 102, -378, -38, -365, -233, -342, -258, -343, -357, -329, -379, -324, -386, -313, -386, -288, -367, -273 )
+
+[sub_resource type="PhysicsMaterial" id=56]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="PhysicsMaterial" id=57]
+rough = true
 
 [sub_resource type="OccluderPolygon2D" id=46]
 cull_mode = 1
-polygon = PoolVector2Array( -294, 901, -299, 217, -278.016, 207.322, -186, 209, -123, 213, 10, 209, 84, 213, 93, 216, 112, 222, 114, 225, 119, 43, 109, 35, 106.342, 29.7103, 106, 21, 114, 11, 124, 4, 145, -9, 215, -19, 276, -23, 336, -22, 314, -196, 306, -202, 302, -210, 302, -218, 305, -224, 313, -231, 341, -237, 398, -248, 449, -256, 470, -259, 514, -262, 536, -264, 560, -260, 554, -317, 552, -349, 551, -369, 547, -390, 540, -390, 536, -393, 531, -398, 529, -405, 529, -412.337, 532, -419, 539, -423, 547, -428, 557, -432, 570, -435, 592.466, -438.421, 614, -440, 626, -442, 698, -456, 737, -464, 779.615, -466.644, 800, -464, 809, -462, 816, -457, 818, -454, 819, -452, 819, -450, 819, -448, 819, -445, 818, -442, 817, -438, 815, -436, 813, -434, 811, -432, 809, -431, 807, -430, 816, -308, 818, -310, 857, -312, 912, -315, 1012, -314, 1036, -315, 1059, -314, 1079, -309, 1091, -308, 1097, -305, 1105, -301, 1120, -295, 1122, -292, 1124, -288, 1124, -285, 1123, -281, 1121, -278, 1125, -267, 1127, -258, 1130, -112, 1156, -112, 1181, -113, 1231, -117, 1306, -124, 1340, -127, 1373, -127, 1420, -121, 1434, -117, 1439, -115, 1441, -113, 1443, -111, 1444, -109, 1445, -106, 1445.13, -103.715, 1445.22, -102.081, 1444, -99, 1443, -96, 1451, -92, 1453, -80, 1455, -68, 1453, -57, 1447, -50, 1480, -56, 1554, -57, 1614, -56, 1696, -51, 1696, -541, 1741.11, -558.081, 1771, -565, 2062, -579, 2246, -569, 2265, -491, 2255, -428, 2622, -419, 2629, -360, 2250, -329, 2250, -69, 2660, -97, 2729, 384, 2278, 481, 2293, 1390, -279, 1389 )
+polygon = PoolVector2Array( -277, 224, 146, 238, 146, 16, 359, -14, 330, -211, 584, -253, 568, -369, 571, -406, 831, -440, 830, -272, 1120, -295, 1141, -66, 1453, -80, 1472, -69, 1472, -52, 1458, -5, 1722, -7, 1731, -517, 2265, -530, 2252, -363, 2627, -400, 2629, -360, 2250, -329, 2279, 6, 2669, -12, 2710, 392, 2278, 481, 2293, 1390, -239, 1370 )
+
+[sub_resource type="PhysicsMaterial" id=53]
+rough = true
+bounce = 1.0
+
+[sub_resource type="PhysicsMaterial" id=58]
+rough = true
+
+[sub_resource type="StreamTexture" id=60]
+flags = 4
+load_path = "res://.import/Chapter1prt3-3 2.png-588fa70c8598570bbf0ccd188566b97e.stex"
+
+[sub_resource type="PhysicsMaterial" id=54]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="PhysicsMaterial" id=55]
+rough = true
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5715.5, 159.5 )
@@ -490,7 +643,7 @@ extents = Vector2( 5715.5, 159.5 )
 [sub_resource type="SpriteFrames" id=47]
 animations = [ {
 "frames": [ ExtResource( 48 ) ],
-"loop": true,
+"loop": false,
 "name": "Activated",
 "speed": 24.0
 }, {
@@ -500,14 +653,21 @@ animations = [ {
 "speed": 24.0
 }, {
 "frames": [ ExtResource( 52 ) ],
-"loop": true,
+"loop": false,
 "name": "Default-Deactivated",
 "speed": 24.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=8]
 
+[sub_resource type="DynamicFont" id=59]
+size = 50
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 69 )
+
 [node name="Chapter1" type="Node2D"]
+position = Vector2( -8, 0 )
 script = SubResource( 24 )
 
 [node name="MapDesign" type="Node2D" parent="."]
@@ -533,18 +693,22 @@ anims/RESET = SubResource( 41 )
 anims/lightanim = SubResource( 42 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="MapDesign"]
-position = Vector2( 6895, -934 )
+position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
+frame = 3
 playing = true
+script = ExtResource( 60 )
+
+[node name="Tween" type="Tween" parent="MapDesign/AnimatedSprite"]
 
 [node name="noiseEffect" type="AnimatedSprite" parent="MapDesign"]
 modulate = Color( 1, 1, 1, 0.0784314 )
-position = Vector2( 4950, 423 )
+position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 5
+frame = 7
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -556,7 +720,7 @@ physics_material_override = SubResource( 37 )
 continuous_cd = 2
 
 [node name="floor1" type="CollisionPolygon2D" parent="MapDesign/Tutorial/floors"]
-polygon = PoolVector2Array( -1006, 2091, -710, 2066, -549, 2061, -240, 2059, -155, 2063, -102, 2073, -84, 2090, -83, 2114, -90, 2128, -110, 2141, -249, 2128, -479, 2126, -728, 2137, -1009, 2159, -1022, 2148, -1031, 2132, -1028, 2113 )
+polygon = PoolVector2Array( -1004, 2051, -123, 2058, -129, 2123, -1005, 2119 )
 
 [node name="IntroTunnel" type="Sprite" parent="MapDesign/Tutorial/floors"]
 position = Vector2( -356, 1292 )
@@ -566,7 +730,7 @@ texture = ExtResource( 15 )
 occluder = SubResource( 5 )
 
 [node name="floor2" type="CollisionPolygon2D" parent="MapDesign/Tutorial/floors"]
-polygon = PoolVector2Array( -97, 1611, -50, 1584, 46, 1561, 356, 1555, 601, 1563, 670, 1573, 1253, 1950, 1262, 1947, 1265, 1967, 1240, 1990, 1190, 1939, 806, 1686, 626, 1595, 60, 1610, -141, 1720, -152, 1703, -149, 1672, -125, 1635 )
+polygon = PoolVector2Array( 1276, 1919, 1297, 1913, 1296, 1931, 1273, 1945, 662, 1579, -112, 1613, -106, 1546, 667, 1548 )
 
 [node name="Walls" type="RigidBody2D" parent="MapDesign/Tutorial" groups=["wall"]]
 mode = 1
@@ -574,10 +738,10 @@ physics_material_override = SubResource( 32 )
 continuous_cd = 2
 
 [node name="wall1" type="CollisionPolygon2D" parent="MapDesign/Tutorial/Walls"]
-polygon = PoolVector2Array( 129, 1219, 115, 1260, 116, 1288, 123, 1342, 135, 1389, 148, 1423, 143, 1464, 144, 1507, 142, 1538, 147, 1564, 147, 1605, 144, 1653, 142, 1687, 490, 1688 )
+polygon = PoolVector2Array( 129, 1198, 125, 1304, 138, 1565, 119, 1711, 490, 1688, 511, 1191 )
 
 [node name="wall2" type="CollisionPolygon2D" parent="MapDesign/Tutorial/Walls"]
-polygon = PoolVector2Array( -769, 1725, -738, 1573, -720, 1470, -713, 1396, -709, 1296, -706, 1157, -708, 1026, -719, 890, -747, 784, -886, 800, -849, 1705 )
+polygon = PoolVector2Array( -758, 1727, -738, 1573, -720, 1470, -713, 1396, -709, 1296, -706, 1157, -708, 1026, -719, 890, -747, 784, -886, 800, -856, 1737 )
 
 [node name="ReverbArea" type="Area2D" parent="MapDesign/Tutorial"]
 
@@ -587,6 +751,7 @@ polygon = PoolVector2Array( -776, 1697, -746, 832, -92, 698, 605, 657, 887, 663,
 [node name="Tween" type="Tween" parent="MapDesign/Tutorial/ReverbArea"]
 
 [node name="Chapter1part1" type="Node2D" parent="MapDesign"]
+position = Vector2( 0, 1 )
 
 [node name="floors" type="RigidBody2D" parent="MapDesign/Chapter1part1" groups=["floor"]]
 position = Vector2( -28, 5 )
@@ -594,21 +759,9 @@ mode = 1
 physics_material_override = SubResource( 38 )
 continuous_cd = 2
 
-[node name="floorfiller2" type="Sprite" parent="MapDesign/Chapter1part1/floors"]
-position = Vector2( 639.99, 1694 )
-rotation = 0.708604
-scale = Vector2( 0.138, 0.726 )
-texture = ExtResource( 33 )
-
 [node name="part1sprite" type="Sprite" parent="MapDesign/Chapter1part1/floors"]
-position = Vector2( 1932, 1260 )
+position = Vector2( 1967, 1225 )
 texture = ExtResource( 26 )
-
-[node name="floorfiller" type="Sprite" parent="MapDesign/Chapter1part1/floors"]
-position = Vector2( 1085.99, 2057 )
-rotation = 0.593412
-scale = Vector2( 0.632, 0.796 )
-texture = ExtResource( 33 )
 
 [node name="part1light" type="Light2D" parent="MapDesign/Chapter1part1/floors"]
 position = Vector2( 2079, 896 )
@@ -623,17 +776,18 @@ position = Vector2( -89, -1085 )
 occluder = SubResource( 6 )
 
 [node name="floor1" type="CollisionPolygon2D" parent="MapDesign/Chapter1part1/floors"]
-polygon = PoolVector2Array( 1771, 1563, 2440, 1608, 2445, 1703, 1769, 1633 )
+polygon = PoolVector2Array( 1804, 1529, 2487, 1570, 2484, 1610, 1806, 1560 )
 
 [node name="floor2" type="CollisionPolygon2D" parent="MapDesign/Chapter1part1/floors"]
-polygon = PoolVector2Array( 1536, 1426, 1544, 1416, 1563, 1411, 1761, 1418, 1777, 1425, 1788, 1438, 1783, 1448, 1768, 1442, 1744, 1435, 1640, 1429, 1574, 1429, 1542, 1432 )
+position = Vector2( 35, -35 )
+polygon = PoolVector2Array( 1540, 1415, 1787, 1415, 1788, 1438, 1783, 1448, 1768, 1442, 1744, 1435, 1640, 1429, 1574, 1429, 1538, 1431 )
 
 [node name="floor3" type="CollisionPolygon2D" parent="MapDesign/Chapter1part1/floors"]
-polygon = PoolVector2Array( 2446, 1469, 2449, 1441, 2548, 1424, 2687, 1416, 2954, 1411, 3580, 1602, 2958, 1434, 2481, 1453 )
+polygon = PoolVector2Array( 2487, 1396, 2985, 1375, 3644, 1544, 3630, 1589, 2988, 1399, 2482, 1432 )
 
 [node name="floor4" type="CollisionPolygon2D" parent="MapDesign/Chapter1part1/floors"]
-position = Vector2( 0, 24 )
-polygon = PoolVector2Array( 1908, 991, 2160, 995, 2181, 1001, 2192, 1009, 2196, 1039, 1900, 1014 )
+position = Vector2( 38, -25 )
+polygon = PoolVector2Array( 1902, 995, 2188, 996, 2190, 1013, 1900, 1015 )
 
 [node name="walls" type="RigidBody2D" parent="MapDesign/Chapter1part1" groups=["wall"]]
 mode = 1
@@ -641,24 +795,30 @@ physics_material_override = SubResource( 33 )
 continuous_cd = 2
 
 [node name="wall1" type="CollisionPolygon2D" parent="MapDesign/Chapter1part1/walls"]
-polygon = PoolVector2Array( 1510, 1437, 1509, 1533, 1745, 1573, 1757, 1451, 1729, 1444, 1706, 1440, 1579, 1434 )
+position = Vector2( 40, -24 )
+polygon = PoolVector2Array( 1507, 1447, 1506, 1535, 1745, 1573, 1754, 1447, 1706, 1440, 1579, 1434 )
 
 [node name="wall2" type="CollisionPolygon2D" parent="MapDesign/Chapter1part1/walls"]
-polygon = PoolVector2Array( 2410, 1455, 2409, 1622, 3539, 1889, 3550, 1620, 2902, 1444, 2459, 1450 )
+polygon = PoolVector2Array( 2457, 1440, 2444, 1606, 3539, 1889, 3536, 1656, 2902, 1444 )
 
 [node name="wall3" type="CollisionPolygon2D" parent="MapDesign/Chapter1part1/walls"]
-polygon = PoolVector2Array( 1863, 1213, 2150, 1229, 2166, 1068, 1875, 1041 )
+position = Vector2( 48, -40 )
+polygon = PoolVector2Array( 1861, 1220, 2137, 1230, 2149, 1038, 1866, 1039 )
 
 [node name="chapter1part1Occluder1" type="LightOccluder2D" parent="MapDesign/Chapter1part1"]
+position = Vector2( 39, -8 )
 occluder = SubResource( 18 )
 
 [node name="chapter1part1Occluder2" type="LightOccluder2D" parent="MapDesign/Chapter1part1"]
+position = Vector2( 40, -8 )
 occluder = SubResource( 19 )
 
 [node name="chapter1part1Occluder3" type="LightOccluder2D" parent="MapDesign/Chapter1part1"]
+position = Vector2( 39, -10 )
 occluder = SubResource( 20 )
 
 [node name="chapter1art1Occluder4" type="LightOccluder2D" parent="MapDesign/Chapter1part1"]
+position = Vector2( 25, -38 )
 occluder = SubResource( 34 )
 
 [node name="Chapter1Part2" type="Node2D" parent="MapDesign"]
@@ -668,124 +828,83 @@ mode = 1
 physics_material_override = SubResource( 39 )
 gravity_scale = 0.3
 
-[node name="platformFiller3" type="Sprite" parent="MapDesign/Chapter1Part2/floor"]
-position = Vector2( 3043, 1635 )
-rotation = 0.322886
-scale = Vector2( 0.186, 0.204 )
-texture = ExtResource( 33 )
-
-[node name="platformFiller4" type="Sprite" parent="MapDesign/Chapter1Part2/floor"]
-position = Vector2( 3051, 1637 )
-rotation = 0.322886
-scale = Vector2( 0.186, 0.204 )
-texture = ExtResource( 33 )
-
-[node name="platformFiller" type="Sprite" parent="MapDesign/Chapter1Part2/floor"]
-position = Vector2( 4916, 772 )
-rotation = -0.0872665
-scale = Vector2( 0.578, 0.322 )
-texture = ExtResource( 33 )
-
-[node name="platformFiller8" type="Sprite" parent="MapDesign/Chapter1Part2/floor"]
-position = Vector2( 2306, 668 )
-rotation = 1.5708
-scale = Vector2( 0.618, 0.976 )
-texture = ExtResource( 33 )
-
 [node name="backgroundMain" type="Sprite" parent="MapDesign/Chapter1Part2/floor"]
-position = Vector2( 3924, 1031.7 )
+position = Vector2( 3980, 970.7 )
 texture = ExtResource( 30 )
 
-[node name="platformFiller2" type="Sprite" parent="MapDesign/Chapter1Part2/floor"]
-position = Vector2( 3324, 2067 )
-rotation = 0.322886
-scale = Vector2( 0.6, 0.586 )
-texture = ExtResource( 33 )
-
-[node name="platformFiller5" type="Sprite" parent="MapDesign/Chapter1Part2/floor"]
-position = Vector2( 3303, 2127 )
-rotation = 0.322886
-scale = Vector2( 0.6, 0.648 )
-texture = ExtResource( 33 )
-
-[node name="platformFiller7" type="Sprite" parent="MapDesign/Chapter1Part2/floor"]
-position = Vector2( 3130, 1016 )
-rotation = 0.246091
-scale = Vector2( 0.3, 1.18 )
-texture = ExtResource( 33 )
-
-[node name="platformFiller6" type="Sprite" parent="MapDesign/Chapter1Part2/floor"]
-position = Vector2( 3770, 832 )
-scale = Vector2( 0.858, 1 )
-texture = ExtResource( 33 )
-
 [node name="Occluder1" type="LightOccluder2D" parent="MapDesign/Chapter1Part2/floor"]
-position = Vector2( -40, 0 )
+position = Vector2( 20, -49 )
 scale = Vector2( 0.999877, 1 )
 occluder = SubResource( 11 )
 
 [node name="floor1" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/floor"]
 position = Vector2( 0, 1 )
-polygon = PoolVector2Array( 3785, 1623, 3783, 1640, 3788, 1650, 3980, 1629, 4149, 1633, 4323, 1653, 4371, 1663, 4380, 1653, 4369, 1635, 4332, 1620, 4226, 1602, 4104, 1595, 3930, 1593, 3822, 1602, 3791, 1610 )
+polygon = PoolVector2Array( 3830, 1594, 3830, 1630, 4429, 1628, 4434, 1594 )
 
 [node name="floor2" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/floor"]
 position = Vector2( -88, -88 )
-polygon = PoolVector2Array( 4545, 1567, 4536, 1559, 4538, 1549, 4544, 1538, 4703, 1514, 4808, 1504, 4848, 1503, 4854, 1514, 4854, 1525, 4845, 1531, 4822, 1529, 4788, 1529, 4716, 1537 )
+polygon = PoolVector2Array( 4615, 1496, 4615, 1472, 4911, 1473, 4908, 1497 )
 
 [node name="floor3" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/floor"]
-polygon = PoolVector2Array( 4744, 1158, 4800, 1126, 4859, 1103, 4908, 1087, 4918, 1091, 4920.6, 1101.17, 4922, 1112, 4883, 1121, 4843, 1135, 4811, 1149, 4748, 1184, 4739, 1180, 4737, 1169 )
+polygon = PoolVector2Array( 4965, 1098, 4965, 1136, 4801, 1138, 4800, 1101 )
 
 [node name="floor4" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/floor"]
-polygon = PoolVector2Array( 3898, 639, 3918, 624, 3967.75, 672.488, 4463, 926, 4149, 815 )
+position = Vector2( 53, -113 )
+polygon = PoolVector2Array( 3897, 659, 3911, 636, 4509, 993, 4462, 993 )
 
 [node name="floor5" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/floor"]
-polygon = PoolVector2Array( 4310, 553, 4962, 487, 5347, 497, 5438, 503, 5470, 510, 5480, 515, 5480, 525, 5478, 543, 5455, 531, 5204, 513, 4971, 508, 4947, 518, 4281, 586, 4285, 573, 4289, 564 )
+polygon = PoolVector2Array( 4350, 445, 5505, 447, 5501, 466, 4349, 465 )
 
 [node name="floor6" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/floor"]
-polygon = PoolVector2Array( 2891, 34, 2889, -12, 3035, -17, 3793, -31, 3844, -28, 3875, -21, 3890, -7, 3890, 11, 3883, 24, 3876, 25, 3862, 15, 3823, 4, 3593, -1, 3169, 8, 2935, 26 )
+position = Vector2( 64, -16 )
+polygon = PoolVector2Array( 2891, 10, 2888, -38, 3853, -37, 3863, 2 )
 
 [node name="walls" type="RigidBody2D" parent="MapDesign/Chapter1Part2" groups=["wall"]]
 mode = 1
 physics_material_override = SubResource( 35 )
 
 [node name="wall1" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/walls"]
-polygon = PoolVector2Array( 3817, 1592, 3806, 1613, 3795, 1642, 3797, 1674, 3797, 1737, 3796, 1839, 4378, 1842, 4373, 1743, 4381, 1699, 4384, 1655, 4371, 1627 )
+position = Vector2( 40, -6 )
+polygon = PoolVector2Array( 3792, 1643, 3792, 1885, 4382, 1880, 4388, 1639 )
 
 [node name="wall2" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4456, 1477, 4485, 1609, 4532, 1861, 4831, 1853, 4760, 1442, 4696, 1441 )
+polygon = PoolVector2Array( 4530, 1409, 4593, 1857, 4831, 1853, 4822, 1421 )
 
 [node name="wall3" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4745, 1187, 4760, 1417, 4947, 1394, 4944, 1178, 4947, 1086, 4917, 1091, 4924, 1098, 4922, 1114, 4903, 1116, 4814, 1144 )
+polygon = PoolVector2Array( 4806, 1142, 4823, 1406, 5002, 1400, 4994, 1137 )
 
 [node name="wall4" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4902, 537, 4902, 906, 4906, 1088, 4927, 1089, 4952, 1083, 4946, 1084, 4949, 746, 5465, 755, 5472, 544 )
+position = Vector2( 56, 48 )
+polygon = PoolVector2Array( 4886, 439, 4902, 906, 4906, 1088, 4927, 1089, 4952, 1083, 4946, 1084, 4925, 653, 5455, 650, 5444, 431 )
 
 [node name="wall5" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4491, 934, 4496, 947, 4492, 967, 4488, 976, 4483, 986, 4474, 996, 4461, 1006, 4438, 1018, 4410, 1018, 4378, 987, 4289, 947, 4294, 1034, 4296, 1219, 4284, 1324, 3902, 1293, 3888, 781 )
+position = Vector2( 64, -64 )
+polygon = PoolVector2Array( 4496, 949, 4447, 994, 4378, 987, 4304, 973, 4294, 1034, 4296, 1219, 4284, 1324, 3902, 1293, 3882, 611, 4464, 942 )
 
 [node name="wall6" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4283, 587, 4285, 608, 4296, 648, 4359, 654, 4440, 649, 4529, 644, 4733, 620, 4905, 603, 4962, 630, 4962, 492, 4944, 526, 4343, 574 )
+polygon = PoolVector2Array( 4374, 552, 5002, 541, 5005, 482, 4346, 494 )
+disabled = true
 
 [node name="wall7" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/walls"]
-polygon = PoolVector2Array( 3921, 627, 3917, 414, 3884, 27, 3833, 6, 3466, 4, 3054, 14, 2893, 36, 2897, 784, 3523, 730, 3755, 750, 3904, 771 )
+polygon = PoolVector2Array( 3918, -6, 2958, -6, 2965, 736, 3972, 709 )
 
 [node name="wall8" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/walls"]
+position = Vector2( 48, -17 )
 polygon = PoolVector2Array( 3779, 1882, 4371, 1905, 4367, 1662, 4321, 1652, 4236, 1645, 4158, 1635, 3975, 1630, 3782, 1650 )
 
 [node name="chapter1part2occluder1" type="LightOccluder2D" parent="MapDesign/Chapter1Part2"]
-position = Vector2( 24, 72 )
+position = Vector2( 40, 16 )
 occluder = SubResource( 16 )
 
 [node name="chapter1part2occluder2" type="LightOccluder2D" parent="MapDesign/Chapter1Part2"]
+position = Vector2( 48, 16 )
 occluder = SubResource( 13 )
 
 [node name="Chapter1part2occluder3" type="LightOccluder2D" parent="MapDesign/Chapter1Part2"]
 occluder = SubResource( 14 )
 
-[node name="chapter1part2occluder4" type="LightOccluder2D" parent="MapDesign/Chapter1Part2"]
-occluder = SubResource( 17 )
-
 [node name="Chapter1Part3Occluder" type="LightOccluder2D" parent="MapDesign/Chapter1Part2"]
+position = Vector2( 56, -56 )
 occluder = SubResource( 15 )
 
 [node name="Chapter1Part3" type="Node2D" parent="MapDesign"]
@@ -796,11 +915,11 @@ scale = Vector2( 0.664, 0.528 )
 texture = ExtResource( 33 )
 
 [node name="mapdesign" type="Sprite" parent="MapDesign/Chapter1Part3"]
-position = Vector2( 5508, -261 )
+position = Vector2( 5554, -316 )
 texture = ExtResource( 31 )
 
 [node name="mapdesign2" type="Sprite" parent="MapDesign/Chapter1Part3"]
-position = Vector2( 5977, -356 )
+position = Vector2( 6049, -396 )
 scale = Vector2( 1, 1.088 )
 texture = ExtResource( 33 )
 
@@ -824,7 +943,7 @@ texture = ExtResource( 34 )
 position = Vector2( 4648, -480 )
 texture = ExtResource( 34 )
 
-[node name="movingplatform" type="RigidBody2D" parent="MapDesign/Chapter1Part3" groups=["floor", "platform"]]
+[node name="movingplatform" type="RigidBody2D" parent="MapDesign/Chapter1Part3" groups=["platform2"]]
 position = Vector2( 0, -104.768 )
 mode = 3
 physics_material_override = SubResource( 25 )
@@ -836,11 +955,7 @@ texture = ExtResource( 34 )
 
 [node name="floor8" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/movingplatform"]
 position = Vector2( -2088, -496 )
-polygon = PoolVector2Array( 5938, -621.232, 5932, -616.232, 5929, -611.232, 5930, -604.232, 5935, -599.232, 5967, -603.232, 6049, -609.232, 6137, -609.232, 6179, -606.232, 6193.97, -602.957, 6211, -599.232, 6218, -606.232, 6222, -614.232, 6218, -622.232, 6207, -626.232, 6181, -631.232, 6121, -634.232, 6055, -633.232, 6005, -631.232, 5965, -628.232 )
-
-[node name="wall7" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/movingplatform"]
-position = Vector2( -1688, -496 )
-polygon = PoolVector2Array( 5537, -598.232, 5537, -478, 5808, -479, 5805, -599.232, 5789, -603.232, 5748, -609.232, 5663, -608.232, 5592, -606.232 )
+polygon = PoolVector2Array( 5938, -626.232, 6204, -627.232, 6206, -482.232, 5933, -480.232 )
 
 [node name="Tween" type="Tween" parent="MapDesign/Chapter1Part3/movingplatform"]
 repeat = true
@@ -853,79 +968,84 @@ mass = 0.3
 physics_material_override = SubResource( 40 )
 
 [node name="floor1" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/floor"]
-position = Vector2( -16, -80 )
-polygon = PoolVector2Array( 5748, 362, 5736, 385, 5737, 399, 5754, 397, 5766, 385, 5793, 373, 5844, 367, 5916, 359, 6016, 360, 6033, 360, 6040, 354, 6042, 345, 6036, 336, 5878, 337 )
+position = Vector2( 32, -143 )
+polygon = PoolVector2Array( 5735, 343, 5737, 369, 6027, 368, 6029, 344 )
 
 [node name="floor2" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/floor"]
-polygon = PoolVector2Array( 6010, -203, 6382, -215, 6460, -210, 6478, -207, 6495, -202, 6504, -197, 6507, -190, 6504, -180, 6492, -176, 6479, -182, 6458, -185, 6394, -191, 6317, -187, 6171, -180, 6011, -177, 6003, -183, 6001, -189, 6002, -197 )
+position = Vector2( 40, -48 )
+polygon = PoolVector2Array( 6012, -212, 6498, -212, 6502, -183, 6019, -180 )
 
 [node name="floor3" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/floor"]
-polygon = PoolVector2Array( 5935, -624, 5930, -621, 5928, -613, 5929, -608, 5933, -604, 5938, -601, 5976, -606, 6002, -609, 6044, -612, 6085, -613, 6142, -612, 6171, -609, 6186, -607, 6202, -603, 6211, -603, 6217, -607, 6220, -612, 6219, -619, 6215, -624, 6208, -628, 6187, -631, 6164, -634, 6111, -638, 6038, -636, 5969, -630 )
+polygon = PoolVector2Array( 5939, -629, 5937, -605, 6203, -603, 6203, -629 )
 
 [node name="floor4" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/floor"]
-position = Vector2( -400, 0 )
-polygon = PoolVector2Array( 5938, -622, 5932, -618, 5929, -611, 5931, -603, 5936, -599, 5981, -603, 6056, -609, 6121, -610, 6182, -606, 6197, -603, 6209, -602, 6218, -603, 6221, -613, 6214, -625, 6190, -630, 6166, -633, 6117, -634, 6038, -633, 5973, -628 )
+position = Vector2( -402, 0 )
+polygon = PoolVector2Array( 5939, -629, 5937, -605, 6203, -603, 6203, -629 )
 
 [node name="floor5" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/floor"]
-position = Vector2( -816, 0 )
-polygon = PoolVector2Array( 5930, -614, 5929, -608, 5932, -603, 5937, -599, 5966, -603, 6027, -608, 6107, -612, 6181, -606, 6200, -603, 6212, -600, 6218, -603, 6221, -611, 6221, -617, 6216, -623, 6199, -629, 6161, -633, 6095, -635, 6038, -634, 5984, -630, 5948, -624, 5935, -621 )
+position = Vector2( -815, 0 )
+polygon = PoolVector2Array( 5939, -629, 5937, -605, 6203, -603, 6203, -629 )
 
 [node name="floor6" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/floor"]
-position = Vector2( -1257, 0 )
-polygon = PoolVector2Array( 5936, -621, 5930, -613, 5930, -606, 5935, -598, 5980, -604, 6035, -608, 6124, -612, 6172, -608, 6212, -600, 6218, -604, 6222, -611, 6222, -616, 6215, -624, 6196, -630, 6124, -635, 6016, -632, 5957, -626 )
+position = Vector2( -1255, 0 )
+polygon = PoolVector2Array( 5939, -629, 5937, -605, 6203, -603, 6203, -629 )
 
 [node name="floor7" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/floor"]
-position = Vector2( -1712, 0 )
-polygon = PoolVector2Array( 5937, -621, 5931, -616, 5930, -603, 5938, -598, 5970, -603, 6013, -608, 6062, -610, 6114, -611, 6176, -608, 6209, -602, 6216, -601, 6220, -608, 6219, -617, 6213, -624, 6197, -628, 6140, -635, 6030, -633 )
+position = Vector2( -1711, 0 )
+polygon = PoolVector2Array( 5939, -629, 5937, -605, 6203, -603, 6203, -629 )
 
 [node name="floor8" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/floor"]
-polygon = PoolVector2Array( 5254, -1278, 5972, -1290, 6050, -1292, 6095, -1284, 6116, -1272, 6119, -1247, 6107, -1235, 6074, -1246, 6040, -1255, 5904, -1264, 5739, -1261, 5542, -1256, 5433, -1257, 5211, -1248, 5102, -1246, 4951, -1224, 4952, -1248, 4974, -1258, 5136, -1274 )
+position = Vector2( -80, -37 )
+polygon = PoolVector2Array( 6224, -1294, 6228, -1255, 5102, -1246, 5101, -1256, 5114, -1292 )
 
 [node name="floor9" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/floor"]
-polygon = PoolVector2Array( 6092, -955, 6108, -964, 6154, -962, 6235, -969, 6320, -971, 6388, -970, 6466, -974, 6521, -972, 6532, -963, 6533, -952, 6523, -948, 6512, -948, 6451, -951, 6290, -945, 6143, -940, 6111, -940, 6099, -934, 6089, -937 )
+position = Vector2( 40, -56 )
+polygon = PoolVector2Array( 6092, -964, 6533, -973, 6532, -963, 6533, -952, 6523, -948, 6512, -948, 6451, -951, 6290, -945, 6143, -940, 6111, -940, 6099, -934, 6089, -937 )
 
 [node name="floor10" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/floor"]
-polygon = PoolVector2Array( 6092, 258, 6275, 257, 6353, 258, 6436, 254, 6509, 257, 6574, 252, 6604, 256, 6620, 263, 6628, 269, 6624, 275, 6620, 281, 6609, 281, 6598, 275, 6584, 276, 6573, 272, 6539, 271, 6497, 269, 6434, 270, 6397, 269, 6327, 275, 6263, 274, 6110, 273, 6086, 271, 6086, 258 )
+polygon = PoolVector2Array( 6137, 256, 6600, 257, 6600, 279, 6138, 290 )
 
 [node name="wall" type="RigidBody2D" parent="MapDesign/Chapter1Part3" groups=["wall"]]
 mode = 1
 physics_material_override = SubResource( 36 )
 
 [node name="wall1" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/wall"]
-polygon = PoolVector2Array( 5880, 282, 5792, 288, 5762, 297, 5751, 303, 5742, 311, 5737, 319, 5732, 321, 5728, 319, 5698, 764, 6108, 763, 6093, 395, 6614, 376, 6619, 288, 6601, 277, 6569, 271, 6477, 271, 6384, 273, 6254, 274, 6093, 275, 6092, 215, 6092, -129, 6532, -109, 6533, -158, 6506, -177, 6480, -179, 6465, -183, 6388, -190, 6257, -182, 6015, -174, 6016, 254, 6021, 257, 6024.71, 261.077, 6025, 274, 6020, 281, 5946, 280 )
+position = Vector2( 40, -63 )
+polygon = PoolVector2Array( 5880, 282, 5792, 288, 5734, 290, 5708, 770, 6071, 771, 6092, 448, 6558, 433, 6558, 345, 6100, 357, 6092, 215, 6092, -129, 6532, -109, 6533, -158, 6506, -177, 6480, -179, 6465, -183, 6388, -190, 6257, -182, 6015, -174, 6019, 255, 6020, 281, 5946, 280 )
 
 [node name="wall2" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/wall"]
-polygon = PoolVector2Array( 6499, -159, 6468, -834, 6465, -842, 5952, -811, 5942, -1036, 5167, -999, 4952, -1003, 4957, -1220, 5090, -1242, 5280, -1251, 5567, -1253, 5878, -1263, 6057.72, -1248.03, 6096, -1249, 6096, -963, 6088, -954, 6086, -939, 6098, -931, 6107, -938, 6452, -950, 6527, -945, 6534, -952, 6535, -104, 6491, -102 )
+polygon = PoolVector2Array( 6510, -907, 6025, -872, 5991, -1078, 5035, -1043, 5025, -1276, 6146, -1286, 6144, -986, 6578, -997, 6579, -160, 6546, -159 )
 
 [node name="wall3" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/wall"]
-polygon = PoolVector2Array( 5537, -600, 5537, -478, 5808, -479, 5804, -602, 5773, -608, 5746, -608, 5722, -609, 5676, -609, 5589, -604 )
-
-[node name="wall7" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/wall"]
-position = Vector2( 397, 0 )
-polygon = PoolVector2Array( 5537, -601, 5537, -478, 5808, -479, 5804, -602, 5771, -609, 5747, -611, 5687, -613, 5589, -607 )
+polygon = PoolVector2Array( 5537, -600, 5537, -478, 5808, -479, 5804, -602 )
 
 [node name="wall4" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/wall"]
-position = Vector2( -416, -1 )
-polygon = PoolVector2Array( 5537, -599, 5537, -478, 5808, -479, 5805, -600, 5744, -607, 5699, -610, 5632, -607 )
+position = Vector2( -424, 0 )
+polygon = PoolVector2Array( 5537, -600, 5537, -478, 5808, -479, 5804, -602 )
 
 [node name="wall5" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/wall"]
-position = Vector2( -857, 1 )
-polygon = PoolVector2Array( 5536, -599, 5537, -478, 5808, -479, 5805, -602, 5776, -608, 5751, -610, 5692, -611, 5619, -607, 5575, -604 )
+position = Vector2( -856, 0 )
+polygon = PoolVector2Array( 5537, -600, 5537, -478, 5808, -479, 5804, -602 )
 
 [node name="wall6" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/wall"]
-position = Vector2( -1311, 0 )
-polygon = PoolVector2Array( 5535, -599, 5537, -478, 5808, -479, 5804, -600, 5778, -605, 5749, -608, 5695, -610, 5600, -605 )
+position = Vector2( -1312, 0 )
+polygon = PoolVector2Array( 5537, -600, 5537, -478, 5808, -479, 5804, -602 )
+
+[node name="wall7" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/wall"]
+position = Vector2( 399, 0 )
+polygon = PoolVector2Array( 5537, -600, 5537, -478, 5808, -479, 5804, -602 )
 
 [node name="wall8" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part3/wall"]
-polygon = PoolVector2Array( 4944, 525, 4964, 511, 5445, 528, 5476, 543, 5465, 757, 4935, 757 )
+position = Vector2( 56, -51 )
+polygon = PoolVector2Array( 4944, 525, 5445, 528, 5465, 757, 4935, 757 )
 
 [node name="Chapter1part4" type="Node2D" parent="MapDesign"]
-position = Vector2( 2418, 59 )
+position = Vector2( 2490, 59 )
 
 [node name="sprites" type="Node2D" parent="MapDesign/Chapter1part4"]
 
 [node name="Chapter1Part4-1" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
-position = Vector2( -452, -670 )
+position = Vector2( -452, -668 )
 texture = ExtResource( 38 )
 
 [node name="Chapter1Part4-3" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
@@ -934,42 +1054,50 @@ rotation = 3.14159
 scale = Vector2( 1, -1 )
 texture = ExtResource( 38 )
 
-[node name="Chapter1Part4-2" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
-position = Vector2( -421, -666 )
-texture = ExtResource( 35 )
-
-[node name="Chapter1Part4-4" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
-position = Vector2( -2214, -668 )
-rotation = 3.14159
-scale = Vector2( 1, -1 )
-texture = ExtResource( 36 )
-
 [node name="Chapter1prt3-3 8" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
-position = Vector2( 184, -3484 )
+position = Vector2( 2008, -3502 )
 rotation = -0.0174533
-scale = Vector2( 3.368, -1.794 )
+scale = Vector2( 5.162, -1.794 )
 texture = ExtResource( 37 )
 
 [node name="Chapter1Part4-6" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
-position = Vector2( -2214, -1652 )
+position = Vector2( -2294, -1642 )
 rotation = 3.14159
 scale = Vector2( 1, -1 )
 texture = ExtResource( 36 )
 
 [node name="Chapter1Part4-7" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
-position = Vector2( -421, -1652 )
+position = Vector2( -845, -1652 )
+rotation = 3.14159
+scale = Vector2( -1, -1 )
+texture = ExtResource( 36 )
+
+[node name="Chapter1Part4-8" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
+position = Vector2( -13, -1663 )
+rotation = 3.14159
+scale = Vector2( -1, -1 )
+texture = ExtResource( 36 )
+
+[node name="Chapter1Part4-9" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
+position = Vector2( 817, -1666 )
+rotation = 3.14159
+scale = Vector2( -1, -1 )
+texture = ExtResource( 36 )
+
+[node name="Chapter1Part4-10" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
+position = Vector2( 1649, -1675 )
 rotation = 3.14159
 scale = Vector2( -1, -1 )
 texture = ExtResource( 36 )
 
 [node name="Chapter1prt3-3 2" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
-position = Vector2( -4389, 592 )
+position = Vector2( -4949, 552 )
 rotation = 1.5708
-scale = Vector2( 50, 1 )
+scale = Vector2( 94.584, 1.72 )
 texture = ExtResource( 37 )
 
 [node name="Chapter1prt3-3 3" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
-position = Vector2( -3165.33, 1064 )
+position = Vector2( -3165.33, 1024 )
 scale = Vector2( 0.72, 0.99 )
 texture = ExtResource( 37 )
 
@@ -989,7 +1117,7 @@ scale = Vector2( 1.598, 1.102 )
 texture = ExtResource( 37 )
 
 [node name="Chapter1prt3-3 6" type="Sprite" parent="MapDesign/Chapter1part4/sprites"]
-position = Vector2( -2176.33, 1392 )
+position = Vector2( -2240.33, 1392 )
 scale = Vector2( 1.598, 1.26 )
 texture = ExtResource( 37 )
 
@@ -998,62 +1126,62 @@ mode = 1
 physics_material_override = SubResource( 49 )
 
 [node name="floor1" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( 118, -263, 126, -269, 142, -277, 176, -281, 231, -282, 280, -284, 341, -280, 404, -270, 430, -262, 447, -253, 455, -242, 455, -229, 449, -221, 435, -218, 425, -226, 407, -234, 371, -240, 340, -244, 308, -246, 261, -245, 206, -245, 140, -237, 126, -240, 121, -247, 118, -260 )
+polygon = PoolVector2Array( 105, -291, 432, -294, 450, -248, 113, -250 )
 
 [node name="floor2" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( -475, -289, -442, -294, -403, -293, -381, -292, -328, -285, -289, -284, -244, -281, -201, -275, -174, -267, -165, -257, -159, -249, -159, -243, -160, -235, -166, -225, -174, -222, -185, -224, -204, -233, -245, -245, -317, -250, -443, -257, -459, -255, -469, -255, -478, -257, -480, -270, -483, -280 )
+polygon = PoolVector2Array( -492, -294, -155, -292, -167, -240, -476, -227 )
 
 [node name="floor3" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( -1208, -276, -1173, -288, -1079, -296, -1039, -297, -954, -302, -902, -296, -818, -283, -806, -270, -805, -259, -809, -251, -809, -242, -819, -232, -832, -234, -852, -243, -883, -248, -918, -249, -959, -259, -1129, -240, -1167, -232, -1208, -225, -1215, -235, -1215, -245, -1212, -257, -1211, -268 )
+polygon = PoolVector2Array( -1204, -290, -799, -293, -797, -255, -1204, -260 )
 
 [node name="floor4" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( -1854, -275, -1821, -290, -1727, -304, -1668, -304, -1615, -296, -1570, -301, -1503, -293, -1454, -282, -1445, -273, -1445, -269, -1445, -261, -1446, -252, -1443, -247, -1444, -232, -1451, -230, -1463, -225, -1471, -225, -1486, -225, -1489, -234, -1517, -238, -1551, -240, -1592, -252, -1640, -256, -1680, -259, -1740, -255, -1796, -247, -1820, -242, -1826, -237, -1841, -237, -1853, -244, -1853, -256 )
+polygon = PoolVector2Array( -1858, -295, -1449, -295, -1449, -261, -1543, -234, -1854, -255 )
 
 [node name="floor5" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( -2498, -249, -2491, -258, -2487, -265, -2470, -272, -2433, -281, -2404, -282, -2375, -287, -2304, -292, -2259, -298, -2237, -298, -2187, -294, -2187, -294, -2185, -293, -2174, -285, -2174, -282, -2174, -277, -2178, -266, -2191, -259, -2388, -246, -2435, -239, -2462, -228, -2481, -227, -2491, -227, -2491, -232 )
+polygon = PoolVector2Array( -2494, -293, -2160, -295, -2171, -232, -2489, -241 )
 
 [node name="floor6" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( -3109, -250, -3088, -267, -3003, -283, -2918, -292, -2811, -283, -2781, -274, -2779, -265, -2779, -247, -2793, -242, -2809, -249, -2960, -250, -3035, -240, -3078, -231, -3089, -228, -3099, -220, -3104, -221, -3104, -229, -3107, -236 )
+polygon = PoolVector2Array( -2760, -294, -3092, -296, -3107, -247, -2771, -248 )
 
 [node name="floor7" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( -2813, 204, -2785, 203, -2691, 210, -2527, 223, -2487, 230, -2479, 240, -2480, 251, -2485, 262, -2496, 265, -2529, 261, -2581, 253, -2704, 247, -2770, 239, -2795, 239, -2800, 241, -2810, 240, -2813, 230, -2815, 226, -2815, 214 )
+polygon = PoolVector2Array( -2783, 194, -2521, 192, -2539, 243, -2771, 248 )
 
 [node name="floor8" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( -2172, 220, -2120, 221, -2093, 223, -2058, 225, -1996, 225, -1966, 220, -1928, 222, -1905, 224, -1898, 229, -1893, 236, -1893, 245, -1897, 253, -1906, 260, -1917, 259, -1948, 258, -1958, 258, -1995, 263, -2052, 262, -2078, 263, -2109, 261, -2139, 257, -2160, 258, -2170, 259, -2182, 253, -2186, 245, -2186, 231, -2181, 226 )
+polygon = PoolVector2Array( -2177, 191, -1908, 192, -1939, 243, -2175, 237 )
 
 [node name="floor9" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( -1467, 235, -1427, 235, -1293, 240, -1205, 236, -1189, 237, -1176, 244, -1173, 253, -1174, 259, -1178, 269, -1179, 283, -1462, 271, -1475, 270, -1481, 255, -1478, 240 )
+polygon = PoolVector2Array( -1479, 189, -1175, 194, -1177, 268, -1484, 250 )
 
 [node name="floor10" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( -757, 230, -727, 222, -676, 225, -544, 226, -485, 222, -477, 226, -470, 237, -470, 250, -479, 262, -496, 258, -576, 264, -703, 260, -748, 262, -764, 252 )
+polygon = PoolVector2Array( -744, 198, -477, 196, -488, 238, -721, 252 )
 
 [node name="floor11" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/floor"]
-polygon = PoolVector2Array( -168, 232, -121, 223, -39, 216, 28, 212, 90, 207, 156, 207, 166, 220, 165, 237, 152, 247, 139, 248, 131, 244, -9, 252, -71, 257, -164, 269, -173, 262, -178, 252, -175, 237 )
+polygon = PoolVector2Array( -133, 194, 134, 196, 120, 245, -116, 250 )
 
 [node name="wall" type="RigidBody2D" parent="MapDesign/Chapter1part4" groups=["wall"]]
 mode = 1
 physics_material_override = SubResource( 50 )
 
 [node name="wall1" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/wall"]
-polygon = PoolVector2Array( 125, -236, 136, 206, 473, 198, 470, -73, 464, -186, 457, -227, 448, -216, 435, -217, 424, -226, 403, -234, 369, -239, 336, -245, 292, -247, 228, -246, 168, -243, 150, -243, 147, -235, 137, -235 )
+polygon = PoolVector2Array( 123, -248, 445, -237, 469, -102, 460, 182, 131, 197 )
 
 [node name="wall2" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/wall"]
-polygon = PoolVector2Array( -479, -259, -479, -212, -488, 223, -471, 241, -177, 251, -145, 230, -147, 90, -153, 41, -156, -79, -150, -170, -155, -238, -162, -229, -170, -230, -180, -219, -207, -234, -257, -246 )
+polygon = PoolVector2Array( -481, -230, -168, -240, -158, 165, -125, 203, -488, 196, -449, -62 )
 
 [node name="wall3" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/wall"]
-polygon = PoolVector2Array( -1201, -216, -1159, -233, -1075, -244, -1020, -255, -943, -256, -857, -243, -827, -229, -808, -239, -747, 224, -755.575, 233.861, -763, 249, -1187, 241, -1191, -104, -1210, -203 )
+polygon = PoolVector2Array( -1203, -260, -801, -251, -766, 136, -741, 203, -1187, 197 )
 
 [node name="wall4" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/wall"]
-polygon = PoolVector2Array( -1450, -224, -1463, -43, -1472, 168, -1471, 238, -1892, 231, -1903.68, 223.994, -1913, 221, -1890, 146, -1874, 73, -1873, 9, -1865, -25, -1855, -194, -1852, -247, -1839, -236, -1826, -233, -1801, -245, -1767, -252, -1659, -258 )
+polygon = PoolVector2Array( -1851, -253, -1526, -233, -1449, -261, -1479, 207, -1914, 199 )
 
 [node name="wall5" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/wall"]
-polygon = PoolVector2Array( -2177, -261, -2176, -215, -2178, -15, -2165, 216, -2185, 228, -2480, 238, -2487, 229, -2509, 225, -2509, 69, -2500, 2, -2504, -138, -2507, -152, -2510, -185, -2503, -204, -2501, -233, -2487, -223, -2376, -248, -2221, -259 )
+polygon = PoolVector2Array( -2488, -243, -2171, -225, -2199, -62, -2169, 188, -2513, 188 )
 
 [node name="wall6" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/wall"]
-polygon = PoolVector2Array( -2780, -241, -2796, 204, -3117, 220, -3125, -85, -3112, -227, -3090, -219, -3069, -232, -2960, -247, -2884, -249 )
+polygon = PoolVector2Array( -3107, -245, -2764, -248, -2786, 187, -3134, 186 )
 
 [node name="wall7" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/wall"]
-polygon = PoolVector2Array( -3112, 217, -3530, 221, -3518, -4419, -3708, -4423, -3711, 490, -3512, 2421, -3349, 2421, -3414, 370, -3109, 318 )
+polygon = PoolVector2Array( -3115, 214, -3530, 221, -3518, -4419, -3708, -4423, -3711, 490, -3512, 2421, -3349, 2421, -3414, 370, -3109, 318 )
 
 [node name="platform" type="RigidBody2D" parent="MapDesign/Chapter1part4" groups=["platform"]]
 position = Vector2( -3349, -184 )
@@ -1064,19 +1192,19 @@ script = ExtResource( 57 )
 [node name="movingplatform2tween" type="Tween" parent="MapDesign/Chapter1part4/platform"]
 
 [node name="SpritePlatform" type="Sprite" parent="MapDesign/Chapter1part4/platform"]
-position = Vector2( 122, 406 )
-scale = Vector2( 0.242, 0.544 )
-texture = ExtResource( 33 )
+position = Vector2( -246, 21 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 55 )
 
 [node name="platformCollision" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/platform"]
 position = Vector2( 3358, 150 )
-polygon = PoolVector2Array( -3483, -192, -3441, -203, -3341, -209, -3255, -211, -3218, -213, -3214, -211, -3203, -205, -3203, -195, -3206, -184, -3207, -88, -3483, -68, -3484, -179 )
+polygon = PoolVector2Array( -3490, -172, -3541, -173, -3516, -179, -3508, -185, -3500, -193, -3491, -204, -3489, -215, -3491, -229, -3498, -238, -3514, -246, -3579, -251, -3702, -214, -3727, -206, -3754, -194, -3805, -170, -3836, -145, -3902, -104, -4038, -33, -4117, 31, -4116, 248, -3804, 29, -3638, -22, -3507, -64, -3398, -86, -3216, -108, -3157, -104, -3157, -120, -3158, -130, -3160, -137, -3165, -146, -3175, -154, -3245, -168 )
 
 [node name="Area2D" type="Area2D" parent="MapDesign/Chapter1part4/platform"]
 
-[node name="platformCollision2" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/platform/Area2D"]
-position = Vector2( 3359.15, 150 )
-polygon = PoolVector2Array( -3483, -192, -3441, -203, -3341, -209, -3255, -211, -3218, -213, -3214, -211, -3203, -205, -3203, -195, -3206, -184, -3207, -88, -3483, -68, -3484, -179 )
+[node name="platformCollision" type="CollisionPolygon2D" parent="MapDesign/Chapter1part4/platform/Area2D"]
+position = Vector2( 3358, 150 )
+polygon = PoolVector2Array( -3490, -172, -3541, -173, -3516, -179, -3508, -185, -3500, -193, -3491, -204, -3489, -215, -3491, -229, -3498, -238, -3514, -246, -3579, -251, -3702, -214, -3727, -206, -3754, -194, -3805, -170, -3836, -145, -3902, -104, -4038, -33, -4117, 31, -4116, 248, -3804, 29, -3638, -22, -3507, -64, -3398, -86, -3216, -108, -3157, -104, -3157, -120, -3158, -130, -3160, -137, -3165, -146, -3175, -154, -3245, -168 )
 
 [node name="deletePlatform" type="Timer" parent="MapDesign/Chapter1part4/platform"]
 wait_time = 5.0
@@ -1087,43 +1215,138 @@ position = Vector2( 7207, -645 )
 
 [node name="sprites" type="Node2D" parent="MapDesign/Chapter1Part5"]
 
+[node name="platform3" type="RigidBody2D" parent="MapDesign/Chapter1Part5/sprites" groups=["platform3"]]
+position = Vector2( -67, -264 )
+mode = 3
+physics_material_override = SubResource( 51 )
+script = ExtResource( 59 )
+
+[node name="Sprite" type="Sprite" parent="MapDesign/Chapter1Part5/sprites/platform3"]
+texture = ExtResource( 42 )
+
+[node name="collider" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/sprites/platform3"]
+polygon = PoolVector2Array( -531, -86, -200, -81, -190, 64, -532, 71 )
+
+[node name="Area2D" type="Area2D" parent="MapDesign/Chapter1Part5/sprites/platform3"]
+visible = false
+
+[node name="collider" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/sprites/platform3/Area2D"]
+polygon = PoolVector2Array( -531, -86, -200, -81, -190, 64, -532, 71 )
+
+[node name="platform3Tween" type="Tween" parent="MapDesign/Chapter1Part5/sprites/platform3"]
+
+[node name="platform3Timer" type="Timer" parent="MapDesign/Chapter1Part5/sprites/platform3"]
+wait_time = 5.0
+
+[node name="Chapter1Part5-5" type="Sprite" parent="MapDesign/Chapter1Part5/sprites"]
+position = Vector2( 547, 1670 )
+texture = ExtResource( 40 )
+
 [node name="Chapter1Part5-1" type="Sprite" parent="MapDesign/Chapter1Part5/sprites"]
-position = Vector2( -141, 344 )
+position = Vector2( 115, 344 )
 texture = ExtResource( 41 )
 
 [node name="Chapter1Part5-3" type="Sprite" parent="MapDesign/Chapter1Part5/sprites"]
-position = Vector2( 141, 1664 )
-texture = ExtResource( 40 )
-
-[node name="Chapter1Part5-5" type="Sprite" parent="MapDesign/Chapter1Part5/sprites"]
-position = Vector2( 131, 1670 )
-texture = ExtResource( 42 )
-
-[node name="Chapter1Part5-6" type="Sprite" parent="MapDesign/Chapter1Part5/sprites"]
-position = Vector2( 142, 1662 )
-texture = ExtResource( 39 )
+position = Vector2( 557, 1664 )
+texture = ExtResource( 35 )
 
 [node name="occluder1" type="LightOccluder2D" parent="MapDesign/Chapter1Part5/sprites"]
+position = Vector2( 416, 0 )
 occluder = SubResource( 43 )
 
 [node name="occluder2" type="LightOccluder2D" parent="MapDesign/Chapter1Part5/sprites"]
-occluder = SubResource( 44 )
+position = Vector2( 416, 8 )
+occluder = SubResource( 52 )
 
 [node name="occluder3" type="LightOccluder2D" parent="MapDesign/Chapter1Part5/sprites"]
-position = Vector2( 0, -1 )
+position = Vector2( 256, -1 )
 occluder = SubResource( 45 )
 
+[node name="Chapter1Part5-6" type="Sprite" parent="MapDesign/Chapter1Part5"]
+position = Vector2( 558, 1670 )
+texture = ExtResource( 39 )
+
+[node name="wall" type="RigidBody2D" parent="MapDesign/Chapter1Part5" groups=["wall"]]
+mode = 1
+physics_material_override = SubResource( 56 )
+
+[node name="wall1" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/wall"]
+position = Vector2( 256, 0 )
+polygon = PoolVector2Array( -386, -301, -370, -278, -194, -285, 89, -312, 98, -5, 92, 19, 71, 8, -84, 9, -279, 20, -319, 23, -337, 31, -341, 35, -349, 33, -356, 21, -355, 37, -350, 56, -340, 63, -323, 67, -258, 58, 93, 51, 97, 516, 106, 522, 111, 530, 110, 539, 106, 544, 95, 549, 77, 542, 30, 539, -44, 535, -177, 532, -261, 531, -302, 543, -322, 556, -330, 559, -329, 572, -316, 587, -321, 727, -330, 1021, 159, 1025, 160, -355, 154, -347, 138, -343, 101, -349, -375, -298 )
+
+[node name="wall2" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/wall"]
+position = Vector2( 416, 0 )
+polygon = PoolVector2Array( -409, 1529, -406, 1547, 598, 1562, 603, 1540 )
+
+[node name="wall3" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/wall"]
+position = Vector2( 415, 14 )
+polygon = PoolVector2Array( -364, 1744, 578, 1783, 554, 2670, -367, 2689 )
+
+[node name="floor" type="RigidBody2D" parent="MapDesign/Chapter1Part5" groups=["floor"]]
+mode = 1
+physics_material_override = SubResource( 57 )
+
+[node name="floor1" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/floor"]
+position = Vector2( 256, 0 )
+polygon = PoolVector2Array( -378, -326, 108, -379, 153, -368, 158, -358, 154, -349, 128, -345, 109, -352, 77, -348, -35, -338, -359, -303, -372, -298, -381, -299 )
+
+[node name="floor2" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/floor"]
+position = Vector2( 256, 0 )
+polygon = PoolVector2Array( -354, 16, -343, 9, -321, 0, -148, -19, 42, -25, 95, -22, 94, 18, 65, 4, -129, 12, -301, 23, -331, 30, -342, 36, -351, 30 )
+
+[node name="floor3" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/floor"]
+position = Vector2( 256, 8 )
+polygon = PoolVector2Array( -331, 531, -309, 518, -276, 506, -177, 502, 40, 512, 75, 516, 103, 522, 109, 530, 109, 544, 90, 547, 67, 539, -19, 536, -142, 531, -254, 529, -282, 534, -300, 536, -311, 550, -325, 556, -332, 556, -340, 547 )
+
+[node name="floor4" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/floor"]
+position = Vector2( 416, 0 )
+polygon = PoolVector2Array( -411, 1520, 602, 1521, 609, 1552, -409, 1535 )
+
 [node name="chapter1Part6" type="Node2D" parent="MapDesign"]
-position = Vector2( 8611, 970 )
+position = Vector2( 9148, 714 )
 
 [node name="Chapter1Part6" type="Sprite" parent="MapDesign/chapter1Part6"]
 position = Vector2( 725, -102 )
 texture = ExtResource( 43 )
 
 [node name="occluder1" type="LightOccluder2D" parent="MapDesign/chapter1Part6"]
+position = Vector2( -20, -14 )
 occluder = SubResource( 46 )
 
+[node name="wall" type="RigidBody2D" parent="MapDesign/chapter1Part6" groups=["wall"]]
+mode = 1
+physics_material_override = SubResource( 53 )
+
+[node name="wall1" type="CollisionPolygon2D" parent="MapDesign/chapter1Part6/wall"]
+polygon = PoolVector2Array( -260, 1329, -296, 246, 161, 259, 114, 218, 132, 39, 343, 30, 314, -208, 573, -211, 547, -406, 805, -409, 817, -252, 1124, -272, 1138, -88, 1450, -86, 1449, -23, 1700, -29, 1696, 996, 1700, 1380 )
+
+[node name="floor" type="RigidBody2D" parent="MapDesign/chapter1Part6" groups=["floor"]]
+mode = 1
+physics_material_override = SubResource( 58 )
+
+[node name="floor1" type="CollisionPolygon2D" parent="MapDesign/chapter1Part6/floor"]
+polygon = PoolVector2Array( -297, 218, 112, 220, 117, 245, -300, 250 )
+
+[node name="floor2" type="CollisionPolygon2D" parent="MapDesign/chapter1Part6/floor"]
+polygon = PoolVector2Array( 123, 12, 336, 10, 294, 26, 121, 28 )
+
+[node name="floor3" type="CollisionPolygon2D" parent="MapDesign/chapter1Part6/floor"]
+polygon = PoolVector2Array( 314, -237, 564, -233, 566, -219, 312, -207 )
+
+[node name="floor4" type="CollisionPolygon2D" parent="MapDesign/chapter1Part6/floor"]
+polygon = PoolVector2Array( 546, -438, 808, -437, 810, -414, 546, -412 )
+
+[node name="floor5" type="CollisionPolygon2D" parent="MapDesign/chapter1Part6/floor"]
+polygon = PoolVector2Array( 814, -301, 1120, -300, 1120, -277, 817, -267 )
+
+[node name="floor6" type="CollisionPolygon2D" parent="MapDesign/chapter1Part6/floor"]
+polygon = PoolVector2Array( 1137, -119, 1444, -121, 1448, -92, 1141, -87 )
+
+[node name="floor7" type="CollisionPolygon2D" parent="MapDesign/chapter1Part6/floor"]
+polygon = PoolVector2Array( 1449, -47, 1695, -48, 1695, -28, 1452, -28 )
+
 [node name="Chapter1Part7" type="Node2D" parent="MapDesign"]
+position = Vector2( 537, -256 )
 
 [node name="Chapter1Part7" type="Sprite" parent="MapDesign/Chapter1Part7"]
 position = Vector2( 12175.1, 292 )
@@ -1134,39 +1357,80 @@ texture = ExtResource( 44 )
 position = Vector2( 10362, 1024 )
 rotation = -0.0401426
 scale = Vector2( 0.012, 0.1 )
-texture = ExtResource( 37 )
+texture = SubResource( 60 )
 
-[node name="hand" parent="MapDesign" instance=ExtResource( 28 )]
-position = Vector2( 13523, 576 )
-rotation = 3.14159
-scale = Vector2( 1, -1 )
+[node name="wall" type="RigidBody2D" parent="MapDesign/Chapter1Part7" groups=["wall"]]
+mode = 1
+physics_material_override = SubResource( 54 )
+
+[node name="wall1" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/wall"]
+polygon = PoolVector2Array( 10298, 2195, 10297, 489, 10846, 477, 10853.7, 612.215, 11220, 619, 11220, 652, 10856.9, 669.218, 10872.4, 942.04, 11264, 944, 11308, 1362, 10870, 1448, 10948, 2277, 11010, 2274, 11206, 2265, 11464, 2230, 11826, 2199, 12064, 2203, 12281, 2211, 12295, 2187, 12310, 1876, 12286, 1646, 12328, 1627, 12492, 1598, 12614, 1578, 12709, 1578, 12708, 1475, 12698, 1240, 12660, 1012, 12643, 893, 12475, 890, 12408, 898, 12292, 859, 12123, 821, 12040, 773, 12075, 754, 12353, 759, 12647, 743, 12741, 738, 13083, 742, 13127, 1245, 13224, 2129, 13234, 2216, 13235, 2229, 13227, 2240, 13229, 2261, 13250, 2274, 13321, 2264, 13517, 2266, 13768, 2289, 14010, 2291, 14017, 2312, 14044, 2297, 14046, 2639, 10269, 2622 )
+
+[node name="wall2" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/wall"]
+polygon = PoolVector2Array( 11595, 1004, 11597, 303, 12983, 299, 13001, 306, 13020, 319, 13023, 341, 12087, 367, 11786, 398, 11719, 519, 11708, 975, 11690, 1026, 11728, 1037, 11860, 1050, 11934, 1056, 12011, 1114, 12127, 1223, 12226, 1270, 12288, 1274, 12294, 1339, 11974, 1402, 12011, 1698, 11215, 1805, 11169, 1801, 11151, 1686, 11602, 1689, 11605, 1647 )
+
+[node name="floor" type="RigidBody2D" parent="MapDesign/Chapter1Part7" groups=["floor"]]
+mode = 1
+physics_material_override = SubResource( 55 )
+
+[node name="floor1" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/floor"]
+position = Vector2( 0, 1 )
+polygon = PoolVector2Array( 10307, 414, 10857, 414, 10857, 446, 10311, 465 )
+
+[node name="floor2" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/floor"]
+polygon = PoolVector2Array( 10856, 575, 11229, 579, 11233, 609, 10853, 596 )
+
+[node name="floor3" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/floor"]
+polygon = PoolVector2Array( 10879, 890, 11273, 891, 11274, 934, 10875, 922 )
+
+[node name="floor4" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/floor"]
+polygon = PoolVector2Array( 11151, 1655, 11599, 1655, 11595, 1686, 11191, 1688, 11148, 1685 )
+
+[node name="floor5" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/floor"]
+polygon = PoolVector2Array( 10920, 2151, 12285, 2145, 12268, 2208, 10922, 2190 )
+
+[node name="floor6" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/floor"]
+polygon = PoolVector2Array( 12287, 1564, 12710, 1564, 12713, 1603, 12285, 1642 )
+
+[node name="floor7" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/floor"]
+polygon = PoolVector2Array( 11703, 1000, 11922, 1012, 11944, 1017, 12177, 1208, 12297, 1229, 12298, 1253, 12283, 1269, 12255, 1262, 12221, 1264, 12178, 1253, 12093, 1201, 11937, 1057, 11755, 1040, 11694, 1022 )
+
+[node name="floor8" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/floor"]
+polygon = PoolVector2Array( 12043, 711, 13091, 705, 13089, 753, 12039, 746 )
+
+[node name="floor9" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/floor"]
+polygon = PoolVector2Array( 11598, 249, 13021, 254, 13028, 297, 11594, 287 )
+
+[node name="floor10" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/floor"]
+polygon = PoolVector2Array( 13246, 2224, 14039, 2227, 14048, 2264, 13250, 2290 )
 
 [node name="MapBounds" type="Node2D" parent="MapDesign"]
 
 [node name="out of bounds" type="Area2D" parent="MapDesign/MapBounds" groups=["outofworld"]]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapDesign/MapBounds/out of bounds"]
+[node name="bounds1" type="CollisionShape2D" parent="MapDesign/MapBounds/out of bounds"]
 position = Vector2( 5146.5, 2005.5 )
 shape = SubResource( 2 )
 
 [node name="out of bounds3" type="Area2D" parent="MapDesign/MapBounds" groups=["outofworld"]]
-position = Vector2( -633, -2205 )
-scale = Vector2( 0.334, 0.624 )
+position = Vector2( -409, -1597 )
+scale = Vector2( 0.408, 0.624 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapDesign/MapBounds/out of bounds3"]
+[node name="bounds2" type="CollisionShape2D" parent="MapDesign/MapBounds/out of bounds3"]
 position = Vector2( 5146.5, 2005.5 )
 shape = SubResource( 2 )
 
-[node name="out of bounds2" type="Area2D" parent="MapDesign/MapBounds" groups=["outofworld"]]
-position = Vector2( 4144, 592 )
+[node name="out of bounds2" type="Area2D" parent="MapDesign/MapBounds/out of bounds3" groups=["outofworld"]]
+position = Vector2( 11159.3, 3508.01 )
+scale = Vector2( 2.45098, 1.60256 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MapDesign/MapBounds/out of bounds2"]
+[node name="bounds3" type="CollisionShape2D" parent="MapDesign/MapBounds/out of bounds3/out of bounds2"]
 position = Vector2( 8513.55, 2074.41 )
 scale = Vector2( 0.412, 1.658 )
 shape = SubResource( 2 )
 
 [node name="light" type="Light2D" parent="MapDesign"]
-position = Vector2( 883, 939 )
+position = Vector2( 875, 947 )
 scale = Vector2( 24.7916, 15.257 )
 texture = ExtResource( 25 )
 texture_scale = 0.5
@@ -1187,19 +1451,19 @@ position = Vector2( 2596, 1332 )
 position = Vector2( 2776, 1325 )
 
 [node name="shapeBuff2" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( 4696, 1362 )
+position = Vector2( 4696, 1322 )
 
 [node name="shapeBuff3" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( 4520, 436 )
+position = Vector2( 4520, 364 )
 
 [node name="shapeBuff4" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( 4832, 1033 )
+position = Vector2( 4880, 1033 )
 
 [node name="shapeBuff5" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( 5949, 184 )
+position = Vector2( 5949, 96 )
 
 [node name="shapeBuff6" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( 6216, -264 )
+position = Vector2( 6216, -320 )
 
 [node name="shapeBuff7" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 4815, -690 )
@@ -1211,10 +1475,31 @@ position = Vector2( 2093, -288 )
 position = Vector2( 75, -288 )
 
 [node name="lifeup2" parent="Collectables" instance=ExtResource( 24 )]
-position = Vector2( 5823, 208 )
+position = Vector2( 5943, -48 )
 
 [node name="lifeup3" parent="Collectables" instance=ExtResource( 24 )]
 position = Vector2( 4293, -694 )
+
+[node name="lifeup5" parent="Collectables" instance=ExtResource( 24 )]
+position = Vector2( 6432, -1136 )
+
+[node name="shapeBuff10" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 6294, -1115 )
+
+[node name="shapeBuff11" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 9049, 839 )
+
+[node name="shapeBuff12" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 13106, 1236 )
+
+[node name="shapeBuff13" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 12328, 703 )
+
+[node name="lifeup6" parent="Collectables" instance=ExtResource( 24 )]
+position = Vector2( 9806, 208 )
+
+[node name="lifeup7" parent="Collectables" instance=ExtResource( 24 )]
+position = Vector2( 12954, 1245 )
 
 [node name="Audio" type="Node2D" parent="."]
 
@@ -1231,7 +1516,7 @@ position = Vector2( 4332, -298 )
 scale = Vector2( 3.188, 1.524 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/enemyBoundary2"]
-position = Vector2( -155.604, 144 )
+position = Vector2( -125.491, 112.504 )
 scale = Vector2( 3.18, 4.124 )
 shape = SubResource( 21 )
 
@@ -1240,7 +1525,7 @@ position = Vector2( 3334, -275 )
 scale = Vector2( 3.188, 1.524 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/enemyBoundary1"]
-position = Vector2( -146.507, 144 )
+position = Vector2( -133.96, 107.255 )
 scale = Vector2( 3.18, 4.124 )
 shape = SubResource( 21 )
 
@@ -1249,7 +1534,7 @@ position = Vector2( 5520, -1544 )
 scale = Vector2( 3.188, 1.524 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/enemyBoundary3"]
-position = Vector2( -128, 144 )
+position = Vector2( -143.056, 96.7559 )
 scale = Vector2( 3.18, 4.124 )
 shape = SubResource( 21 )
 
@@ -1258,69 +1543,193 @@ position = Vector2( 6368, -1576 )
 scale = Vector2( 3.188, 1.524 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/enemyBoundary4"]
+position = Vector2( -107.925, 117.753 )
+scale = Vector2( 3.18, 4.124 )
+shape = SubResource( 21 )
+
+[node name="enemyBoundary9" type="Area2D" parent="Enemies" groups=["enemyBoundary"]]
+position = Vector2( 12783, -254 )
+scale = Vector2( 3.188, 1.524 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/enemyBoundary9"]
 position = Vector2( -128, 144 )
 scale = Vector2( 3.18, 4.124 )
 shape = SubResource( 21 )
 
-[node name="enemy1" parent="Enemies" instance=ExtResource( 27 )]
-position = Vector2( 2288, 1560.56 )
-rotation = 0.122173
+[node name="enemyBoundary10" type="Area2D" parent="Enemies" groups=["enemyBoundary"]]
+position = Vector2( 13669, -303 )
+scale = Vector2( 3.188, 1.524 )
 
-[node name="enemy2" parent="Enemies" instance=ExtResource( 27 )]
-position = Vector2( 3480, -78 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemies/enemyBoundary10"]
+position = Vector2( -128, 144 )
+scale = Vector2( 3.18, 4.124 )
+shape = SubResource( 21 )
+
+[node name="enemy1" parent="Enemies" groups=["enemy"] instance=ExtResource( 27 )]
+position = Vector2( 2290, 1513.56 )
+rotation = 0.0523599
+
+[node name="enemy2" parent="Enemies" groups=["enemy"] instance=ExtResource( 27 )]
+position = Vector2( 3480, -110 )
 scale = Vector2( 1, 1.01162 )
 
-[node name="enemy" parent="Enemies" instance=ExtResource( 58 )]
-position = Vector2( 5169, 435 )
+[node name="enemy" parent="Enemies" groups=["enemy"] instance=ExtResource( 58 )]
+position = Vector2( 5169, 390 )
 
-[node name="enemy3" parent="Enemies" instance=ExtResource( 56 )]
-position = Vector2( 5346, -690 )
+[node name="enemy3" parent="Enemies" groups=["enemy"] instance=ExtResource( 56 )]
+position = Vector2( 5346, -674 )
 
-[node name="enemy4" parent="Enemies" instance=ExtResource( 27 )]
-position = Vector2( 5487, -1343 )
+[node name="enemy4" parent="Enemies" groups=["enemy"] instance=ExtResource( 27 )]
+position = Vector2( 5488, -1383 )
+
+[node name="enemy5" parent="Enemies" groups=["enemy"] instance=ExtResource( 58 )]
+position = Vector2( 7154, -701 )
+
+[node name="enemy6" parent="Enemies" groups=["enemy"] instance=ExtResource( 58 )]
+position = Vector2( 7190, -188 )
+
+[node name="enemy7" parent="Enemies" groups=["enemy"] instance=ExtResource( 56 )]
+position = Vector2( 6463, 199 )
+
+[node name="enemy8" parent="Enemies" groups=["enemy"] instance=ExtResource( 58 )]
+position = Vector2( 9646, 398 )
+rotation = -0.0872665
+
+[node name="enemy9" parent="Enemies" groups=["enemy"] instance=ExtResource( 56 )]
+position = Vector2( 10340, 543 )
+
+[node name="enemy10" parent="Enemies" groups=["enemy"] instance=ExtResource( 56 )]
+position = Vector2( 11709, 572 )
+
+[node name="enemy12" parent="Enemies" groups=["enemy"] instance=ExtResource( 27 )]
+position = Vector2( 12253, 1855 )
+
+[node name="enemy14" parent="Enemies" groups=["enemy"] instance=ExtResource( 27 )]
+position = Vector2( 12795, -53 )
 
 [node name="Checkpoints" type="Node2D" parent="."]
 
+[node name="Light2D" type="Light2D" parent="Checkpoints"]
+position = Vector2( 741, 865 )
+texture = ExtResource( 25 )
+texture_scale = 0.14
+color = Color( 0, 1, 0, 1 )
+energy = 2.0
+shadow_enabled = true
+
+[node name="Light2D2" type="Light2D" parent="Checkpoints"]
+position = Vector2( 2911, 1110.54 )
+texture = ExtResource( 25 )
+texture_scale = 0.14
+color = Color( 0, 1, 0, 1 )
+energy = 2.0
+shadow_enabled = true
+script = ExtResource( 61 )
+
+[node name="Light2D3" type="Light2D" parent="Checkpoints"]
+position = Vector2( 4687, 170.54 )
+texture = ExtResource( 25 )
+texture_scale = 0.14
+color = Color( 0, 1, 0, 1 )
+energy = 2.0
+shadow_enabled = true
+script = ExtResource( 62 )
+
+[node name="Light2D4" type="Light2D" parent="Checkpoints"]
+position = Vector2( 4413, -901.46 )
+texture = ExtResource( 25 )
+texture_scale = 0.14
+color = Color( 0, 1, 0, 1 )
+energy = 2.0
+shadow_enabled = true
+script = ExtResource( 63 )
+
+[node name="Light2D5" type="Light2D" parent="Checkpoints"]
+position = Vector2( -532, -503.46 )
+texture = ExtResource( 25 )
+texture_scale = 0.14
+color = Color( 0, 1, 0, 1 )
+energy = 2.0
+shadow_enabled = true
+script = ExtResource( 64 )
+
+[node name="Light2D6" type="Light2D" parent="Checkpoints"]
+position = Vector2( 5993, -1600.46 )
+texture = ExtResource( 25 )
+texture_scale = 0.14
+color = Color( 0, 1, 0, 1 )
+energy = 2.0
+shadow_enabled = true
+script = ExtResource( 65 )
+
+[node name="Light2D7" type="Light2D" parent="Checkpoints"]
+position = Vector2( 8934, 654 )
+texture = ExtResource( 25 )
+texture_scale = 0.14
+color = Color( 0, 1, 0, 1 )
+energy = 2.0
+shadow_enabled = true
+script = ExtResource( 66 )
+
+[node name="Light2D8" type="Light2D" parent="Checkpoints"]
+position = Vector2( 12059, 1131 )
+texture = ExtResource( 25 )
+texture_scale = 0.14
+color = Color( 0, 1, 0, 1 )
+energy = 2.0
+shadow_enabled = true
+script = ExtResource( 67 )
+
 [node name="CheckpointAnim1" type="AnimatedSprite" parent="Checkpoints"]
-position = Vector2( 740, 874 )
+position = Vector2( 740, 858 )
 scale = Vector2( 0.196, 0.272 )
 frames = SubResource( 47 )
 animation = "Activated"
 
 [node name="CheckpointAnim2" type="AnimatedSprite" parent="Checkpoints"]
-position = Vector2( 3003, 1152 )
-rotation = 0.174533
+position = Vector2( 2907, 1104 )
 scale = Vector2( 0.196, 0.272 )
 frames = SubResource( 47 )
 animation = "Activated"
 
 [node name="CheckpointAnim3" type="AnimatedSprite" parent="Checkpoints"]
-position = Vector2( 4680, 238 )
-rotation = -0.174533
+position = Vector2( 4684.12, 166 )
 scale = Vector2( 0.196, 0.272 )
 frames = SubResource( 47 )
 animation = "Activated"
 
 [node name="CheckpointAnim4" type="AnimatedSprite" parent="Checkpoints"]
-position = Vector2( 4408, -912 )
+position = Vector2( 4408, -909 )
 scale = Vector2( 0.196, 0.272 )
 frames = SubResource( 47 )
 animation = "Activated"
 
 [node name="CheckpointAnim5" type="AnimatedSprite" parent="Checkpoints"]
-position = Vector2( -624, -498 )
+position = Vector2( -536, -510 )
 scale = Vector2( 0.196, 0.272 )
 frames = SubResource( 47 )
 animation = "Activated"
 
 [node name="CheckpointAnim6" type="AnimatedSprite" parent="Checkpoints"]
-position = Vector2( 5991, -1569 )
+position = Vector2( 5991, -1609 )
+scale = Vector2( 0.196, 0.272 )
+frames = SubResource( 47 )
+animation = "Activated"
+
+[node name="CheckpointAnim7" type="AnimatedSprite" parent="Checkpoints"]
+position = Vector2( 8931, 648 )
+scale = Vector2( 0.196, 0.272 )
+frames = SubResource( 47 )
+animation = "Activated"
+
+[node name="CheckpointAnim8" type="AnimatedSprite" parent="Checkpoints"]
+position = Vector2( 12056, 1122 )
 scale = Vector2( 0.196, 0.272 )
 frames = SubResource( 47 )
 animation = "Activated"
 
 [node name="checkpoint1" type="Area2D" parent="Checkpoints"]
-position = Vector2( 740, 1026 )
+position = Vector2( 740, 1018 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint1"]
 position = Vector2( 0, -72 )
@@ -1328,7 +1737,7 @@ scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
 [node name="checkpoint2" type="Area2D" parent="Checkpoints"]
-position = Vector2( 2991, 1305.54 )
+position = Vector2( 2919, 1266.54 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint2"]
 position = Vector2( 0, -72 )
@@ -1336,7 +1745,7 @@ scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
 [node name="checkpoint3" type="Area2D" parent="Checkpoints"]
-position = Vector2( 4711, 393.54 )
+position = Vector2( 4703, 361.54 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint3"]
 position = Vector2( 0, -72 )
@@ -1352,7 +1761,7 @@ scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
 [node name="checkpoint5" type="Area2D" parent="Checkpoints"]
-position = Vector2( -616, -342.46 )
+position = Vector2( -528, -342.46 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint5"]
 position = Vector2( 0, -72 )
@@ -1360,30 +1769,77 @@ scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
 [node name="checkpoint6" type="Area2D" parent="Checkpoints"]
-position = Vector2( 6000, -1406.46 )
+position = Vector2( 6000, -1446.46 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint6"]
 position = Vector2( 0, -72 )
 scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
+[node name="checkpoint7" type="Area2D" parent="Checkpoints"]
+position = Vector2( 8933, 810 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint7"]
+position = Vector2( 0, -72 )
+scale = Vector2( 6.61, 18.99 )
+shape = SubResource( 8 )
+
+[node name="checkpoint8" type="Area2D" parent="Checkpoints"]
+position = Vector2( 12058, 1282 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint8"]
+position = Vector2( 0, -72 )
+scale = Vector2( 6.61, 18.99 )
+shape = SubResource( 8 )
+
+[node name="cannonBallTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="hand" parent="." instance=ExtResource( 28 )]
+position = Vector2( 14561, 422 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = 19363.0
+margin_top = -2936.0
+margin_right = 19682.0
+margin_bottom = -2870.0
+custom_fonts/font = SubResource( 59 )
+text = "Thanks for playing!"
+percent_visible = 0.0
+script = ExtResource( 70 )
+
+[node name="labelTween" type="Tween" parent="Label"]
+
+[node name="keyboard" type="AudioStreamPlayer" parent="Label"]
+
 [connection signal="body_entered" from="MapDesign/Tutorial/ReverbArea" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="MapDesign/Tutorial/ReverbArea" to="." method="_on_ReverbArea_body_exited"]
 [connection signal="tween_all_completed" from="MapDesign/Chapter1part4/platform/movingplatform2tween" to="MapDesign/Chapter1part4/platform" method="_on_movingplatform2tween_tween_all_completed"]
 [connection signal="body_entered" from="MapDesign/Chapter1part4/platform/Area2D" to="MapDesign/Chapter1part4/platform" method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="MapDesign/Chapter1part4/platform/deletePlatform" to="MapDesign/Chapter1part4/platform" method="_on_deletePlatform_timeout"]
+[connection signal="body_entered" from="MapDesign/Chapter1Part5/sprites/platform3/Area2D" to="MapDesign/Chapter1Part5/sprites/platform3" method="_on_Area2D_body_entered"]
+[connection signal="tween_all_completed" from="MapDesign/Chapter1Part5/sprites/platform3/platform3Tween" to="MapDesign/Chapter1Part5/sprites/platform3" method="_on_platform3Tween_tween_all_completed"]
+[connection signal="timeout" from="MapDesign/Chapter1Part5/sprites/platform3/platform3Timer" to="MapDesign/Chapter1Part5/sprites/platform3" method="_on_platform3Timer_timeout"]
 [connection signal="body_entered" from="MapDesign/MapBounds/out of bounds" to="." method="_on_out_of_bounds_body_entered"]
-[connection signal="body_entered" from="MapDesign/MapBounds/out of bounds3" to="." method="_on_out_of_bounds_body_entered"]
-[connection signal="body_entered" from="MapDesign/MapBounds/out of bounds2" to="." method="_on_out_of_bounds_body_entered"]
+[connection signal="body_entered" from="MapDesign/MapBounds/out of bounds3" to="." method="_on_out_of_bounds3_body_entered"]
+[connection signal="body_entered" from="MapDesign/MapBounds/out of bounds3/out of bounds2" to="." method="_on_out_of_bounds2_body_entered"]
 [connection signal="animation_finished" from="Checkpoints/CheckpointAnim1" to="." method="_on_CheckpointAnim1_animation_finished"]
 [connection signal="animation_finished" from="Checkpoints/CheckpointAnim2" to="." method="_on_CheckpointAnim2_animation_finished"]
 [connection signal="animation_finished" from="Checkpoints/CheckpointAnim3" to="." method="_on_CheckpointAnim3_animation_finished"]
 [connection signal="animation_finished" from="Checkpoints/CheckpointAnim4" to="." method="_on_CheckpointAnim4_animation_finished"]
 [connection signal="animation_finished" from="Checkpoints/CheckpointAnim5" to="." method="_on_CheckpointAnim5_animation_finished"]
 [connection signal="animation_finished" from="Checkpoints/CheckpointAnim6" to="." method="_on_CheckpointAnim6_animation_finished"]
-[connection signal="body_entered" from="Checkpoints/checkpoint1" to="." method="_on_finishtutorial_body_entered"]
+[connection signal="animation_finished" from="Checkpoints/CheckpointAnim7" to="." method="_on_CheckpointAnim7_animation_finished"]
+[connection signal="animation_finished" from="Checkpoints/CheckpointAnim8" to="." method="_on_CheckpointAnim8_animation_finished"]
+[connection signal="body_entered" from="Checkpoints/checkpoint1" to="." method="_on_checkpoint1_body_entered"]
 [connection signal="body_entered" from="Checkpoints/checkpoint2" to="." method="_on_checkpoint2_body_entered"]
 [connection signal="body_entered" from="Checkpoints/checkpoint3" to="." method="_on_checkpoint3_body_entered"]
 [connection signal="body_entered" from="Checkpoints/checkpoint4" to="." method="_on_checkpoint4_body_entered"]
 [connection signal="body_entered" from="Checkpoints/checkpoint5" to="." method="_on_checkpoint5_body_entered"]
 [connection signal="body_entered" from="Checkpoints/checkpoint6" to="." method="_on_checkpoint6_body_entered"]
+[connection signal="body_entered" from="Checkpoints/checkpoint7" to="." method="_on_checkpoint7_body_entered"]
+[connection signal="body_entered" from="Checkpoints/checkpoint8" to="." method="_on_checkpoint8_body_entered"]
+[connection signal="timeout" from="cannonBallTimer" to="." method="_on_cannonBallTimer_timeout"]
+[connection signal="tween_completed" from="Label/labelTween" to="Label" method="_on_labelTween_tween_completed"]

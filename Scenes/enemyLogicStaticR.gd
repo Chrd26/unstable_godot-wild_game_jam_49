@@ -15,7 +15,7 @@ var playRandom = RandomNumberGenerator.new();
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass;
-	#$AnimatedSprite.play("EnemyIdle");
+	$AnimatedSprite.play("EnemyIdle");
 
 
 func _physics_process(_delta):
@@ -89,4 +89,13 @@ func _physics_process(_delta):
 
 func _on_Timer_timeout():
 	hasShot = false;
+	$AnimatedSprite.play("EnemyIdle");
 
+
+
+func _on_Area2D_body_entered(body):
+	if body.is_in_group("player"):
+		Global.takeDamage = true;
+		if Global.lives > 0:
+			Global.lives -= 1;
+			Global.lostLife = true;

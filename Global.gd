@@ -14,13 +14,20 @@ var enemyGetPOS;
 var hasActivatedBuilding = false;
 var haspickedUpShape = false;
 var chapterNumber = 0;
-var checkpointIndex= 5;
+var checkpointIndex= 0;
 var hasgameStarted = false;
 var isjumping = false;
 var haspressedBegin = false;
 var getPlatformVelocity;
 var getPlatformPosition;
-
+var getPlatform2Velocity;
+var getPlatform3Velocity;
+var getExitChapterVelocity;
+var hashand1Startedmoving = false;
+var hasexitChapterStarted = false;
+var isChapter1Finished = false;
+var hasOutroStarted = false;
+var hasEnteredMenu = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

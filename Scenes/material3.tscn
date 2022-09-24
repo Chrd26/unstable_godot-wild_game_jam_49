@@ -13,7 +13,6 @@ absorbent = true
 mass = 20.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 5.0
-continuous_cd = 2
 linear_damp = -0.5
 script = ExtResource( 2 )
 
@@ -30,6 +29,3 @@ polygon = PoolVector2Array( -20, -18, -17, 42, -72, 46, -70, 83, 68, 76, 65, 34,
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="material_1/Area2D"]
 position = Vector2( 1, 0 )
 polygon = PoolVector2Array( -20, -18, -17, 42, -72, 46, -70, 83, 68, 76, 65, 34, 19, 38, 16, -20 )
-
-[connection signal="body_entered" from="material_1/Area2D" to="material_1" method="_on_Area2D_body_entered"]
-[connection signal="body_exited" from="material_1/Area2D" to="material_1" method="_on_Area2D_body_exited"]

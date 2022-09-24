@@ -32,18 +32,3 @@ func _physics_process(_delta):
 		global_position = matPos;
 		if Global.checkpointIndex > 0:
 			Global.materials -= 1;
-
-
-
-func _on_Area2D_body_entered(body):
-	if Global.movementEnabled:
-		if body.is_in_group("player"):
-			Global.isonMaterial = true;
-			Global.isjumping = false;
-		#print("isonMaterial");
-
-
-func _on_Area2D_body_exited(body):
-	if Global.movementEnabled:
-		if body.is_in_group("player"):
-			Global.isonMaterial = false;
