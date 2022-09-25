@@ -281,7 +281,7 @@ func _process(_delta):
 			var selection = load(\"res://Scenes/changeShape.tscn\");
 			var playSelectionSound = selection.instance();
 			add_child(playSelectionSound);
-			var material = load(\"res://Scenes/Material3.tscn\");
+			var material = load(\"res://Scenes/material3_2.tscn\");
 			materialSpawn = material.instance();
 			add_child(materialSpawn);
 		else:
@@ -786,7 +786,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 2
+frame = 8
 playing = true
 script = ExtResource( 60 )
 
@@ -797,7 +797,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 4
+frame = 5
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -1365,7 +1365,7 @@ polygon = PoolVector2Array( -386, -301, -370, -278, -194, -285, 89, -312, 98, -5
 
 [node name="wall2" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/wall"]
 position = Vector2( 416, 0 )
-polygon = PoolVector2Array( -409, 1529, -406, 1547, 598, 1562, 603, 1540 )
+polygon = PoolVector2Array( -406, 1541, -390, 1547, 598, 1562, 603, 1540 )
 
 [node name="wall3" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/wall"]
 position = Vector2( 415, 14 )
@@ -1389,7 +1389,7 @@ polygon = PoolVector2Array( -331, 531, -309, 518, -276, 506, -177, 502, 40, 512,
 
 [node name="floor4" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/floor"]
 position = Vector2( 416, 0 )
-polygon = PoolVector2Array( -411, 1520, 602, 1521, 609, 1552, -409, 1535 )
+polygon = PoolVector2Array( -411, 1513, 603, 1512, 609, 1552, -409, 1535 )
 
 [node name="chapter1Part6" type="Node2D" parent="MapDesign"]
 position = Vector2( 9148, 714 )
