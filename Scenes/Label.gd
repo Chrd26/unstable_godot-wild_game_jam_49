@@ -1,14 +1,9 @@
 extends Label
 var hasStarted = false;
-var randomPitch = RandomNumberGenerator.new()
 
 func _process(_delta):
 	if Global.hasOutroStarted:
 		if !hasStarted:
-			randomPitch.randomize()
-			var randomPitchNumber = randomPitch.randf_range(0.9,1);
-			$keyboard.pitch_scale = randomPitchNumber;
-			$keyboard.play();
 			$labelTween.interpolate_property(self, "percent_visible", 0.0, 0.1, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT);
 			$labelTween.interpolate_property(self, "percent_visible", 0.1, 0.2, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.3);
 			$labelTween.interpolate_property(self, "percent_visible", 0.3, 0.4, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 0.6);
@@ -21,7 +16,4 @@ func _process(_delta):
 			hasStarted = true;
 
 func _on_labelTween_tween_completed(_object, _key):
-	randomPitch.randomize()
-	var randomPitchNumber = randomPitch.randf_range(0.9,1);
-	$keyboard.pitch_scale = randomPitchNumber;
-	$keyboard.play();
+	pass;

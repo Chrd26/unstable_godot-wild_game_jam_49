@@ -303,10 +303,6 @@ func _on_playerArea_body_exited(body):
 		$Audio/Movement.stop();
 		isonPlatform2 = false;
 		isonfloor = false;
-		if !Global.isjumping:
-			gravity_scale = 40;
-		else:
-			gravity_scale = 20;
 	elif body.is_in_group("platform3"):
 		$Audio/Footsteps.stop();
 		$Audio/Movement.stop();

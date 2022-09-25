@@ -14,7 +14,7 @@ var enemyGetPOS;
 var hasActivatedBuilding = false;
 var haspickedUpShape = false;
 var chapterNumber = 0;
-var checkpointIndex= 0;
+var checkpointIndex = 0;
 var hasgameStarted = false;
 var isjumping = false;
 var haspressedBegin = false;
@@ -48,6 +48,7 @@ func _process(_delta):
 		Global.buttonPresses += 1;
 	if buttonPresses == 2:
 		Global.hasActivatedBuilding = false;
+		Global.isonMaterial = true;
 		var buildSound = load("res://Scenes/EnableDisableBuildMode.tscn");
 		var playbuildSound = buildSound.instance();
 		add_child(playbuildSound);

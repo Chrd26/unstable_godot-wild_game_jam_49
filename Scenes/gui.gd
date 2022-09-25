@@ -15,6 +15,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	if Global.checkpointIndex == 0:
+		$CanvasLayer/materials_left.add_color_override("font_color", Color(0, 0, 0, 1));
+		$CanvasLayer/X.add_color_override("font_color", Color(0, 0, 0, 1));
+	if Global.checkpointIndex > 0:
+		$CanvasLayer/materials_left.add_color_override("font_color", Color(1, 1, 1, 1));
+		$CanvasLayer/X.add_color_override("font_color", Color(1, 1, 1, 1));
 	materialsLeft.text = str(Global.materials);
 	if Global.lostLife:
 		if Global.lives == 2:

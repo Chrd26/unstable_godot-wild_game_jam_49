@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/00MasterTrack 1 to Track 2.ogg-3f203b2d969992852cbba0ce4b635117.oggstr"
+
+[deps]
+
+source_file="res://Assets/Music/00MasterTrack 1 to Track 2.ogg"
+dest_files=[ "res://.import/00MasterTrack 1 to Track 2.ogg-3f203b2d969992852cbba0ce4b635117.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

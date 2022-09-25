@@ -17,12 +17,14 @@ func _process(_delta):
 			$TutorialIntro.stop();
 		elif $TutorialLoop.playing:
 			$TutorialLoop.stop();
-		elif $TutorialtoLevel1.playing:
-			$TutorialtoLevel1.stop();
-		elif $Chapter1Intro.playing:
-			$Chapter1Intro.stop();
-		elif $Chapter1Loop.playing:
-			$Chapter1Loop.stop();
+		elif $Track1Intro.playing:
+			$Track1Intro.stop();
+		elif $Track1Loop.playing:
+			$Track1Loop.stop();
+		elif $Track2Intro.playing:
+			$Track2Intro.stop();
+		elif $Track2Loop.playing:
+			$Track2Loop.stop();
 		Global.hasEnteredMenu = false;
 	#print($IntroFadeIn.volume_db);
 	if Global.hasgameStarted:
@@ -41,12 +43,10 @@ func _on_IntroFadeIn_finished():
 		$IntroLoop.play();
 	elif Global.chapterNumber == 1 && Global.checkpointIndex == 0:
 		$TutorialIntro.play();	
-	elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
-		$Chapter1Intro.play();
+	elif Global.chapterNumber == 1 && Global.checkpointIndex > 0 && Global.checkpointIndex < 4:
+		$Track1Intro.play();
 	elif Global.chapterNumber == 0 && Global.checkpointIndex == 0:
 		$IntroLoop.play();
-
-
 
 
 func _on_IntroLoop_finished():
@@ -54,10 +54,12 @@ func _on_IntroLoop_finished():
 		$IntroLoop.play();
 	elif Global.chapterNumber == 1 && Global.checkpointIndex == 0:
 		$TutorialIntro.play();	
-	elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
-		$Chapter1Intro.play();
+	elif Global.chapterNumber == 1 && Global.checkpointIndex > 0 && Global.checkpointIndex < 4:
+		$Track1Intro.play();
 	elif Global.chapterNumber == 0 && Global.checkpointIndex == 0:
 		$IntroLoop.play();
+	elif Global.chapterNumber == 1 && Global.checkpointIndex >= 4:
+		$Track2Intro.play();
 
 
 func _on_TutorialIntro_finished():
@@ -70,31 +72,8 @@ func _on_TutorialLoop_finished():
 		$IntroFadeIn.volume_db = 0;
 	if Global.chapterNumber == 1 && Global.checkpointIndex == 0:
 		$TutorialLoop.play();
-	elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
-		$TutorialtoLevel1.play();
-
-func _on_Chapter1Intro_finished():
-	if Global.chapterNumber == 0:
-		$IntroFadeIn.play();
-		$IntroFadeIn.volume_db = 0;
-	if Global.chapterNumber == 1:
-		$Chapter1Loop.play();
-
-
-func _on_Chapter1Loop_finished():
-	if Global.chapterNumber == 0:
-		$IntroFadeIn.play();
-		$IntroFadeIn.volume_db = 0;
-	if Global.chapterNumber == 1:
-		$Chapter1Loop.play();
-
-
-func _on_TutorialtoLevel1_finished():
-	if Global.chapterNumber == 0:
-		$IntroFadeIn.play();
-		$IntroFadeIn.volume_db = 0;
-	if Global.chapterNumber == 1:
-		$Chapter1Intro.play();
+	elif Global.chapterNumber == 1 && Global.checkpointIndex > 0 && Global.checkpointIndex < 4:
+		$Track1Intro.play();
 
 
 func _on_musicTween_tween_all_completed():
@@ -102,12 +81,52 @@ func _on_musicTween_tween_all_completed():
 		$IntroFadeIn.stop();
 		if Global.chapterNumber == 1 && Global.checkpointIndex == 0:
 			$TutorialIntro.play();	
-		elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
-			$Chapter1Intro.play();
+		elif Global.chapterNumber == 1 && Global.checkpointIndex > 0 && Global.checkpointIndex < 4:
+			$Track1Intro.play();
+		elif Global.chapterNumber == 1 && Global.checkpointIndex >= 4:
+			$Track2Intro.play();
 	elif $IntroLoop.playing:
 		$IntroLoop.stop();
 		if Global.chapterNumber == 1 && Global.checkpointIndex == 0:
 			$TutorialIntro.play();	
-		elif Global.chapterNumber == 1 && Global.checkpointIndex > 0:
-			$Chapter1Intro.play();
+		elif Global.chapterNumber == 1 && Global.checkpointIndex > 0 && Global.checkpointIndex < 0:
+			$Track1Intro.play();
+		elif Global.chapterNumber == 1 && Global.checkpointIndex >= 4:
+			$Track2Intro.play();
+		
+
+
+
+func _on_Track2Intro_finished():
+	if Global.chapterNumber == 0:
+		$IntroFadeIn.play();
+		$IntroFadeIn.volume_db = 0;
+	if Global.chapterNumber == 1 && Global.checkpointIndex >= 4:
+		$Track2Loop.play();
+
+
+func _on_Track2Loop_finished():
+	if Global.chapterNumber == 0:
+		$IntroFadeIn.play();
+		$IntroFadeIn.volume_db = 0;
+	if Global.chapterNumber == 1 && Global.checkpointIndex >= 4:
+		$Track2Loop.play();
+
+
+func _on_Track1Loop_finished():
+	if Global.chapterNumber == 0:
+		$IntroFadeIn.play();
+		$IntroFadeIn.volume_db = 0;
+	if Global.chapterNumber == 1 && Global.checkpointIndex > 0 && Global.checkpointIndex < 4:
+		$Track1Loop.play();
+	if Global.chapterNumber == 1 && Global.checkpointIndex >= 4:
+		$Track2Intro.play();
+
+
+func _on_Track1Intro_finished():
+	if Global.chapterNumber == 0:
+		$IntroFadeIn.play();
+		$IntroFadeIn.volume_db = 0;
+	if Global.chapterNumber == 1 && Global.checkpointIndex > 0 && Global.checkpointIndex < 4:
+		$Track1Loop.play();
 

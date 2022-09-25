@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=12 format=2]
+[gd_resource type="AudioBusLayout" load_steps=16 format=2]
 
 [sub_resource type="AudioEffectReverb" id=4]
 resource_name = "Reverb"
@@ -21,6 +21,23 @@ band_db/3200_hz = -24.0
 [sub_resource type="AudioEffectEQ" id=14]
 resource_name = "EQ"
 band_db/10000_hz = 24.0
+
+[sub_resource type="AudioEffectPhaser" id=16]
+resource_name = "Phaser"
+rate_hz = 0.892
+
+[sub_resource type="AudioEffectDelay" id=17]
+resource_name = "Delay"
+feedback/active = true
+
+[sub_resource type="AudioEffectLowPassFilter" id=18]
+resource_name = "LowPassFilter"
+
+[sub_resource type="AudioEffectCompressor" id=15]
+resource_name = "Compressor"
+threshold = -10.0
+ratio = 2.0
+sidechain = "Music"
 
 [sub_resource type="AudioEffectHighShelfFilter" id=3]
 resource_name = "HighShelfFilter"
@@ -50,6 +67,7 @@ rate_hz = 2.0
 depth = 0.4
 
 [resource]
+bus/0/volume_db = -0.030508
 bus/1/name = "SFX"
 bus/1/solo = false
 bus/1/mute = false
@@ -66,6 +84,8 @@ bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = -9.42178
 bus/2/send = "Master"
+bus/2/effect/0/effect = SubResource( 15 )
+bus/2/effect/0/enabled = true
 bus/3/name = "PlayerMovement"
 bus/3/solo = false
 bus/3/mute = false
@@ -148,5 +168,29 @@ bus/13/name = "Atmos"
 bus/13/solo = false
 bus/13/mute = false
 bus/13/bypass_fx = false
-bus/13/volume_db = -16.0924
+bus/13/volume_db = -6.41537
 bus/13/send = "Master"
+bus/14/name = "Checkpoint"
+bus/14/solo = false
+bus/14/mute = false
+bus/14/bypass_fx = false
+bus/14/volume_db = -2.70802
+bus/14/send = "SFX"
+bus/14/effect/0/effect = SubResource( 16 )
+bus/14/effect/0/enabled = true
+bus/14/effect/1/effect = SubResource( 17 )
+bus/14/effect/1/enabled = true
+bus/14/effect/2/effect = SubResource( 18 )
+bus/14/effect/2/enabled = true
+bus/15/name = "CheckpointLoop"
+bus/15/solo = false
+bus/15/mute = false
+bus/15/bypass_fx = false
+bus/15/volume_db = -9.42178
+bus/15/send = "SFX"
+bus/16/name = "keyboard"
+bus/16/solo = false
+bus/16/mute = false
+bus/16/bypass_fx = false
+bus/16/volume_db = -15.795
+bus/16/send = "SFX"

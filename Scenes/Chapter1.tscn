@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=2]
+[gd_scene load_steps=120 format=2]
 
 [ext_resource path="res://Scenes/movingplatform.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-10.png" type="Texture" id=2]
@@ -67,8 +67,12 @@
 [ext_resource path="res://Scenes/Light2D6.gd" type="Script" id=65]
 [ext_resource path="res://Scenes/Light2D7.gd" type="Script" id=66]
 [ext_resource path="res://Scenes/Light2D8.gd" type="Script" id=67]
+[ext_resource path="res://Assets/Sound/Checkpoint/Checkpoint Loop.wav" type="AudioStream" id=68]
 [ext_resource path="res://Font/Ms_Madi/MsMadi-Regular.ttf" type="DynamicFontData" id=69]
 [ext_resource path="res://Scenes/Label.gd" type="Script" id=70]
+[ext_resource path="res://Assets/Sound/Checkpoint/CheckPoint Sound.wav" type="AudioStream" id=71]
+[ext_resource path="res://Scenes/CheckpointSound.gd" type="Script" id=72]
+[ext_resource path="res://Scenes/tutorialText.gd" type="Script" id=78]
 
 [sub_resource type="GDScript" id=24]
 script/source = "extends Node2D
@@ -296,7 +300,7 @@ func _process(_delta):
 			var selection = load(\"res://Scenes/outofshapes.tscn\");
 			var playSelectionSound = selection.instance();
 			add_child(playSelectionSound);
-	if Global.lives == 0:
+	if Global.lives <= 0:
 		Global.lives = 3;
 		Global.materials = 10;
 		queue_free(); 
@@ -321,6 +325,7 @@ func _on_out_of_bounds_body_entered(body):
 
 func _on_checkpoint2_body_entered(body):
 	if body.is_in_group(\"player\"):
+		$Audio/CheckpointSound/Checkpoint_Activate2.play();
 		$Checkpoints/CheckpointAnim2.stop();
 		$Checkpoints/CheckpointAnim2.play(\"Activation\");
 		Global.checkpointIndex = 2;
@@ -329,6 +334,7 @@ func _on_checkpoint2_body_entered(body):
 
 func _on_checkpoint3_body_entered(body):
 	if body.is_in_group(\"player\"):
+		$Audio/CheckpointSound/Checkpoint_Activate3.play();
 		$Checkpoints/CheckpointAnim3.stop();
 		$Checkpoints/CheckpointAnim3.play(\"Activation\");
 		Global.checkpointIndex = 3;
@@ -338,6 +344,7 @@ func _on_checkpoint3_body_entered(body):
 
 func _on_checkpoint4_body_entered(body):
 	if body.is_in_group(\"player\"):
+		$Audio/CheckpointSound/Checkpoint_Activate4.play()
 		$Checkpoints/CheckpointAnim4.stop();
 		$Checkpoints/CheckpointAnim4.play(\"Activation\");
 		Global.checkpointIndex = 4;
@@ -362,6 +369,7 @@ func _on_ReverbArea_body_exited(body):
 
 func _on_checkpoint5_body_entered(body):
 	if body.is_in_group(\"player\"):
+		$Audio/CheckpointSound/Checkpoint_Activate5.play();
 		$Checkpoints/CheckpointAnim5.stop();
 		$Checkpoints/CheckpointAnim5.play(\"Activation\");
 		Global.checkpointIndex = 5;
@@ -370,6 +378,7 @@ func _on_checkpoint5_body_entered(body):
 
 func _on_checkpoint6_body_entered(body):
 	if body.is_in_group(\"player\"):
+		$Audio/CheckpointSound/Checkpoint_Activate6.play();
 		$Checkpoints/CheckpointAnim6.stop();
 		$Checkpoints/CheckpointAnim6.play(\"Activation\");
 		Global.checkpointIndex = 6;
@@ -446,6 +455,7 @@ func _on_CheckpointAnim8_animation_finished():
 
 func _on_checkpoint7_body_entered(body):
 	if body.is_in_group(\"player\"):
+		$Audio/CheckpointSound/Checkpoint_Activate7.play();
 		$Checkpoints/CheckpointAnim7.stop();
 		$Checkpoints/CheckpointAnim7.play(\"Activation\");
 		Global.checkpointIndex = 7;
@@ -454,6 +464,7 @@ func _on_checkpoint7_body_entered(body):
 
 func _on_checkpoint8_body_entered(body):
 	if body.is_in_group(\"player\"):
+		$Audio/CheckpointSound/Checkpoint_Activate8.play();
 		$Checkpoints/CheckpointAnim6.stop();
 		$Checkpoints/CheckpointAnim6.play(\"Activation\");
 		Global.checkpointIndex = 8;
@@ -462,11 +473,85 @@ func _on_checkpoint8_body_entered(body):
 
 func _on_checkpoint1_body_entered(body):
 	if body.is_in_group(\"player\"):
+		$Audio/CheckpointSound/Checkpoint_Activate1.play();
 		$Checkpoints/CheckpointAnim1.stop();
 		$Checkpoints/CheckpointAnim1.play(\"Activation\");
 		Global.checkpointIndex = 1;
 		$Checkpoints/checkpoint1.queue_free();
 
+
+
+func _on_Checkpoint_Activate1_finished():
+	$Audio/CheckpointSound/Checkpoint_Activated_loop1.play();
+
+
+func _on_Checkpoint_Activated_loop1_finished():
+	if Global.checkpointIndex == 1:
+		$Audio/CheckpointSound/Checkpoint_Activated_loop1.play();
+
+
+func _on_Checkpoint_Activate2_finished():
+	$Audio/CheckpointSound/Checkpoint_Activated_loop2.play();
+
+
+func _on_Checkpoint_Activated_loop2_finished():
+	if Global.checkpointIndex == 2:
+		$Audio/CheckpointSound/Checkpoint_Activated_loop2.play();
+
+
+func _on_Checkpoint_Activate3_finished():
+	$Audio/CheckpointSound/Checkpoint_Activated_loop3.play();
+
+
+func _on_Checkpoint_Activated_loop3_finished():
+	if Global.checkpointIndex == 3:
+		$Audio/CheckpointSound/Checkpoint_Activated_loop3.play();
+
+
+func _on_Checkpoint_Activated_loop4_finished():
+	if Global.checkpointIndex == 4:
+		$Audio/CheckpointSound/Checkpoint_Activated_loop4.play();
+
+
+func _on_Checkpoint_Activate4_finished():
+	$Audio/CheckpointSound/Checkpoint_Activated_loop4.play();
+
+
+func _on_Checkpoint_Activate5_finished():
+	$Audio/CheckpointSound/Checkpoint_Activated_loop5.play();
+
+
+func _on_Checkpoint_Activated_loop5_finished():
+	if Global.checkpointIndex == 5:
+		$Audio/CheckpointSound/Checkpoint_Activated_loop5.play();
+
+
+func _on_Checkpoint_Activate6_finished():
+	$Audio/CheckpointSound/Checkpoint_Activated_loop6.play();
+
+
+func _on_Checkpoint_Activated_loop6_finished():
+	if Global.checkpointIndex == 6:
+		$Audio/CheckpointSound/Checkpoint_Activated_loop6.play();
+
+
+func _on_Checkpoint_Activate7_finished():
+	$Audio/CheckpointSound/Checkpoint_Activated_loop7.play();
+
+
+
+func _on_Checkpoint_Activated_loop7_finished():
+	if Global.checkpointIndex == 7:
+		$Audio/CheckpointSound/Checkpoint_Activated_loop7.play();
+
+
+func _on_Checkpoint_Activate8_finished():
+	$Audio/CheckpointSound/Checkpoint_Activated_loop8.play();
+
+
+func _on_Checkpoint_Activated_loop8_finished():
+	if Global.checkpointIndex == 8:
+		$Audio/CheckpointSound/Checkpoint_Activated_loop8.play();
 "
 
 [sub_resource type="Animation" id=41]
@@ -666,6 +751,12 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 69 )
 
+[sub_resource type="DynamicFont" id=61]
+size = 50
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 69 )
+
 [node name="Chapter1" type="Node2D"]
 position = Vector2( -8, 0 )
 script = SubResource( 24 )
@@ -695,7 +786,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 9
+frame = 2
 playing = true
 script = ExtResource( 60 )
 
@@ -942,7 +1033,7 @@ position = Vector2( 4648, -480 )
 texture = ExtResource( 34 )
 
 [node name="movingplatform" type="RigidBody2D" parent="MapDesign/Chapter1Part3" groups=["platform2"]]
-position = Vector2( 0, 880 )
+position = Vector2( 0, -108 )
 mode = 3
 physics_material_override = SubResource( 25 )
 script = ExtResource( 1 )
@@ -1437,6 +1528,104 @@ energy = 1.47
 shadow_enabled = true
 shadow_filter_smooth = 0.8
 
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="Atmosphere" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 29 )
+autoplay = true
+bus = "Atmos"
+
+[node name="CheckpointSound" type="Node2D" parent="Audio"]
+script = ExtResource( 72 )
+
+[node name="Checkpoint_Activate1" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 732, 872 )
+stream = ExtResource( 71 )
+bus = "Checkpoint"
+
+[node name="Checkpoint_Activated_loop1" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 739, 879 )
+stream = ExtResource( 68 )
+attenuation = 4.0
+bus = "CheckpointLoop"
+
+[node name="Checkpoint_Activate2" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 2909, 1115 )
+stream = ExtResource( 71 )
+bus = "Checkpoint"
+
+[node name="Checkpoint_Activated_loop2" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 2908, 1118 )
+stream = ExtResource( 68 )
+attenuation = 4.0
+bus = "CheckpointLoop"
+
+[node name="Checkpoint_Activate3" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 4681, 173 )
+stream = ExtResource( 71 )
+bus = "Checkpoint"
+
+[node name="Checkpoint_Activated_loop3" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 4684, 179 )
+stream = ExtResource( 68 )
+attenuation = 4.0
+bus = "CheckpointLoop"
+
+[node name="Checkpoint_Activate4" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 4406, -889 )
+stream = ExtResource( 71 )
+bus = "Checkpoint"
+
+[node name="Checkpoint_Activated_loop4" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 4415, -899 )
+stream = ExtResource( 68 )
+attenuation = 4.0
+bus = "CheckpointLoop"
+
+[node name="Checkpoint_Activate5" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( -543, -503 )
+stream = ExtResource( 71 )
+bus = "Checkpoint"
+
+[node name="Checkpoint_Activated_loop5" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( -539, -504 )
+stream = ExtResource( 68 )
+attenuation = 4.0
+bus = "CheckpointLoop"
+
+[node name="Checkpoint_Activate6" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 5993, -1602 )
+stream = ExtResource( 71 )
+bus = "Checkpoint"
+
+[node name="Checkpoint_Activated_loop6" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 5994, -1601 )
+stream = ExtResource( 68 )
+attenuation = 4.0
+bus = "CheckpointLoop"
+
+[node name="Checkpoint_Activate7" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 8932, 658 )
+stream = ExtResource( 71 )
+bus = "Checkpoint"
+
+[node name="Checkpoint_Activated_loop7" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 8931, 657 )
+stream = ExtResource( 68 )
+attenuation = 4.28709
+bus = "CheckpointLoop"
+
+[node name="Checkpoint_Activate8" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 8932, 658 )
+stream = ExtResource( 71 )
+bus = "Checkpoint"
+
+[node name="Checkpoint_Activated_loop8" type="AudioStreamPlayer2D" parent="Audio/CheckpointSound"]
+position = Vector2( 8931, 657 )
+stream = ExtResource( 68 )
+attenuation = 4.0
+bus = "CheckpointLoop"
+
 [node name="Collectables" type="Node2D" parent="."]
 
 [node name="lifeup4" parent="Collectables" instance=ExtResource( 24 )]
@@ -1498,13 +1687,6 @@ position = Vector2( 9806, 208 )
 
 [node name="lifeup7" parent="Collectables" instance=ExtResource( 24 )]
 position = Vector2( 12954, 1245 )
-
-[node name="Audio" type="Node2D" parent="."]
-
-[node name="Atmosphere" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource( 29 )
-autoplay = true
-bus = "Atmos"
 
 [node name="Enemies" type="Node2D" parent="."]
 position = Vector2( 8, 8 )
@@ -1731,7 +1913,8 @@ frames = SubResource( 47 )
 animation = "Activated"
 
 [node name="checkpoint1" type="Area2D" parent="Checkpoints"]
-position = Vector2( 740, 1018 )
+position = Vector2( 745, 1019 )
+scale = Vector2( 0.152, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint1"]
 position = Vector2( 0, -72 )
@@ -1739,7 +1922,8 @@ scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
 [node name="checkpoint2" type="Area2D" parent="Checkpoints"]
-position = Vector2( 2919, 1266.54 )
+position = Vector2( 2914, 1266.54 )
+scale = Vector2( 0.154, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint2"]
 position = Vector2( 0, -72 )
@@ -1747,7 +1931,8 @@ scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
 [node name="checkpoint3" type="Area2D" parent="Checkpoints"]
-position = Vector2( 4703, 361.54 )
+position = Vector2( 4693, 361.54 )
+scale = Vector2( 0.146, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint3"]
 position = Vector2( 0, -72 )
@@ -1755,7 +1940,8 @@ scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
 [node name="checkpoint4" type="Area2D" parent="Checkpoints"]
-position = Vector2( 4423, -734.46 )
+position = Vector2( 4414, -734.46 )
+scale = Vector2( 0.138, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint4"]
 position = Vector2( 0, -72 )
@@ -1764,6 +1950,7 @@ shape = SubResource( 8 )
 
 [node name="checkpoint5" type="Area2D" parent="Checkpoints"]
 position = Vector2( -528, -342.46 )
+scale = Vector2( 0.158, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint5"]
 position = Vector2( 0, -72 )
@@ -1772,6 +1959,7 @@ shape = SubResource( 8 )
 
 [node name="checkpoint6" type="Area2D" parent="Checkpoints"]
 position = Vector2( 6000, -1446.46 )
+scale = Vector2( 0.146, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint6"]
 position = Vector2( 0, -72 )
@@ -1779,7 +1967,8 @@ scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
 [node name="checkpoint7" type="Area2D" parent="Checkpoints"]
-position = Vector2( 8933, 810 )
+position = Vector2( 8938, 810 )
+scale = Vector2( 0.14, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint7"]
 position = Vector2( 0, -72 )
@@ -1788,6 +1977,7 @@ shape = SubResource( 8 )
 
 [node name="checkpoint8" type="Area2D" parent="Checkpoints"]
 position = Vector2( 12058, 1282 )
+scale = Vector2( 0.12, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint8"]
 position = Vector2( 0, -72 )
@@ -1814,7 +2004,85 @@ script = ExtResource( 70 )
 
 [node name="labelTween" type="Tween" parent="Label"]
 
-[node name="keyboard" type="AudioStreamPlayer" parent="Label"]
+[node name="tutorialText" type="Node2D" parent="."]
+script = ExtResource( 78 )
+
+[node name="Label1" type="Label" parent="tutorialText"]
+margin_left = -697.0
+margin_top = 1299.0
+margin_right = 7.0
+margin_bottom = 1462.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 61 )
+text = "Welcome friend. 
+Let Me tell you how to play the game."
+percent_visible = 0.0
+
+[node name="Label2" type="Label" parent="tutorialText"]
+margin_left = -697.0
+margin_top = 1267.0
+margin_right = 7.0
+margin_bottom = 1471.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 61 )
+text = "Press A to move to the left.
+Press D to move to the right.
+Press Space to jump."
+percent_visible = 0.0
+
+[node name="Label3" type="Label" parent="tutorialText"]
+margin_left = -697.0
+margin_top = 1267.0
+margin_right = 7.0
+margin_bottom = 1471.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 61 )
+text = "Press F to enable Build Mode.
+Press 1,2,3 or 4 to change shapes.
+Move The mouse to move the selected shape."
+percent_visible = 0.0
+
+[node name="Label4" type="Label" parent="tutorialText"]
+margin_left = -697.0
+margin_top = 1267.0
+margin_right = 7.0
+margin_bottom = 1609.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 61 )
+text = "Press the Left Mouse Button to place shape.
+Press F again to exit Build Mode.
+Press R to reset to the latest checkpoint.
+
+"
+percent_visible = 0.0
+
+[node name="Label5" type="Label" parent="tutorialText"]
+margin_left = -697.0
+margin_top = 1267.0
+margin_right = 110.0
+margin_bottom = 1609.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 61 )
+text = "Use the shapes to block the vision of the enemies.
+Use the shapes to change the direction of the enemies.
+Push the shape to change its position.
+
+"
+percent_visible = 0.0
+
+[node name="Label6" type="Label" parent="tutorialText"]
+margin_left = -697.0
+margin_top = 1267.0
+margin_right = 7.0
+margin_bottom = 1471.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 61 )
+text = "Try building a platform to get out of the cave.
+Your resources are unlimited for now.
+Good Luck!"
+percent_visible = 0.0
+
+[node name="tutorial" type="Tween" parent="tutorialText"]
 
 [connection signal="body_entered" from="MapDesign/Tutorial/ReverbArea" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="MapDesign/Tutorial/ReverbArea" to="." method="_on_ReverbArea_body_exited"]
@@ -1827,6 +2095,22 @@ script = ExtResource( 70 )
 [connection signal="body_entered" from="MapDesign/MapBounds/out of bounds" to="." method="_on_out_of_bounds_body_entered"]
 [connection signal="body_entered" from="MapDesign/MapBounds/out of bounds3" to="." method="_on_out_of_bounds3_body_entered"]
 [connection signal="body_entered" from="MapDesign/MapBounds/out of bounds3/out of bounds2" to="." method="_on_out_of_bounds2_body_entered"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activate1" to="." method="_on_Checkpoint_Activate1_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activated_loop1" to="." method="_on_Checkpoint_Activated_loop1_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activate2" to="." method="_on_Checkpoint_Activate2_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activated_loop2" to="." method="_on_Checkpoint_Activated_loop2_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activate3" to="." method="_on_Checkpoint_Activate3_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activated_loop3" to="." method="_on_Checkpoint_Activated_loop3_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activate4" to="." method="_on_Checkpoint_Activate4_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activated_loop4" to="." method="_on_Checkpoint_Activated_loop4_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activate5" to="." method="_on_Checkpoint_Activate5_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activated_loop5" to="." method="_on_Checkpoint_Activated_loop5_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activate6" to="." method="_on_Checkpoint_Activate6_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activated_loop6" to="." method="_on_Checkpoint_Activated_loop6_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activate7" to="." method="_on_Checkpoint_Activate7_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activated_loop7" to="." method="_on_Checkpoint_Activated_loop7_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activate8" to="." method="_on_Checkpoint_Activate8_finished"]
+[connection signal="finished" from="Audio/CheckpointSound/Checkpoint_Activated_loop8" to="." method="_on_Checkpoint_Activated_loop8_finished"]
 [connection signal="animation_finished" from="Checkpoints/CheckpointAnim1" to="." method="_on_CheckpointAnim1_animation_finished"]
 [connection signal="animation_finished" from="Checkpoints/CheckpointAnim2" to="." method="_on_CheckpointAnim2_animation_finished"]
 [connection signal="animation_finished" from="Checkpoints/CheckpointAnim3" to="." method="_on_CheckpointAnim3_animation_finished"]
@@ -1845,3 +2129,4 @@ script = ExtResource( 70 )
 [connection signal="body_entered" from="Checkpoints/checkpoint8" to="." method="_on_checkpoint8_body_entered"]
 [connection signal="timeout" from="cannonBallTimer" to="." method="_on_cannonBallTimer_timeout"]
 [connection signal="tween_completed" from="Label/labelTween" to="Label" method="_on_labelTween_tween_completed"]
+[connection signal="tween_completed" from="tutorialText/tutorial" to="tutorialText" method="_on_tutorial_tween_completed"]

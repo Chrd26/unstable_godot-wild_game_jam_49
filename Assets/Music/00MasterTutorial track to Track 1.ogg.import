@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/00MasterTutorial track to Track 1.ogg-c69699fca56b8b9bb3235653fc047a92.oggstr"
+
+[deps]
+
+source_file="res://Assets/Music/00MasterTutorial track to Track 1.ogg"
+dest_files=[ "res://.import/00MasterTutorial track to Track 1.ogg-c69699fca56b8b9bb3235653fc047a92.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
