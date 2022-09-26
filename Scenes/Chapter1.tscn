@@ -786,7 +786,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 9
+frame = 7
 playing = true
 script = ExtResource( 60 )
 
@@ -797,7 +797,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 6
+frame = 4
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -2039,7 +2039,7 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 61 )
 text = "Press F to enable Build Mode.
 Press 1,2,3 or 4 to change shapes.
-Move The mouse to move the selected shape."
+Press A or D to rotate the shape."
 percent_visible = 0.0
 
 [node name="Label4" type="Label" parent="tutorialText"]
@@ -2065,7 +2065,7 @@ custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 61 )
 text = "Use the shapes to block the vision of the enemies.
 Use the shapes to change the direction of the enemies.
-Push the shape to change its position.
+Push the shape to change their position.
 
 "
 percent_visible = 0.0
