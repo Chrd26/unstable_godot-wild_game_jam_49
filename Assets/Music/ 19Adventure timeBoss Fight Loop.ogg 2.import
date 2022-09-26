@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ 19Adventure timeBoss Fight Loop.ogg-80e3b1ba7db0ffd27a93e5029fc9f89f.oggstr"
+
+[deps]
+
+source_file="res://Assets/Music/ 19Adventure timeBoss Fight Loop.ogg"
+dest_files=[ "res://.import/ 19Adventure timeBoss Fight Loop.ogg-80e3b1ba7db0ffd27a93e5029fc9f89f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
