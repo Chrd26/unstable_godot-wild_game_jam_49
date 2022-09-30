@@ -15,7 +15,7 @@ func _ready():
 	var randomPlaySound = randomPlay.randi_range(0, 1);
 	var randomPitchNumber = randomPitch.randf_range(0.9, 1);
 	if Global.hasActivatedBuilding:
-		if randomPlaySound ==1:
+		if randomPlaySound == 1:
 			$EnableBuildMode1.pitch_scale = randomPitchNumber;
 			$EnableBuildMode1.play();
 		else:

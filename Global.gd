@@ -5,7 +5,6 @@ var stackingMode = false;
 var buttonPresses = 0;
 var lives = 3;
 var isonfloor = true;
-var isonMaterial = false;
 var materials = 10;
 var lostLife = false;
 var getlife = false;
@@ -16,7 +15,6 @@ var haspickedUpShape = false;
 var chapterNumber = 0;
 var checkpointIndex = 0;
 var hasgameStarted = false;
-var isjumping = false;
 var haspressedBegin = false;
 var getPlatformVelocity;
 var getPlatformPosition;
@@ -35,24 +33,3 @@ func _ready():
 
 func _process(_delta):
 	position = get_global_mouse_position();
-	
-	if Input.is_action_just_pressed("stacking_mode_enable"):
-		Global.hasActivatedBuilding = true;
-		var buildSound = load("res://Scenes/EnableDisableBuildMode.tscn");
-		var playbuildSound = buildSound.instance();
-		add_child(playbuildSound);
-		Global.stackingMode = true;
-		Global.movementEnabled = false;
-		print("stacking mode");
-	if Input.is_action_just_pressed("stacking_mode_enable") && stackingMode == true:
-		Global.buttonPresses += 1;
-	if buttonPresses == 2:
-		Global.hasActivatedBuilding = false;
-		Global.isonMaterial = true;
-		var buildSound = load("res://Scenes/EnableDisableBuildMode.tscn");
-		var playbuildSound = buildSound.instance();
-		add_child(playbuildSound);
-		Global.stackingMode = false;
-		Global.movementEnabled = true;
-		print("resume movement");
-		Global.buttonPresses = 0;

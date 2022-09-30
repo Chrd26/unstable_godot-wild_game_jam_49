@@ -76,8 +76,40 @@
 
 [sub_resource type="GDScript" id=24]
 script/source = "extends Node2D
+
+#variables
 var materialSpawn;
 var getReverb = AudioServer.get_bus_effect(1,0);
+var fKeyPress = 0;
+
+#for Arrays
+#Checkpoint Animation
+onready var CheckpointAnimPlayDefault1 = get_node(\"Checkpoints/CheckpointAnim1\");
+onready var CheckpointAnimPlayDefault2 = get_node(\"Checkpoints/CheckpointAnim2\");
+onready var CheckpointAnimPlayDefault3 = get_node(\"Checkpoints/CheckpointAnim3\");
+onready var CheckpointAnimPlayDefault4 = get_node(\"Checkpoints/CheckpointAnim4\");
+onready var CheckpointAnimPlayDefault5 = get_node(\"Checkpoints/CheckpointAnim5\");
+onready var CheckpointAnimPlayDefault6 = get_node(\"Checkpoints/CheckpointAnim6\");
+onready var CheckpointAnimPlayDefault7 = get_node(\"Checkpoints/CheckpointAnim7\");
+onready var CheckpointAnimPlayDefault8 = get_node(\"Checkpoints/CheckpointAnim8\");
+
+#checkpoints
+onready var Checkpoint1 = get_node(\"Checkpoints/checkpoint1\");
+onready var Checkpoint2 = get_node(\"Checkpoints/checkpoint2\");
+onready var Checkpoint3 = get_node(\"Checkpoints/checkpoint3\");
+onready var Checkpoint4 = get_node(\"Checkpoints/checkpoint4\");
+onready var Checkpoint5 = get_node(\"Checkpoints/checkpoint5\");
+onready var Checkpoint6 = get_node(\"Checkpoints/checkpoint6\");
+onready var Checkpoint7 = get_node(\"Checkpoints/checkpoint7\");
+onready var Checkpoint8 = get_node(\"Checkpoints/checkpoint8\");
+
+
+#preloadscenes
+var preloadbuildModeSound = preload(\"res://Scenes/EnableDisableBuildMode.tscn\")
+var preloadPlayer = preload(\"res://Scenes/player.tscn\");
+var preloadGatherSound = preload(\"res://Scenes/GlobalGather.tscn\");
+
+#booleans
 var hasStartedBallTimer = false;
 
 # Declare member variables here. Examples:
@@ -87,151 +119,147 @@ var hasStartedBallTimer = false;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#Animation Array
+	var animArray = [CheckpointAnimPlayDefault1, CheckpointAnimPlayDefault2, CheckpointAnimPlayDefault3, CheckpointAnimPlayDefault4, CheckpointAnimPlayDefault5, CheckpointAnimPlayDefault6, CheckpointAnimPlayDefault7, CheckpointAnimPlayDefault8];
+	#Checkpoint Array
+	var checkPointArray = [Checkpoint1, Checkpoint2, Checkpoint3, Checkpoint4, Checkpoint5, Checkpoint6, Checkpoint7, Checkpoint8];
 	Global.chapterNumber = 1;
 	Global.hashand1Startedmoving = false;
+	
+	# Vary the Spawning Point based on the index of the checkpooint
 	match (Global.checkpointIndex):
 		0:
-			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim2.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
-			var playerload = load(\"res://Scenes/player.tscn\");
-			var addPlayer = playerload.instance();
+			for i in 8:
+				var getAnim = animArray[i];
+				getAnim.play(\"Default-Deactivated\");
+			var addPlayer = preloadPlayer.instance();
 			addPlayer.position = Vector2(-192, 1543);
 			add_child(addPlayer);
 		1:
-			$Checkpoints/CheckpointAnim2.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
-			var playerload = load(\"res://Scenes/player.tscn\");
-			var addPlayer = playerload.instance();
+			for i in 8:
+				var getAnim = animArray[i];
+				if getAnim == CheckpointAnimPlayDefault1:
+					getAnim.play(\"Activated\");
+				else:
+					getAnim.play(\"Default-Deactivated\");
+			var addPlayer = preloadPlayer.instance();
 			addPlayer.position = Vector2(745, 1031);
 			add_child(addPlayer);
-			$Checkpoints/CheckpointAnim1.play(\"Activated\");
 		2:
-			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
-			var playerload = load(\"res://Scenes/player.tscn\");
-			var addPlayer = playerload.instance();
+			for i in 8:
+				var getAnim = animArray[i];
+				if getAnim == CheckpointAnimPlayDefault2:
+					getAnim.play(\"Activated\");
+				else:
+					getAnim.play(\"Default-Deactivated\");
+			var addPlayer = preloadPlayer.instance();
 			addPlayer.position = Vector2(2922, 1279);
 			add_child(addPlayer);
-			$Checkpoints/CheckpointAnim2.play(\"Activated\");
-			$Checkpoints/checkpoint1.queue_free();
+			Checkpoint1.queue_free();
 		3:
-			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim2.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
-			var playerload = load(\"res://Scenes/player.tscn\");
-			var addPlayer = playerload.instance();
+			for i in 8:
+				var getAnim = animArray[i];
+				if getAnim == CheckpointAnimPlayDefault3:
+					getAnim.play(\"Activated\");
+				else:
+					getAnim.play(\"Default-Deactivated\");
+			var addPlayer = preloadPlayer.instance();
 			addPlayer.position = Vector2(4702, 340);
 			add_child(addPlayer);
-			$Checkpoints/CheckpointAnim3.play(\"Activated\");
-			$Checkpoints/checkpoint1.queue_free();
-			$Checkpoints/checkpoint2.queue_free()
+			for j in 2:
+				var CheckpointDelete = checkPointArray[j];
+				CheckpointDelete.queue_free();
 		4:
-			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim2.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
-			var playerload = load(\"res://Scenes/player.tscn\");
-			var addPlayer = playerload.instance();
+			for i in 8:
+				var getAnim = animArray[i];
+				if getAnim == CheckpointAnimPlayDefault4:
+					getAnim.play(\"Activated\");
+				else:
+					getAnim.play(\"Default-Deactivated\");
+			var addPlayer = preloadPlayer.instance();
 			addPlayer.position = Vector2(4420, -734);
 			add_child(addPlayer);
-			$Checkpoints/CheckpointAnim4.play(\"Activated\");
-			$Checkpoints/checkpoint1.queue_free();
-			$Checkpoints/checkpoint2.queue_free();
-			$Checkpoints/checkpoint3.queue_free();
+			for j in 3:
+				var CheckpointDelete = checkPointArray[j];
+				CheckpointDelete.queue_free();
 		5:
-			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim2.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
-			var playerload = load(\"res://Scenes/player.tscn\");
-			var addPlayer = playerload.instance();
+			for i in 8:
+				var getAnim = animArray[i];
+				if getAnim == CheckpointAnimPlayDefault5:
+					getAnim.play(\"Activated\");
+				else:
+					getAnim.play(\"Default-Deactivated\");
+			var addPlayer = preloadPlayer.instance();
 			addPlayer.position = Vector2(-528, -338);
 			add_child(addPlayer);
-			$Checkpoints/CheckpointAnim5.play(\"Activated\");
-			$Checkpoints/checkpoint1.queue_free();
-			$Checkpoints/checkpoint2.queue_free();
-			$Checkpoints/checkpoint3.queue_free();
-			$Checkpoints/checkpoint4.queue_free();
+			for j in 4:
+				var CheckpointDelete = checkPointArray[j];
+				CheckpointDelete.queue_free();
 		6:
-			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim2.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
-			var playerload = load(\"res://Scenes/player.tscn\");
-			var addPlayer = playerload.instance();
+			for i in 8:
+				var getAnim = animArray[i];
+				if getAnim == CheckpointAnimPlayDefault6:
+					getAnim.play(\"Activated\");
+				else:
+					getAnim.play(\"Default-Deactivated\");
+			var addPlayer = preloadPlayer.instance();
 			addPlayer.position = Vector2(5998, -1434);
 			add_child(addPlayer);
 			$Enemies/enemy4.queue_free();
-			$Checkpoints/CheckpointAnim6.play(\"Activated\");
-			$Checkpoints/checkpoint1.queue_free();
-			$Checkpoints/checkpoint2.queue_free();
-			$Checkpoints/checkpoint3.queue_free();
-			$Checkpoints/checkpoint4.queue_free();
-			$Checkpoints/checkpoint5.queue_free();
+			for j in 5:
+				var CheckpointDelete = checkPointArray[j];
+				CheckpointDelete.queue_free();
 		7:
-			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim2.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
-			var playerload = load(\"res://Scenes/player.tscn\");
-			var addPlayer = playerload.instance();
+			for i in 8:
+				var getAnim = animArray[i];
+				if getAnim == CheckpointAnimPlayDefault8:
+					getAnim.play(\"Activated\");
+				else:
+					getAnim.play(\"Default-Deactivated\");
+			var addPlayer = preloadPlayer.instance();
 			addPlayer.position = Vector2(8937, 827);
 			add_child(addPlayer);
 			$Enemies/enemy4.queue_free();
-			$Checkpoints/CheckpointAnim7.play(\"Activated\");
-			$Checkpoints/checkpoint1.queue_free();
-			$Checkpoints/checkpoint2.queue_free();
-			$Checkpoints/checkpoint3.queue_free();
-			$Checkpoints/checkpoint4.queue_free();
-			$Checkpoints/checkpoint5.queue_free();
-			$Checkpoints/checkpoint6.queue_free();
+			for j in 6:
+				var CheckpointDelete = checkPointArray[j];
+				CheckpointDelete.queue_free();
 		8:
-			$Checkpoints/CheckpointAnim1.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim2.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim3.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim4.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim5.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim6.play(\"Default-Deactivated\");
-			$Checkpoints/CheckpointAnim7.play(\"Default-Deactivated\");
-			var playerload = load(\"res://Scenes/player.tscn\");
-			var addPlayer = playerload.instance();
+			for i in 8:
+				var getAnim = animArray[i];
+				if getAnim == CheckpointAnimPlayDefault8:
+					getAnim.play(\"Activated\");
+				else:
+					getAnim.play(\"Default-Deactivated\");
+			var addPlayer = preloadPlayer.instance();
 			addPlayer.position = Vector2(12062, 1295);
 			add_child(addPlayer);
 			$Enemies/enemy4.queue_free();
-			$Checkpoints/CheckpointAnim8.play(\"Activated\");
-			$Checkpoints/checkpoint1.queue_free();
-			$Checkpoints/checkpoint2.queue_free();
-			$Checkpoints/checkpoint3.queue_free();
-			$Checkpoints/checkpoint4.queue_free();
-			$Checkpoints/checkpoint5.queue_free();
-			$Checkpoints/checkpoint6.queue_free();
-			$Checkpoints/checkpoint7.queue_free();
+			for j in 7:
+				var CheckpointDelete = checkPointArray[j];
+				CheckpointDelete.queue_free();
+
+func _input(event):
+	if event.is_action_pressed(\"stacking_mode_enable\") && fKeyPress == 0:
+		Global.movementEnabled = false;
+		Global.hasActivatedBuilding = true;
+		fKeyPress += 1;
+		var playSoundBuild = preloadbuildModeSound.instance();
+		add_child(playSoundBuild);
+	elif event.is_action_pressed(\"stacking_mode_enable\") && fKeyPress == 1:
+		Global.movementEnabled = true;
+		Global.hasActivatedBuilding = false;
+		fKeyPress = 0;
+		var playSoundBuild = preloadbuildModeSound.instance();
+		add_child(playSoundBuild);
+	elif event.is_action_pressed(\"Reset\"):
+		Global.lives = 3;
+		Global.materials = 10;
+		queue_free(); 
+		# warning-ignore:return_value_discarded
+		get_tree().change_scene(\"res://Scenes/Chapter1.tscn\");
 
 func _process(_delta):
+	#Play Bombs Sequence
 	if Global.hashand1Startedmoving:
 		if !hasStartedBallTimer:
 			hasStartedBallTimer = true;
@@ -239,73 +267,20 @@ func _process(_delta):
 	if !Global.hashand1Startedmoving && hasStartedBallTimer:
 		hasStartedBallTimer = false;
 		$cannonBallTimer.stop();
-	#print($Checkpoints/CheckpointAnim1.animation);
-	if Input.is_action_just_pressed(\"Reset\"):
-		Global.lives = 3;
-		Global.materials = 10;
-		queue_free(); 
-		# warning-ignore:return_value_discarded
-		get_tree().change_scene(\"res://Scenes/Chapter1.tscn\");
+	#Picking a Shape
 	if Global.haspickedUpShape:
 		Global.materials += 5;
-		var GatherSound = load(\"res://Scenes/GlobalGather.tscn\");
-		var playSoundGather = GatherSound.instance();
+		var playSoundGather = preloadGatherSound.instance();
 		add_child(playSoundGather);
 		Global.haspickedUpShape = false;
-	if Input.is_action_just_pressed(\"Material1\") && Global.stackingMode:
-		if Global.materials > 0:
-			var selection = load(\"res://Scenes/changeShape.tscn\");
-			var playSelectionSound = selection.instance();
-			add_child(playSelectionSound);
-			var material = load(\"res://Scenes/Material_1.tscn\");
-			materialSpawn = material.instance();
-			add_child(materialSpawn);
-		else:
-			var selection = load(\"res://Scenes/outofshapes.tscn\");
-			var playSelectionSound = selection.instance();
-			add_child(playSelectionSound);
-	elif Input.is_action_just_pressed(\"Material2\") && Global.stackingMode:
-		if Global.materials > 0:
-			var selection = load(\"res://Scenes/changeShape.tscn\");
-			var playSelectionSound = selection.instance();
-			add_child(playSelectionSound);
-			var material = load(\"res://Scenes/Material2.tscn\");
-			materialSpawn = material.instance();
-			add_child(materialSpawn);
-		else:
-			var selection = load(\"res://Scenes/outofshapes.tscn\");
-			var playSelectionSound = selection.instance();
-			add_child(playSelectionSound);
-	elif Input.is_action_just_pressed(\"Material4\") && Global.stackingMode:
-		if Global.materials > 0:
-			var selection = load(\"res://Scenes/changeShape.tscn\");
-			var playSelectionSound = selection.instance();
-			add_child(playSelectionSound);
-			var material = load(\"res://Scenes/material3_2.tscn\");
-			materialSpawn = material.instance();
-			add_child(materialSpawn);
-		else:
-			var selection = load(\"res://Scenes/outofshapes.tscn\");
-			var playSelectionSound = selection.instance();
-			add_child(playSelectionSound);
-	elif Input.is_action_just_pressed(\"Material3\") && Global.stackingMode:
-		if Global.materials > 0:
-			var selection = load(\"res://Scenes/changeShape.tscn\");
-			var playSelectionSound = selection.instance();
-			add_child(playSelectionSound);
-			var material = load(\"res://Scenes/Material4.tscn\");
-			materialSpawn = material.instance();
-			add_child(materialSpawn);
-		else:
-			var selection = load(\"res://Scenes/outofshapes.tscn\");
-			var playSelectionSound = selection.instance();
-			add_child(playSelectionSound);
+	#Death and Load Scene
 	if Global.lives <= 0:
 		Global.lives = 3;
 		Global.materials = 10;
 		queue_free(); 
 		# warning-ignore:return_value_discarded
 		get_tree().change_scene(\"res://Scenes/Chapter1.tscn\");
+	#finish chapter
 	if Global.isChapter1Finished:
 		Global.hasEnteredMenu = true;
 		Global.chapterNumber = 0;
@@ -317,7 +292,7 @@ func _process(_delta):
 		Global.isChapter1Finished = false;
 		queue_free();
 
-
+#Checkpoint System
 
 func _on_out_of_bounds_body_entered(body):
 	if body.is_in_group(\"player\"):
@@ -797,7 +772,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 4
+frame = 7
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]

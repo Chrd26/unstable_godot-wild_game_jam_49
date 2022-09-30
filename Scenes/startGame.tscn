@@ -104,9 +104,9 @@ anims/RESET = SubResource( 2 )
 anims/lightanim = SubResource( 3 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = 231.0
+margin_left = 243.0
 margin_top = 84.0
-margin_right = 795.0
+margin_right = 807.0
 margin_bottom = 216.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_fonts/font = SubResource( 5 )
