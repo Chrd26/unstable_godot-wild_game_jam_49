@@ -12,10 +12,16 @@ var isWalkingLeft = false;
 var isWalkingRight = false;
 var isonShape = false;
 
+#Declare Audio Variables
+onready var MOVEMENT = [$Audio/Footsteps, $Audio/Movement];
+onready var DAMAGE = [$Audio/takeDamage1, $Audio/takeDamage2, $Audio/takeDamage3, $Audio/takeDamage4, $Audio/takeDamage5];
+onready var JUMPSOUND = [$Audio/JumpImpact1, $Audio/JumpImpact2, $Audio/JumpMovement];
+onready var LAND = $Audio/landImpact;
+
 #Declare variables
 const gravity = 100;
 const walkingspeed = 400;
-const airMovingSpeed = 80;
+const airMovingSpeed = 60;
 const jumpingForce = -800;
 const surfaceFriction = 50;
 const airFriction = 50;
@@ -47,27 +53,85 @@ func _physics_process(_delta):
 		mode = 2
 		#Input Detection
 		if Input.is_action_pressed("move_left"):
+			var footsteps = MOVEMENT[0];
+			var moveSound = MOVEMENT[1];
 			if !isJumping:
+				randomPitch.randomize();
+				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+				footsteps.pitch_scale = randomPitchNumber;
+				moveSound.pitch_scale = randomPitchNumber;
+				if !footsteps.playing && !moveSound.playing:
+					footsteps.play();
+					moveSound.play()
 				states = WALKING_L;
 			if Input.is_action_just_pressed("jump"):
+				randomSound.randomize();
+				randomPitch.randomize();
+				var randomSoundPlay = randomSound.randi_range(0,1);
+				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+				var jumpMovement = JUMPSOUND[2];
+				var jumpSound = JUMPSOUND[randomSoundPlay];
+				if !jumpSound.playing && !jumpMovement.playing:
+					jumpMovement.pitch_scale = randomPitchNumber;
+					jumpSound.pitch_scale = randomPitchNumber;
+					jumpMovement.play();
+					jumpSound.play();
 				states = JUMPING;
 		elif Input.is_action_pressed("move_right"):
+			var footsteps = MOVEMENT[0];
+			var moveSound = MOVEMENT[1];
 			if !isJumping:
+				randomPitch.randomize();
+				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+				footsteps.pitch_scale = randomPitchNumber;
+				moveSound.pitch_scale = randomPitchNumber;
+				if !footsteps.playing && !moveSound.playing:
+					footsteps.play();
+					moveSound.play()
 				states = WALKING_R;
 			if Input.is_action_just_pressed("jump"):
+				randomSound.randomize();
+				randomPitch.randomize();
+				var randomSoundPlay = randomSound.randi_range(0,1);
+				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+				var jumpMovement = JUMPSOUND[2];
+				var jumpSound = JUMPSOUND[randomSoundPlay];
+				if !jumpSound.playing && !jumpMovement.playing:
+					jumpMovement.pitch_scale = randomPitchNumber;
+					jumpSound.pitch_scale = randomPitchNumber;
+					jumpMovement.play();
+					jumpSound.play();
 				states = JUMPING;
 		elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
+			var footsteps = MOVEMENT[0];
+			var moveSound = MOVEMENT[1];
+			randomPitch.randomize();
+			var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+			footsteps.pitch_scale = randomPitchNumber;
+			moveSound.pitch_scale = randomPitchNumber;
+			if footsteps.playing && moveSound.playing:
+				footsteps.stop();
+				moveSound.stop()
 			states = IDLE;
 		elif Input.is_action_just_pressed("jump"):
 			if !isJumping:
+				randomSound.randomize();
+				randomPitch.randomize();
+				var randomSoundPlay = randomSound.randi_range(0,1);
+				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+				var jumpMovement = JUMPSOUND[2];
+				var jumpSound = JUMPSOUND[randomSoundPlay];
+				if !jumpSound.playing && !jumpMovement.playing:
+					jumpMovement.pitch_scale = randomPitchNumber;
+					jumpSound.pitch_scale = randomPitchNumber;
+					jumpMovement.play();
+					jumpSound.play();
 				states = JUMPING;
 	else:
 		mode = 1;
 
 func _integrate_forces(state):
 	#State Machine
-	print(linear_velocity.x);
-	print(states);
 	match states:
 		IDLE:
 			isWalkingComplete = true;
@@ -89,16 +153,19 @@ func _integrate_forces(state):
 				elif Input.is_action_pressed("move_right"):
 					states = WALKING_R
 		JUMPING:
+			#Apply jumping impulse
 			if !isJumping:
 					state.apply_central_impulse(Vector2(linear_velocity.x, jumpingForce + airFriction));
 					isJumping = true;
 			if isJumping:
 					states = IDLE;
 		WALKING_L:
+			#Set walking linear velocity while not jumping and apply impulses when on air.
+			animations.flip_h = 1;
 			#For Walking Animation
 			isWalkingComplete = false;
 			#Apply different types of force depending on the state of the Character
-			if !isJumping:
+			if !isJumping && isonFloor:
 				state.set_linear_velocity(Vector2(-1 * walkingspeed + surfaceFriction, gravity - airFriction));
 			elif isJumping || !isonFloor:
 				if Input.is_action_pressed("move_left"):
@@ -108,10 +175,12 @@ func _integrate_forces(state):
 					# warning-ignore:integer_division
 					state = IDLE;
 		WALKING_R:
+			#Set Walking linear velocity while not jumping and apply impulses when on air/
+			animations.flip_h = 0;
 			#for Walking Animation
 			isWalkingComplete = false;
 			#Apply different types of force depending on the state of the Character
-			if !isJumping:
+			if !isJumping && isonFloor:
 				state.set_linear_velocity(Vector2(walkingspeed - surfaceFriction, gravity - airFriction));
 			elif isJumping || !isonFloor:
 				if Input.is_action_pressed("move_right"):
@@ -140,7 +209,21 @@ func _on_RigidBody2D_body_entered(body):
 	#collission logic on enter
 	isonFloor = true;
 	isJumping = false;
+	if body.is_in_group("cannonball"):
+		randomSound.randomize();
+		randomPitch.randomize();
+		var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+		var randomSoundPlay = randomSound.randi_range(0, 4);
+		var takeDamage = DAMAGE[randomSoundPlay];
+		if !takeDamage.playing:
+			takeDamage.pitch_scale = randomPitchNumber;
+			takeDamage.play();
 	if !body.is_in_group("wall"):
+		randomSound.randomize();
+		randomPitch.randomize();
+		var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+		LAND.pitch_scale = randomPitchNumber;
+		LAND.play();
 		if Input.is_action_pressed("move_left"):
 			states = WALKING_L;
 		elif Input.is_action_pressed("move_right"):
