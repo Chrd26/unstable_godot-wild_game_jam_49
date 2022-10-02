@@ -11,7 +11,7 @@ var isWalkingComplete = true;
 
 #Declare variables
 const gravity = 100;
-const walkingspeed = 100;
+const walkingspeed = 10000000;
 const jumpingForce = -100;
 const surfaceFriciton = 0;
 const airFriction = 0;
@@ -39,6 +39,7 @@ func _ready():
 	states = IDLE
 
 func _process(delta):
+	print(isWalkingComplete);
 	if Input.is_action_pressed("move_left"):
 		states = WALKING_L;
 	elif Input.is_action_pressed("move_right"):
@@ -49,7 +50,6 @@ func _process(delta):
 		isWalkingComplete = true;
 
 func _integrate_forces(state):
-	#state.add_central_force(Vector2(walkingspeed, 0));
 	match states:
 		IDLE:
 			animations.play("Idle");
@@ -74,7 +74,14 @@ func _integrate_forces(state):
 		ISONEXITCHAPTER:
 			pass;
 
-func _on_playerNode_body_entered(body):
+func _on_AnimatedSprite_animation_finished():
+	if !isWalkingComplete:
+		animations.play("Walk");
+	else:
+		states = IDLE;
+
+
+func _on_RigidBody2D_body_entered(body):
 	isonFloor = true;
 	isJumping = false;
 	if body.is_in_group("platform"):
@@ -87,7 +94,8 @@ func _on_playerNode_body_entered(body):
 		isonWall = true;
 
 
-func _on_playerNode_body_exited(body):
+
+func _on_RigidBody2D_body_exited(body):
 	isonFloor = false;
 	if body.is_in_group("platform"):
 		isonPlatform = false;
@@ -98,10 +106,3 @@ func _on_playerNode_body_exited(body):
 	if body.is_in_group("wall"):
 		isonWall = false;
 
-
-func _on_AnimatedSprite_animation_finished():
-	if !isWalkingComplete:
-		animations.play("Walk");
-	else:
-		animations.play("Idle");
-		states = IDLE;

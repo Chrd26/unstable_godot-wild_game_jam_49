@@ -37,17 +37,18 @@
 [ext_resource path="res://Scenes/gui.tscn" type="PackedScene" id=112]
 
 [sub_resource type="PhysicsMaterial" id=5]
-friction = 0.0
+rough = true
+absorbent = true
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
 "frames": [ ExtResource( 15 ) ],
-"loop": true,
+"loop": false,
 "name": "Idle",
 "speed": 30.0
 }, {
 "frames": [ ExtResource( 13 ), ExtResource( 6 ), ExtResource( 16 ), ExtResource( 1 ), ExtResource( 12 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 19 ), ExtResource( 14 ), ExtResource( 8 ), ExtResource( 23 ), ExtResource( 4 ), ExtResource( 22 ), ExtResource( 17 ), ExtResource( 20 ), ExtResource( 9 ), ExtResource( 2 ), ExtResource( 18 ) ],
-"loop": true,
+"loop": false,
 "name": "Walk",
 "speed": 30.0
 } ]
@@ -77,10 +78,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray(  ),
+"transitions": PoolRealArray(  ),
 "update": 0,
-"values": [ 1.0 ]
+"values": [  ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -109,10 +110,12 @@ colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 0.588235 )
 [node name="playerNode" type="RigidBody2D" groups=["player"]]
 position = Vector2( 512, 300 )
 mode = 2
+mass = 10.0
 physics_material_override = SubResource( 5 )
-gravity_scale = 90.0
+gravity_scale = 30.0
 custom_integrator = true
-contacts_reported = 10
+continuous_cd = 1
+contacts_reported = 2
 contact_monitor = true
 script = ExtResource( 11 )
 
@@ -144,7 +147,7 @@ scale = Vector2( 1.43, 3.626 )
 shape = SubResource( 8 )
 
 [node name="RayCollider" type="CollisionShape2D" parent="."]
-scale = Vector2( 8.682, 4.63 )
+scale = Vector2( 7.788, 4.578 )
 shape = SubResource( 9 )
 
 [node name="Audio" type="Node2D" parent="."]
@@ -198,8 +201,10 @@ position = Vector2( -8, -70 )
 texture = ExtResource( 32 )
 texture_scale = 0.1
 color = Color( 1, 0.72, 0.72, 1 )
+energy = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Light2D"]
+autoplay = "light"
 anims/RESET = SubResource( 7 )
 anims/light = SubResource( 6 )
 
@@ -231,3 +236,7 @@ color = Color( 1, 1, 1, 0.501961 )
 color_initial_ramp = SubResource( 10 )
 
 [node name="Shapes" parent="." instance=ExtResource( 34 )]
+
+[connection signal="body_entered" from="." to="." method="_on_playerNode_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_playerNode_body_exited"]
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

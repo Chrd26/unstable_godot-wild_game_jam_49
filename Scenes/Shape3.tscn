@@ -4,14 +4,14 @@
 [ext_resource path="res://Scenes/Shape3.gd" type="Script" id=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
-rough = true
+friction = 0.5
 absorbent = true
 
-[node name="Shape3" type="RigidBody2D"]
+[node name="Shape3" type="RigidBody2D" groups=["shape"]]
 mode = 3
 mass = 20.0
 physics_material_override = SubResource( 1 )
-gravity_scale = 20.0
+gravity_scale = 10.0
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]

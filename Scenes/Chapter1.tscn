@@ -1,4 +1,4 @@
-[gd_scene load_steps=120 format=2]
+[gd_scene load_steps=121 format=2]
 
 [ext_resource path="res://Scenes/movingplatform.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-10.png" type="Texture" id=2]
@@ -72,6 +72,7 @@
 [ext_resource path="res://Scenes/Label.gd" type="Script" id=70]
 [ext_resource path="res://Assets/Sound/Checkpoint/CheckPoint Sound.wav" type="AudioStream" id=71]
 [ext_resource path="res://Scenes/CheckpointSound.gd" type="Script" id=72]
+[ext_resource path="res://Scenes/shapesSystem.tscn" type="PackedScene" id=73]
 [ext_resource path="res://Scenes/tutorialText.gd" type="Script" id=78]
 
 [sub_resource type="GDScript" id=24]
@@ -106,7 +107,7 @@ onready var Checkpoint8 = get_node(\"Checkpoints/checkpoint8\");
 
 #preloadscenes
 var preloadbuildModeSound = preload(\"res://Scenes/EnableDisableBuildMode.tscn\")
-var preloadPlayer = preload(\"res://Scenes/player.tscn\");
+var preloadPlayer = preload(\"res://Scenes/characterNew.tscn\");
 var preloadGatherSound = preload(\"res://Scenes/GlobalGather.tscn\");
 
 #booleans
@@ -577,7 +578,8 @@ animations = [ {
 } ]
 
 [sub_resource type="PhysicsMaterial" id=37]
-rough = true
+friction = 0.5
+absorbent = true
 
 [sub_resource type="OccluderPolygon2D" id=5]
 cull_mode = 1
@@ -761,7 +763,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 7
+frame = 3
 playing = true
 script = ExtResource( 60 )
 
@@ -772,7 +774,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 7
+frame = 8
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -781,10 +783,9 @@ playing = true
 position = Vector2( 248, -416 )
 mode = 1
 physics_material_override = SubResource( 37 )
-continuous_cd = 2
 
 [node name="floor1" type="CollisionPolygon2D" parent="MapDesign/Tutorial/floors"]
-polygon = PoolVector2Array( -1004, 2051, -123, 2058, -129, 2123, -1005, 2119 )
+polygon = PoolVector2Array( -1004, 2051, -121, 2050, -129, 2123, -1005, 2119 )
 
 [node name="IntroTunnel" type="Sprite" parent="MapDesign/Tutorial/floors"]
 position = Vector2( -356, 1292 )
@@ -799,7 +800,6 @@ polygon = PoolVector2Array( 1276, 1919, 1297, 1913, 1296, 1931, 1273, 1945, 662,
 [node name="Walls" type="RigidBody2D" parent="MapDesign/Tutorial" groups=["wall"]]
 mode = 1
 physics_material_override = SubResource( 32 )
-continuous_cd = 2
 
 [node name="wall1" type="CollisionPolygon2D" parent="MapDesign/Tutorial/Walls"]
 polygon = PoolVector2Array( 129, 1198, 125, 1304, 138, 1565, 119, 1711, 490, 1688, 511, 1191 )
@@ -2058,6 +2058,8 @@ Good Luck!"
 percent_visible = 0.0
 
 [node name="tutorial" type="Tween" parent="tutorialText"]
+
+[node name="Shapes" parent="tutorialText" instance=ExtResource( 73 )]
 
 [connection signal="body_entered" from="MapDesign/Tutorial/ReverbArea" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="MapDesign/Tutorial/ReverbArea" to="." method="_on_ReverbArea_body_exited"]
