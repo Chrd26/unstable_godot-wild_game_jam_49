@@ -578,7 +578,6 @@ animations = [ {
 } ]
 
 [sub_resource type="PhysicsMaterial" id=37]
-friction = 0.5
 absorbent = true
 
 [sub_resource type="OccluderPolygon2D" id=5]
@@ -763,7 +762,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 9
+frame = 6
 playing = true
 script = ExtResource( 60 )
 
@@ -774,7 +773,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 5
+frame = 2
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]

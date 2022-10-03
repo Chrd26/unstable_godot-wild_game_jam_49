@@ -1,7 +1,8 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://Scenes/characterNewLogic.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/gui.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-9.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Sound/footsteps/05MovingPartsfootsteps.wav" type="AudioStream" id=4]
 [ext_resource path="res://Assets/Sound/Take damage and Gain Life/01Take DamageTake Damage 5.wav" type="AudioStream" id=5]
 [ext_resource path="res://Assets/Graphics/Character/Walking/Alternative_MC_Walking_1-7.png" type="Texture" id=6]
@@ -21,7 +22,7 @@
 [ext_resource path="res://Assets/Graphics/Character/Walking/Alternative_MC_Walking_1-10.png" type="Texture" id=20]
 [ext_resource path="res://Assets/Sound/footsteps/02Footstep_Impactfootsteps.wav" type="AudioStream" id=21]
 [ext_resource path="res://Assets/Graphics/Character/Walking/Alternative_MC_Walking_2-7.png" type="Texture" id=22]
-[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-11.png" type="Texture" id=23]
 [ext_resource path="res://Assets/Graphics/Character/Walking/Alternative_MC_Walking_1-4.png" type="Texture" id=24]
 [ext_resource path="res://Assets/Graphics/Character/Walking/Alternative_MC_Walking_2-4.png" type="Texture" id=25]
 [ext_resource path="res://Assets/Sound/footsteps/Jump Impact1.wav" type="AudioStream" id=26]
@@ -34,12 +35,33 @@
 [ext_resource path="res://Assets/Sound/footsteps/Jump Movement.wav" type="AudioStream" id=33]
 [ext_resource path="res://Assets/Sound/Take damage and Gain Life/01Take DamageTake Damage 3.wav" type="AudioStream" id=34]
 [ext_resource path="res://Assets/Graphics/light image/light.png" type="Texture" id=35]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-12.png" type="Texture" id=36]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-13.png" type="Texture" id=37]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-14.png" type="Texture" id=38]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-2.png" type="Texture" id=39]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-7.png" type="Texture" id=40]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-8.png" type="Texture" id=41]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-6.png" type="Texture" id=42]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-3.png" type="Texture" id=43]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-10.png" type="Texture" id=44]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-5.png" type="Texture" id=45]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-1.png" type="Texture" id=46]
+[ext_resource path="res://Assets/Graphics/Character/Idle/Alternative_MC_Idle-4.png" type="Texture" id=47]
+[ext_resource path="res://Assets/Graphics/Character/In the Air/Alternative_MC_Jumping_And_On_Air.png" type="Texture" id=48]
+
+[sub_resource type="PhysicsMaterial" id=8]
+absorbent = true
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 23 ) ],
+"frames": [ ExtResource( 46 ), ExtResource( 39 ), ExtResource( 43 ), ExtResource( 47 ), ExtResource( 45 ), ExtResource( 42 ), ExtResource( 40 ), ExtResource( 41 ), ExtResource( 3 ), ExtResource( 44 ), ExtResource( 23 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ) ],
 "loop": true,
 "name": "Idle",
+"speed": 30.0
+}, {
+"frames": [ ExtResource( 48 ) ],
+"loop": true,
+"name": "In the Air",
 "speed": 30.0
 }, {
 "frames": [ ExtResource( 32 ), ExtResource( 31 ), ExtResource( 24 ), ExtResource( 28 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 30 ), ExtResource( 29 ), ExtResource( 20 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 25 ), ExtResource( 13 ), ExtResource( 9 ), ExtResource( 22 ), ExtResource( 19 ), ExtResource( 14 ) ],
@@ -105,15 +127,19 @@ colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 0.588235 )
 [node name="RigidBody2D" type="RigidBody2D" groups=["player"]]
 position = Vector2( 512, 300 )
 mode = 2
-custom_integrator = true
+mass = 20.0
+physics_material_override = SubResource( 8 )
+gravity_scale = 20.0
 contacts_reported = 2
 contact_monitor = true
+linear_velocity = Vector2( 5, 0 )
+linear_damp = 0.0
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.0998718, 0.1 )
 frames = SubResource( 1 )
-animation = "Walk"
+animation = "In the Air"
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="."]
 scale = Vector2( 0.998718, 1 )
@@ -129,12 +155,12 @@ smoothing_speed = 7.0
 current = true
 
 [node name="MainCollider" type="CollisionShape2D" parent="."]
-position = Vector2( 0.716, 11.87 )
-scale = Vector2( 1.43, 3.626 )
+position = Vector2( 0.264, 1.076 )
+scale = Vector2( 1.178, 3.178 )
 shape = SubResource( 2 )
 
 [node name="RayCollider" type="CollisionShape2D" parent="."]
-scale = Vector2( 7.788, 5 )
+scale = Vector2( 9.606, 5.084 )
 shape = SubResource( 3 )
 
 [node name="Audio" type="Node2D" parent="."]
@@ -207,8 +233,6 @@ amount = 20
 one_shot = true
 speed_scale = 1.5
 explosiveness = 1.0
-randomness = 0.8
-lifetime_randomness = 0.68
 texture = ExtResource( 18 )
 emission_shape = 2
 emission_rect_extents = Vector2( 18.89, 1 )
@@ -226,4 +250,3 @@ color_initial_ramp = SubResource( 7 )
 
 [connection signal="body_entered" from="." to="." method="_on_RigidBody2D_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_RigidBody2D_body_exited"]
-[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

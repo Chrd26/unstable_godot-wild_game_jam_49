@@ -1,256 +1,178 @@
 extends RigidBody2D
 
 #Declare Booleans
-var isonFloor = false;
+var isJumping = false;
+var isOnFloor = true;
 var isonPlatform = false;
 var isonPlatform2 = false;
-var isonexitChapter = false;
-var isonWall = false;
-var isJumping = false;
-var isWalkingComplete = true;
-var isWalkingLeft = false;
-var isWalkingRight = false;
-var isonShape = false;
+var isonExit = false;
 
-#Declare Audio Variables
-onready var MOVEMENT = [$Audio/Footsteps, $Audio/Movement];
-onready var DAMAGE = [$Audio/takeDamage1, $Audio/takeDamage2, $Audio/takeDamage3, $Audio/takeDamage4, $Audio/takeDamage5];
-onready var JUMPSOUND = [$Audio/JumpImpact1, $Audio/JumpImpact2, $Audio/JumpMovement];
-onready var LAND = $Audio/landImpact;
-
-#Declare variables
-const gravity = 100;
-const walkingspeed = 400;
-const airMovingSpeed = 60;
-const jumpingForce = -800;
-const surfaceFriction = 50;
-const airFriction = 50;
-const stopWalkingForce = 100;
+#Declare Variables
+onready var stateMachine;
+const walkingSpeed = 250;
+const stopForce = 200;
+const jumpForce = - 9300;
 onready var animations = $AnimatedSprite;
-var randomPitch = RandomNumberGenerator.new();
-var randomSound = RandomNumberGenerator.new();
-var states;
 
-#Declare States
+#Declare Enum
 enum{
 	IDLE,
 	JUMPING,
-	WALKING_L,
-	WALKING_R,
-	ISONWALL,
-	ISONPLATFORM1,
-	ISONPLATFORM2,
-	ISONEXITCHAPTER
+	WALKING,
+	ONPLATFORM,
+	ONPLATFORM2,
+	ONEXITCHAPTER
 }
 
 func _ready():
-	#Defaults
-	states = IDLE
-	animations.play("Idle");
+	stateMachine = IDLE
 
-func _physics_process(_delta):
+func _process(_delta):
 	if Global.movementEnabled:
-		mode = 2
-		#Input Detection
-		if Input.is_action_pressed("move_left"):
-			var footsteps = MOVEMENT[0];
-			var moveSound = MOVEMENT[1];
-			if !isJumping:
-				randomPitch.randomize();
-				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
-				footsteps.pitch_scale = randomPitchNumber;
-				moveSound.pitch_scale = randomPitchNumber;
-				if !footsteps.playing && !moveSound.playing:
-					footsteps.play();
-					moveSound.play()
-				states = WALKING_L;
+		$Light2D/AnimationPlayer.stop();
+		$Light2D.energy = 0;
+		mode = 2;
+		if Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left"):
+			stateMachine = WALKING;
 			if Input.is_action_just_pressed("jump"):
-				randomSound.randomize();
-				randomPitch.randomize();
-				var randomSoundPlay = randomSound.randi_range(0,1);
-				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
-				var jumpMovement = JUMPSOUND[2];
-				var jumpSound = JUMPSOUND[randomSoundPlay];
-				if !jumpSound.playing && !jumpMovement.playing:
-					jumpMovement.pitch_scale = randomPitchNumber;
-					jumpSound.pitch_scale = randomPitchNumber;
-					jumpMovement.play();
-					jumpSound.play();
-				states = JUMPING;
-		elif Input.is_action_pressed("move_right"):
-			var footsteps = MOVEMENT[0];
-			var moveSound = MOVEMENT[1];
-			if !isJumping:
-				randomPitch.randomize();
-				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
-				footsteps.pitch_scale = randomPitchNumber;
-				moveSound.pitch_scale = randomPitchNumber;
-				if !footsteps.playing && !moveSound.playing:
-					footsteps.play();
-					moveSound.play()
-				states = WALKING_R;
-			if Input.is_action_just_pressed("jump"):
-				randomSound.randomize();
-				randomPitch.randomize();
-				var randomSoundPlay = randomSound.randi_range(0,1);
-				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
-				var jumpMovement = JUMPSOUND[2];
-				var jumpSound = JUMPSOUND[randomSoundPlay];
-				if !jumpSound.playing && !jumpMovement.playing:
-					jumpMovement.pitch_scale = randomPitchNumber;
-					jumpSound.pitch_scale = randomPitchNumber;
-					jumpMovement.play();
-					jumpSound.play();
-				states = JUMPING;
-		elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
-			var footsteps = MOVEMENT[0];
-			var moveSound = MOVEMENT[1];
-			randomPitch.randomize();
-			var randomPitchNumber = randomPitch.randf_range(0.95, 1);
-			footsteps.pitch_scale = randomPitchNumber;
-			moveSound.pitch_scale = randomPitchNumber;
-			if footsteps.playing && moveSound.playing:
-				footsteps.stop();
-				moveSound.stop()
-			states = IDLE;
-		elif Input.is_action_just_pressed("jump"):
-			if !isJumping:
-				randomSound.randomize();
-				randomPitch.randomize();
-				var randomSoundPlay = randomSound.randi_range(0,1);
-				var randomPitchNumber = randomPitch.randf_range(0.95, 1);
-				var jumpMovement = JUMPSOUND[2];
-				var jumpSound = JUMPSOUND[randomSoundPlay];
-				if !jumpSound.playing && !jumpMovement.playing:
-					jumpMovement.pitch_scale = randomPitchNumber;
-					jumpSound.pitch_scale = randomPitchNumber;
-					jumpMovement.play();
-					jumpSound.play();
-				states = JUMPING;
+				stateMachine = JUMPING;
 	else:
+		$Light2D/AnimationPlayer.play("light");
 		mode = 1;
 
-func _integrate_forces(state):
-	#State Machine
-	match states:
-		IDLE:
-			isWalkingComplete = true;
-			if linear_velocity.x > 0:
-				if !isonShape:
-					state.apply_central_impulse(Vector2(-1 * stopWalkingForce, gravity - airFriction));
-				else:
-					state.apply_central_impulse(Vector2(0 , gravity - airFriction));
-			elif linear_velocity.x < 0:
-				if !isonShape:
-					state.apply_central_impulse(Vector2(stopWalkingForce, gravity - airFriction));
-				else:
-					state.apply_central_impulse(Vector2(0, gravity - airFriction));
-			elif  linear_velocity.x == 0:
-				state.apply_central_impulse(Vector2(linear_velocity.x , gravity - airFriction));
-			if isJumping:
-				if Input.is_action_pressed("move_left"):
-					states = WALKING_L
-				elif Input.is_action_pressed("move_right"):
-					states = WALKING_R
-		JUMPING:
-			#Apply jumping impulse
-			if !isJumping:
-					state.apply_central_impulse(Vector2(linear_velocity.x, jumpingForce + airFriction));
-					isJumping = true;
-			if isJumping:
-					states = IDLE;
-		WALKING_L:
-			#Set walking linear velocity while not jumping and apply impulses when on air.
-			animations.flip_h = 1;
-			#For Walking Animation
-			isWalkingComplete = false;
-			#Apply different types of force depending on the state of the Character
-			if !isJumping && isonFloor:
-				state.set_linear_velocity(Vector2(-1 * walkingspeed + surfaceFriction, gravity - airFriction));
-			elif isJumping || !isonFloor:
-				if Input.is_action_pressed("move_left"):
-					# warning-ignore:integer_division
-					state.apply_central_impulse(Vector2(-1 * airMovingSpeed + airFriction, gravity - airFriction));
-				else:
-					# warning-ignore:integer_division
-					state = IDLE;
-		WALKING_R:
-			#Set Walking linear velocity while not jumping and apply impulses when on air/
-			animations.flip_h = 0;
-			#for Walking Animation
-			isWalkingComplete = false;
-			#Apply different types of force depending on the state of the Character
-			if !isJumping && isonFloor:
-				state.set_linear_velocity(Vector2(walkingspeed - surfaceFriction, gravity - airFriction));
-			elif isJumping || !isonFloor:
-				if Input.is_action_pressed("move_right"):
-					# warning-ignore:integer_division
-					state.apply_central_impulse(Vector2(airMovingSpeed - airFriction, gravity - airFriction));
-				else:
-					# warning-ignore:integer_division
-					state = IDLE
-		ISONWALL:
-			pass;
-		ISONPLATFORM1:
-			pass;
-		ISONPLATFORM2:
-			pass;
-		ISONEXITCHAPTER:
-			pass;
+func _physics_process(_delta):
+	pass;
 
-func _on_AnimatedSprite_animation_finished():
-	#Animation System
-	if !isWalkingComplete:
-		animations.play("Walk");
-	elif isWalkingComplete:
-		animations.play("Idle");
+func _integrate_forces(state):
+	var vertvel = get_linear_velocity().y;
+	var horVel = get_linear_velocity().x;
+	match stateMachine:
+		IDLE:
+			#IDLE State Logic
+			animations.play("Idle");
+			if Input.is_action_just_pressed("jump"):
+				stateMachine = JUMPING;
+			if horVel > 0:
+				if !isJumping:
+					state.apply_central_impulse(Vector2(horVel - stopForce , vertvel));
+				else:
+					state.apply_central_impulse(Vector2(horVel - stopForce , vertvel));
+			elif horVel < 0:
+				if !isJumping:
+					state.apply_central_impulse(Vector2(horVel + stopForce, vertvel));
+				else:
+					state.apply_central_impulse(Vector2(horVel + stopForce, vertvel));
+			else: 
+				if !isJumping:
+					state.apply_central_impulse(Vector2(horVel, vertvel));
+				else:
+					state.apply_central_impulse(Vector2(horVel, vertvel));
+		JUMPING:
+			#JUMPING State Logic and Platform Logic
+			if isOnFloor:
+				if !isJumping:
+					state.apply_central_impulse(Vector2(horVel, jumpForce));
+					isJumping = true;
+					stateMachine = IDLE;
+					if isonPlatform:
+						state.apply_central_impulse(Vector2(Global.getPlatformVelocity.x, Global.getPlatformVelocity.y + jumpForce))
+						isJumping = true;
+						stateMachine = ONPLATFORM;
+					elif isonPlatform2:
+						state.apply_central_impulse(Vector2(Global.getPlatform2Velocity.x, Global.getPlatform2Velocity.y + jumpForce))
+						isJumping = true;
+						stateMachine = ONPLATFORM2;
+					elif isonExit:
+						state.apply_central_impulse(Vector2(Global.getPlatform3Velocity.x, Global.getPlatform3Velocity.y + jumpForce))
+						isJumping = true;
+						stateMachine = ONEXITCHAPTER;
+		WALKING:
+			animations.play("Walk")
+			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+				animations.flip_h = 1;
+				if !isJumping:
+					state.set_linear_velocity(Vector2(-1 * walkingSpeed, vertvel));
+				else:
+					state.apply_central_impulse(Vector2(-1 * walkingSpeed, vertvel));
+			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+				animations.flip_h = 0;
+				if !isJumping:
+					state.set_linear_velocity(Vector2(walkingSpeed, vertvel));
+				else:
+					state.apply_central_impulse(Vector2(walkingSpeed, vertvel));
+			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
+				stateMachine = IDLE;
+		ONPLATFORM:
+			animations.play("Walk")
+			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+				animations.flip_h = 1;
+				if !isJumping:
+					state.set_linear_velocity(Vector2(Global.getPlatformVelocity + -1 * walkingSpeed, vertvel));
+				else:
+					state.apply_central_impulse(Vector2(Global.getPlatformVelocity + -1 * walkingSpeed, vertvel));
+			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+				animations.flip_h = 0;
+				if !isJumping:
+					state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + walkingSpeed, Global.getPlatformVelocity.y));
+				else:
+					state.apply_central_impulse(Vector2(Global.getPlatformVelocity.x + walkingSpeed, Global.getPlatformVelocity + vertvel));
+			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
+				state.set_linear_velocity(Global.getPlatformVelocity.x, Global.getPlatformVelocity.y)
+		ONPLATFORM2:
+			animations.play("Walk")
+			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+				animations.flip_h = 1;
+				if !isJumping:
+					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity + -1 * walkingSpeed, vertvel));
+				else:
+					state.apply_central_impulse(Vector2(Global.getPlatform2Velocity + -1 * walkingSpeed, vertvel));
+			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+				animations.flip_h = 0;
+				if !isJumping:
+					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + walkingSpeed, Global.getPlatformVelocity.y));
+				else:
+					state.apply_central_impulse(Vector2(Global.getPlatformV2elocity.x + walkingSpeed, Global.getPlatformVelocity + vertvel));
+			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
+				state.set_linear_velocity(Global.getPlatform2Velocity.x, Global.getPlatform2Velocity.y)
+		ONEXITCHAPTER:
+			animations.play("Walk")
+			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+				animations.flip_h = 1;
+				if !isJumping:
+					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity + -1 * walkingSpeed, vertvel));
+				else:
+					state.apply_central_impulse(Vector2(Global.getPlatform3Velocity + -1 * walkingSpeed, vertvel));
+			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+				animations.flip_h = 0;
+				if !isJumping:
+					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + walkingSpeed, Global.getPlatform3Velocity.y));
+				else:
+					state.apply_central_impulse(Vector2(Global.getPlatform3Velocity.x + walkingSpeed, Global.getPlatform3Velocity + vertvel));
+			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
+				state.set_linear_velocity(Global.getPlatform3Velocity.x, Global.getPlatform3Velocity.y)
+
 
 func _on_RigidBody2D_body_entered(body):
-	#collission logic on enter
-	isonFloor = true;
 	isJumping = false;
-	if body.is_in_group("cannonball"):
-		randomSound.randomize();
-		randomPitch.randomize();
-		var randomPitchNumber = randomPitch.randf_range(0.95, 1);
-		var randomSoundPlay = randomSound.randi_range(0, 4);
-		var takeDamage = DAMAGE[randomSoundPlay];
-		if !takeDamage.playing:
-			takeDamage.pitch_scale = randomPitchNumber;
-			takeDamage.play();
-	if !body.is_in_group("wall"):
-		randomSound.randomize();
-		randomPitch.randomize();
-		var randomPitchNumber = randomPitch.randf_range(0.95, 1);
-		LAND.pitch_scale = randomPitchNumber;
-		LAND.play();
-		if Input.is_action_pressed("move_left"):
-			states = WALKING_L;
-		elif Input.is_action_pressed("move_right"):
-			states = WALKING_R;
-	elif body.is_in_group("platform"):
+	isOnFloor = true;
+	if body.is_in_group("platform"):
+		stateMachine = ONPLATFORM;
 		isonPlatform = true;
+		isOnFloor = true;
 	elif body.is_in_group("platform2"):
+		stateMachine = ONPLATFORM2;
 		isonPlatform2 = true;
+		isOnFloor = true;
 	elif body.is_in_group("exitChapter"):
-		isonexitChapter = true;
-	elif body.is_in_group("wall"):
-		isonWall = true;
-	elif body.is_in_group("shape"):
-		isonShape = true;
+		stateMachine = ONEXITCHAPTER;
+		isonExit = true;
+		isOnFloor = true;
+
 
 func _on_RigidBody2D_body_exited(body):
-	#collision logic on exit
-	isonFloor = false;
 	if body.is_in_group("platform"):
 		isonPlatform = false;
-	if body.is_in_group("platform2"):
+	elif body.is_in_group("platform2"):
 		isonPlatform2 = false;
-	if body.is_in_group("exitChapter"):
-		isonexitChapter = false;
-	if body.is_in_group("wall"):
-		isonWall = false;
-	elif body.is_in_group("shape"):
-		isonShape = true;
-
-
+	elif body.is_in_group("exitChapter"):
+		isonExit = false;

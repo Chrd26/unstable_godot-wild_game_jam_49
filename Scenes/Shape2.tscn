@@ -4,7 +4,6 @@
 [ext_resource path="res://Scenes/Shape2.gd" type="Script" id=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
-friction = 0.5
 absorbent = true
 
 [node name="Shape2" type="RigidBody2D" groups=["shape"]]

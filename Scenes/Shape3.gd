@@ -12,12 +12,12 @@ var presses = 0;
 func _physics_process(_delta):
 	#Change to Kinematic or Rigid Mode
 	if !Global.movementEnabled:
-		mode = 3;
+		mode = 1;
 	else:
 		mode = 0;
 	#Shape Movement, Rotation and Placement
 	if !isPlaced:
-		mode = 3;
+		mode = 1;
 		global_position = get_global_mouse_position();
 		mousePos = get_global_mouse_position();
 		currentRotation = rotation;
