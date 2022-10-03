@@ -22,12 +22,14 @@ func _physics_process(_delta):
 		mousePos = get_global_mouse_position();
 		currentRotation = rotation;
 		if Input.is_action_pressed("move_left"):
-			rotation += 0.1;
+			rotation -= 0.05;
 		if Input.is_action_pressed("move_right"):
-			rotation -= 0.1;
+			rotation += 0.05;
 		if Input.is_action_just_pressed("placeMaterial"):
 			global_position = mousePos;
 			rotation = currentRotation;
+			if Global.checkpointIndex > 0:
+				Global.materials -= 1;
 			isPlaced = true;
 			mode = 0;
 
