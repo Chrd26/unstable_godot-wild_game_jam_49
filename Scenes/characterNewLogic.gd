@@ -49,23 +49,17 @@ func _integrate_forces(state):
 	match stateMachine:
 		IDLE:
 			#IDLE State Logic
-			animations.play("Idle");
+			if isOnFloor:
+				animations.play("Idle");
+			else:
+				animations.play("In the Air");
 			if Input.is_action_just_pressed("jump"):
 				stateMachine = JUMPING;
 			if horVel > 0:
-				if !isJumping:
-					state.apply_central_impulse(Vector2(horVel - stopForce , vertvel));
-				else:
 					state.apply_central_impulse(Vector2(horVel - stopForce , vertvel));
 			elif horVel < 0:
-				if !isJumping:
-					state.apply_central_impulse(Vector2(horVel + stopForce, vertvel));
-				else:
 					state.apply_central_impulse(Vector2(horVel + stopForce, vertvel));
 			else: 
-				if !isJumping:
-					state.apply_central_impulse(Vector2(horVel, vertvel));
-				else:
 					state.apply_central_impulse(Vector2(horVel, vertvel));
 		JUMPING:
 			#JUMPING State Logic and Platform Logic
@@ -73,6 +67,7 @@ func _integrate_forces(state):
 				if !isJumping:
 					state.apply_central_impulse(Vector2(horVel, jumpForce));
 					isJumping = true;
+					animations.play("In the Air");
 					stateMachine = IDLE;
 					if isonPlatform:
 						state.apply_central_impulse(Vector2(Global.getPlatformVelocity.x, Global.getPlatformVelocity.y + jumpForce))
@@ -88,7 +83,10 @@ func _integrate_forces(state):
 						stateMachine = ONEXITCHAPTER;
 		WALKING:
 			#WALKING State logic while the player is in the air or on the floor
-			animations.play("Walk")
+			if isOnFloor:
+				animations.play("Walk")
+			else:
+				animations.play("In the Air")
 			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
 				animations.flip_h = 1;
 				if !isJumping || isOnFloor:
@@ -179,6 +177,7 @@ func _on_RigidBody2D_body_entered(body):
 
 
 func _on_RigidBody2D_body_exited(body):
+	isOnFloor = false;
 	if body.is_in_group("platform"):
 		isonPlatform = false;
 	elif body.is_in_group("platform2"):

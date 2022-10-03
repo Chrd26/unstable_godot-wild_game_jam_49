@@ -57,7 +57,7 @@ animations = [ {
 "frames": [ ExtResource( 46 ), ExtResource( 39 ), ExtResource( 43 ), ExtResource( 47 ), ExtResource( 45 ), ExtResource( 42 ), ExtResource( 40 ), ExtResource( 41 ), ExtResource( 3 ), ExtResource( 44 ), ExtResource( 23 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ) ],
 "loop": true,
 "name": "Idle",
-"speed": 30.0
+"speed": 24.0
 }, {
 "frames": [ ExtResource( 48 ) ],
 "loop": true,
@@ -67,7 +67,7 @@ animations = [ {
 "frames": [ ExtResource( 32 ), ExtResource( 31 ), ExtResource( 24 ), ExtResource( 28 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 30 ), ExtResource( 29 ), ExtResource( 20 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 25 ), ExtResource( 13 ), ExtResource( 9 ), ExtResource( 22 ), ExtResource( 19 ), ExtResource( 14 ) ],
 "loop": true,
 "name": "Walk",
-"speed": 30.0
+"speed": 24.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=2]
