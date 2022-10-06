@@ -1,8 +1,8 @@
 extends RigidBody2D
 var hasStartedMoving;
 var pos1 = Vector2(-67, -264);
-var pos2 = Vector2(-67, 1672);
-var pos3 = Vector2(1917, 1672);
+var pos2 = Vector2(-67, 1660);
+var pos3 = Vector2(1834, 1660);
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -24,8 +24,8 @@ func _physics_process(_delta):
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("player"):
 		if !hasStartedMoving:
-			$platform3Tween.interpolate_property(self, "position", pos1, pos2, 10, Tween.TRANS_QUAD, Tween.EASE_IN_OUT);
-			$platform3Tween.interpolate_property(self, "position", pos2, pos3, 8,Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 10);
+			$platform3Tween.interpolate_property(self, "position", pos1, pos2, 15, Tween.TRANS_QUAD, Tween.EASE_IN_OUT);
+			$platform3Tween.interpolate_property(self, "position", pos2, pos3, 6,Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 15);
 			$platform3Tween.start();
 			hasStartedMoving = true;
 

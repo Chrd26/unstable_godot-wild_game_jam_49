@@ -1,4 +1,7 @@
 extends Node2D
+
+# Global Variables for Gameplay Elements
+
 var movementEnabled = true;
 var materialsLeft;
 var stackingMode = false;
@@ -13,7 +16,7 @@ var enemyGetPOS;
 var hasActivatedBuilding = false;
 var haspickedUpShape = false;
 var chapterNumber = 0;
-var checkpointIndex = 0;
+var checkpointIndex = 1;
 var hasgameStarted = false;
 var haspressedBegin = false;
 var getPlatformVelocity;

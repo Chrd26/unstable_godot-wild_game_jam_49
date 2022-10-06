@@ -49,8 +49,6 @@ func _on_Area2D_body_entered(body):
 		$BallImpact.pitch_scale = randomPitchNumber;
 		$BallImpact.play();
 	if body.is_in_group("player"):
-		Global.takeDamage = true;
-		Global.lostLife = true;
 		queue_free();
 		Global.lives -= 1;
 	if body.is_in_group("material"):

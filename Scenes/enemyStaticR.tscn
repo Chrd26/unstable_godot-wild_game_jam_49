@@ -78,6 +78,7 @@ polygon = PoolVector2Array( -73, 10, -70, 13, -61, 14, -43, 13, -35, 13, -33, 10
 
 [node name="RigidBody2D" type="RigidBody2D" parent="." groups=["enemy"]]
 mode = 2
+mass = 20.0
 gravity_scale = 20.0
 script = ExtResource( 18 )
 

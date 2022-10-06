@@ -1,4 +1,4 @@
-[gd_scene load_steps=121 format=2]
+[gd_scene load_steps=126 format=2]
 
 [ext_resource path="res://Scenes/movingplatform.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-10.png" type="Texture" id=2]
@@ -582,13 +582,19 @@ absorbent = true
 
 [sub_resource type="OccluderPolygon2D" id=5]
 cull_mode = 1
-polygon = PoolVector2Array( 670, 1552, -105, 1544, -115, 1638, -125, 1709, -121, 1793, -108, 1885, -108, 1957, -117, 2073, -235, 2055, -575, 2064, -832, 2077, -1009, 2092, -972, 1784, -992, 1200, -1007, 987, 670, 913 )
+polygon = PoolVector2Array( 670, 1552, -105, 1544, -115, 1638, -125, 1709, -121, 1793, -108, 1885, -108, 1957, -118, 2051, -1001, 2054, -972, 1784, -992, 1200, -1007, 987, 670, 913 )
+
+[sub_resource type="RectangleShape2D" id=64]
+
+[sub_resource type="RectangleShape2D" id=65]
+extents = Vector2( 387.5, 64.125 )
+
+[sub_resource type="RectangleShape2D" id=66]
 
 [sub_resource type="PhysicsMaterial" id=32]
 friction = 0.0
 
 [sub_resource type="PhysicsMaterial" id=38]
-rough = true
 
 [sub_resource type="OccluderPolygon2D" id=6]
 closed = false
@@ -611,7 +617,6 @@ polygon = PoolVector2Array( 2406, 1616, 2417, 1487, 2419, 1446, 2477, 1432, 2593
 polygon = PoolVector2Array( 1883, 1175, 2158, 1177, 2090, 1072, 2020, 1042, 1948, 1068 )
 
 [sub_resource type="PhysicsMaterial" id=39]
-rough = true
 
 [sub_resource type="OccluderPolygon2D" id=11]
 cull_mode = 2
@@ -633,28 +638,29 @@ polygon = PoolVector2Array( 4591, 1857, 4528, 1384, 4817, 1387, 4800, 1101, 4962
 polygon = PoolVector2Array( 3909, 572, 4510, 941, 4459, 989, 4310, 964, 4297, 1312, 4264, 1318, 4226, 1312, 4125, 1301, 3916, 1285, 3904, 766, 3846, 754, 3775, 753, 2969, 767, 2919, 769, 2907, 364, 2902, 32, 2952, 23, 3049, 12, 3160, 5, 3869, -1, 3879, 46 )
 
 [sub_resource type="PhysicsMaterial" id=25]
-rough = true
 absorbent = true
 
 [sub_resource type="PhysicsMaterial" id=40]
-rough = true
 
 [sub_resource type="PhysicsMaterial" id=36]
 friction = 0.0
 
 [sub_resource type="PhysicsMaterial" id=49]
-rough = true
 
 [sub_resource type="PhysicsMaterial" id=50]
 friction = 0.0
 
 [sub_resource type="PhysicsMaterial" id=48]
-rough = true
 absorbent = true
 
 [sub_resource type="PhysicsMaterial" id=51]
-rough = true
 absorbent = true
+
+[sub_resource type="RectangleShape2D" id=63]
+extents = Vector2( 164.5, 14.5 )
+
+[sub_resource type="RectangleShape2D" id=62]
+extents = Vector2( 168.75, 64.25 )
 
 [sub_resource type="OccluderPolygon2D" id=43]
 cull_mode = 1
@@ -672,7 +678,6 @@ friction = 0.0
 bounce = 1.0
 
 [sub_resource type="PhysicsMaterial" id=57]
-rough = true
 
 [sub_resource type="OccluderPolygon2D" id=46]
 cull_mode = 1
@@ -683,7 +688,7 @@ rough = true
 bounce = 1.0
 
 [sub_resource type="PhysicsMaterial" id=58]
-rough = true
+absorbent = true
 
 [sub_resource type="StreamTexture" id=60]
 flags = 4
@@ -694,7 +699,6 @@ friction = 0.0
 bounce = 1.0
 
 [sub_resource type="PhysicsMaterial" id=55]
-rough = true
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 5715.5, 159.5 )
@@ -762,7 +766,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 3
+frame = 8
 playing = true
 script = ExtResource( 60 )
 
@@ -773,7 +777,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 1
+frame = 8
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -783,9 +787,6 @@ position = Vector2( 248, -416 )
 mode = 1
 physics_material_override = SubResource( 37 )
 
-[node name="floor1" type="CollisionPolygon2D" parent="MapDesign/Tutorial/floors"]
-polygon = PoolVector2Array( -1004, 2051, -121, 2050, -129, 2123, -1005, 2119 )
-
 [node name="IntroTunnel" type="Sprite" parent="MapDesign/Tutorial/floors"]
 position = Vector2( -356, 1292 )
 texture = ExtResource( 15 )
@@ -793,10 +794,23 @@ texture = ExtResource( 15 )
 [node name="LightOccluder2D" type="LightOccluder2D" parent="MapDesign/Tutorial/floors"]
 occluder = SubResource( 5 )
 
-[node name="floor2" type="CollisionPolygon2D" parent="MapDesign/Tutorial/floors"]
-polygon = PoolVector2Array( 1276, 1919, 1297, 1913, 1296, 1931, 1273, 1945, 662, 1579, -112, 1613, -106, 1546, 667, 1548 )
+[node name="floor1" type="CollisionShape2D" parent="MapDesign/Tutorial/floors"]
+position = Vector2( -566.556, 2081.04 )
+scale = Vector2( 45.57, 2.856 )
+shape = SubResource( 64 )
+
+[node name="floor2" type="CollisionShape2D" parent="MapDesign/Tutorial/floors"]
+position = Vector2( 277.5, 1616.12 )
+shape = SubResource( 65 )
+
+[node name="floor3" type="CollisionShape2D" parent="MapDesign/Tutorial/floors"]
+position = Vector2( 990.999, 1757 )
+rotation = 3.69137
+scale = Vector2( 38.468, 0.48 )
+shape = SubResource( 66 )
 
 [node name="Walls" type="RigidBody2D" parent="MapDesign/Tutorial" groups=["wall"]]
+visible = false
 mode = 1
 physics_material_override = SubResource( 32 )
 
@@ -807,6 +821,7 @@ polygon = PoolVector2Array( 129, 1198, 125, 1304, 138, 1565, 119, 1711, 490, 168
 polygon = PoolVector2Array( -758, 1727, -738, 1573, -720, 1470, -713, 1396, -709, 1296, -706, 1157, -708, 1026, -719, 890, -747, 784, -886, 800, -856, 1737 )
 
 [node name="ReverbArea" type="Area2D" parent="MapDesign/Tutorial"]
+visible = false
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MapDesign/Tutorial/ReverbArea"]
 polygon = PoolVector2Array( -776, 1697, -746, 832, -92, 698, 605, 657, 887, 663, 917, 657, 924, 1159, 562, 1143, 236, 1177, 166, 1252, 192, 1711, -800, 1760 )
@@ -1287,8 +1302,9 @@ script = ExtResource( 59 )
 [node name="Sprite" type="Sprite" parent="MapDesign/Chapter1Part5/sprites/platform3"]
 texture = ExtResource( 42 )
 
-[node name="collider" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part5/sprites/platform3"]
-polygon = PoolVector2Array( -531, -86, -200, -81, -190, 64, -532, 71 )
+[node name="collider" type="CollisionShape2D" parent="MapDesign/Chapter1Part5/sprites/platform3"]
+position = Vector2( -364, -67 )
+shape = SubResource( 63 )
 
 [node name="Area2D" type="Area2D" parent="MapDesign/Chapter1Part5/sprites/platform3"]
 visible = false
@@ -1300,6 +1316,12 @@ polygon = PoolVector2Array( -531, -86, -200, -81, -190, 64, -532, 71 )
 
 [node name="platform3Timer" type="Timer" parent="MapDesign/Chapter1Part5/sprites/platform3"]
 wait_time = 5.0
+
+[node name="wallPlat" type="RigidBody2D" parent="MapDesign/Chapter1Part5/sprites/platform3" groups=["wall"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapDesign/Chapter1Part5/sprites/platform3/wallPlat"]
+position = Vector2( -361, 15 )
+shape = SubResource( 62 )
 
 [node name="Chapter1Part5-5" type="Sprite" parent="MapDesign/Chapter1Part5/sprites"]
 position = Vector2( 547, 1670 )

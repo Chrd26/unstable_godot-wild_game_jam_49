@@ -180,7 +180,7 @@ func _on_Area2D_body_entered(body):
 			Global.lostLife = true;
 	#if body.is_in_group(\"floor\"):
 		#istouchingFloor = true;
-	if body.is_in_group(\"wall\") || body.is_in_group(\"material\"):
+	if body.is_in_group(\"wall\") || body.is_in_group(\"shape\"):
 		istouchingwall = true;
 		if changeSide:
 			changeSide = false;
@@ -246,6 +246,7 @@ polygon = PoolVector2Array( -73, 10, -70, 13, -61, 14, -43, 13, -35, 13, -33, 10
 
 [node name="Body" type="RigidBody2D" parent="." groups=["enemy"]]
 mode = 2
+mass = 20.0
 physics_material_override = SubResource( 5 )
 gravity_scale = 20.0
 script = SubResource( 3 )
