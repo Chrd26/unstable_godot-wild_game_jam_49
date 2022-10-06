@@ -8,6 +8,16 @@ var isonPlatform2 = false;
 var isonPlatform3 = false;
 var isonExit = false;
 
+#Declare Audio Variables
+onready var jumpImpact = [$Audio/JumpImpact1, $Audio/JumpImpact2];
+onready var jumpMovement = $Audio/JumpMovement;
+onready var footsteps = $Audio/Footsteps;
+onready var walkingMovement = $Audio/Movement;
+onready var landImpact = $Audio/landImpact;
+onready var takeDamage = [$Audio/takeDamage1, $Audio/takeDamage2, $Audio/takeDamage3, $Audio/takeDamage4, $Audio/takeDamage5];
+var randomPitch = RandomNumberGenerator.new();
+var randomSound = RandomNumberGenerator.new();
+
 #Declare Variables
 onready var stateMachine;
 const walkingSpeed = 250;
@@ -25,6 +35,53 @@ enum{
 	ONPLATFORM3,
 	ONEXITCHAPTER
 }
+
+func playTakeDamageSound():
+	randomPitch.randomize();
+	randomSound.randomize();
+	var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+	var randomSoundPlay= randomSound.randi_range(0, 4);
+	var takeDamageSound = takeDamage[randomSoundPlay]
+	if !takeDamageSound.playing:
+		takeDamageSound.pitch_scale = randomPitchNumber;
+		takeDamageSound.play();
+
+
+#Declare Functions
+func stopWalkSound():
+	randomPitch.randomize();
+	var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+	footsteps.pitch_scale = randomPitchNumber
+	walkingMovement.pitch_scale = randomPitchNumber
+	footsteps.stop();
+	walkingMovement.stop();
+
+func playLandSound(velocityImpact, addedPitch):
+	randomPitch.randomize();
+	var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+	landImpact.volume_db = velocityImpact;
+	landImpact.pitch_scale = randomPitchNumber + addedPitch;
+	landImpact.play();
+
+func playWalkSound():
+	randomPitch.randomize();
+	var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+	footsteps.pitch_scale = randomPitchNumber
+	walkingMovement.pitch_scale = randomPitchNumber
+	if !footsteps.playing && !walkingMovement.playing:
+		footsteps.play();
+		walkingMovement.play();
+
+func playJumpSound():
+	randomPitch.randomize();
+	randomSound.randomize();
+	var randomPitchNumber = randomPitch.randf_range(0.95, 1);
+	var randomSoundPlay= randomSound.randi_range(0, 1);
+	var jumpImpactSound = jumpImpact[randomSoundPlay]
+	jumpImpactSound.pitch_scale = randomPitchNumber
+	jumpMovement.pitch_scale = randomPitchNumber
+	jumpImpactSound.play();
+	jumpMovement.play();
 
 func _ready():
 	stateMachine = IDLE
@@ -56,6 +113,7 @@ func _integrate_forces(state):
 		IDLE:
 			#IDLE State Logic
 			if isOnFloor:
+				stopWalkSound();
 				animations.play("Idle");
 			else:
 				animations.play("In the Air");
@@ -71,7 +129,7 @@ func _integrate_forces(state):
 			#JUMPING State Logic and Platform Logic
 			if isOnFloor:
 				if !isJumping:
-					print("jump");
+					playJumpSound();
 					state.apply_central_impulse(Vector2(horVel, jumpForce));
 					isJumping = true;
 					animations.play("In the Air");
@@ -87,8 +145,10 @@ func _integrate_forces(state):
 			#WALKING State logic while the player is in the air or on the floor
 			if isOnFloor:
 				animations.play("Walk")
+				playWalkSound();
 			else:
 				animations.play("In the Air")
+				stopWalkSound();
 			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
 				animations.flip_h = 1;
 				if !isJumping || isOnFloor:
@@ -112,29 +172,34 @@ func _integrate_forces(state):
 				animations.flip_h = 1;
 				# if the player is not jumping logic
 				if !isJumping:
+					playWalkSound();
 					animations.play("Walk")
-					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + - 1 * walkingSpeed, vertvel));
+					state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + - 1 * walkingSpeed, vertvel));
 				else:
 				#if the playr is jumping logic 
 					animations.play("Idle");
+					stopWalkSound();
 					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + - 1 * walkingSpeed, vertvel));
+					state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + - 1 * walkingSpeed, vertvel));
 			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
 				#While moving right
 				animations.flip_h = 0;
 				if !isJumping:
 					# if the player is not jumping logic
+					playWalkSound();
 					animations.play("Walk")
-					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + walkingSpeed,vertvel));
+					state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + walkingSpeed,vertvel));
 				else:
 					#if the playr is jumping logic 
 					animations.play("Idle");
+					stopWalkSound();
 					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + walkingSpeed, vertvel));
-			elif Input.is_action_just_released("move_left") || Input.is_action__just_released("move_right"):
+					state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + walkingSpeed, vertvel));
+			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
 				#If the player is not pressing any buttons
 				animations.play("Idle");
-				state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x, vertvel));
+				stopWalkSound();
+				state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x, vertvel));
 		ONPLATFORM2:
 			#While on Platform change apply platform velocity to the main character
 			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
@@ -143,10 +208,12 @@ func _integrate_forces(state):
 				# if the player is not jumping logic
 				if !isJumping:
 					animations.play("Walk")
+					playWalkSound();
 					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + - 1 * walkingSpeed, vertvel));
 				else:
 				#if the playr is jumping logic 
 					animations.play("Idle");
+					stopWalkSound();
 					#While on air, change from setting the linear velocity to applying central impulse
 					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + - 1 * walkingSpeed, vertvel));
 			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
@@ -155,15 +222,18 @@ func _integrate_forces(state):
 				if !isJumping:
 					# if the player is not jumping logic
 					animations.play("Walk")
+					playWalkSound();
 					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + walkingSpeed,vertvel));
 				else:
 					#if the playr is jumping logic 
 					animations.play("Idle");
+					stopWalkSound();
 					#While on air, change from setting the linear velocity to applying central impulse
 					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + walkingSpeed, vertvel));
-			elif Input.is_action_just_released("move_left") || Input.is_action__just_released("move_right"):
+			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
 				#If the player is not pressing any buttons
 				animations.play("Idle");
+				stopWalkSound()
 				state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x, vertvel));
 		ONPLATFORM3:
 			#While on Platform change apply platform velocity to the main character
@@ -173,10 +243,12 @@ func _integrate_forces(state):
 				# if the player is not jumping logic
 				if !isJumping:
 					animations.play("Walk")
+					playWalkSound()
 					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + - 1 * walkingSpeed, vertvel));
 				else:
 				#if the playr is jumping logic 
 					animations.play("Idle");
+					stopWalkSound();
 					#While on air, change from setting the linear velocity to applying central impulse
 					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + - 1 * walkingSpeed, vertvel));
 			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
@@ -185,15 +257,18 @@ func _integrate_forces(state):
 				if !isJumping:
 					# if the player is not jumping logic
 					animations.play("Walk")
+					playWalkSound();
 					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + walkingSpeed,vertvel));
 				else:
 					#if the playr is jumping logic 
 					animations.play("Idle");
+					stopWalkSound();
 					#While on air, change from setting the linear velocity to applying central impulse
 					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + walkingSpeed, vertvel));
 			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
 				#If the player is not pressing any buttons
 				animations.play("Idle");
+				stopWalkSound()
 				state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x, vertvel));
 		ONEXITCHAPTER:
 			#While on Platform change apply platform velocity to the main character
@@ -203,10 +278,12 @@ func _integrate_forces(state):
 				# if the player is not jumping logic
 				if !isJumping:
 					animations.play("Walk")
+					playWalkSound();
 					state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + - 1 * walkingSpeed, vertvel));
 				else:
 				#if the playr is jumping logic 
 					animations.play("Idle");
+					stopWalkSound();
 					#While on air, change from setting the linear velocity to applying central impulse
 					state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + - 1 * walkingSpeed, vertvel));
 			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
@@ -215,20 +292,24 @@ func _integrate_forces(state):
 				if !isJumping:
 					# if the player is not jumping logic
 					animations.play("Walk")
+					playWalkSound();
 					state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + walkingSpeed,vertvel));
 				else:
 					#if the playr is jumping logic 
 					animations.play("Idle");
+					stopWalkSound();
 					#While on air, change from setting the linear velocity to applying central impulse
 					state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + walkingSpeed, vertvel));
 			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
 				#If the player is not pressing any buttons
 				animations.play("Idle");
+				stopWalkSound();
 				state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x, vertvel));
 	
 func _on_RigidBody2D_body_entered(body):
 	isJumping = false;
 	isOnFloor = true;
+	playLandSound(0, 0.05);
 	if body.is_in_group("platform"):
 		stateMachine = ONPLATFORM;
 		isonPlatform = true;
@@ -245,6 +326,8 @@ func _on_RigidBody2D_body_entered(body):
 		isonExit = true;
 		stateMachine = ONEXITCHAPTER;
 		isOnFloor = true;
+	elif body.is_in_group("cannonball"):
+		playTakeDamageSound();
 
 
 func _on_RigidBody2D_body_exited(body):

@@ -766,7 +766,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 8
+frame = 1
 playing = true
 script = ExtResource( 60 )
 

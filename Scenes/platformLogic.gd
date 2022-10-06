@@ -15,7 +15,6 @@ func _ready():
 
 func _physics_process(_delta):
 	Global.getPlatformVelocity = linear_velocity;
-	Global.getPlatformPosition = global_position;
 
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("player"):
