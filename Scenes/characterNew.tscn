@@ -72,7 +72,7 @@ animations = [ {
 
 [sub_resource type="CapsuleShape2D" id=2]
 custom_solver_bias = 1.0
-radius = 14.52
+radius = 10.01
 height = 146.31
 
 [sub_resource type="Animation" id=4]
@@ -131,8 +131,8 @@ mode = 2
 mass = 20.0
 physics_material_override = SubResource( 8 )
 gravity_scale = 20.0
-continuous_cd = 2
-contacts_reported = 2
+continuous_cd = 1
+contacts_reported = 5
 contact_monitor = true
 linear_velocity = Vector2( 5, 0 )
 linear_damp = 0.0
@@ -157,7 +157,7 @@ smoothing_speed = 7.0
 current = true
 
 [node name="MainCollider" type="CollisionShape2D" parent="."]
-position = Vector2( 0.264008, 16.64 )
+position = Vector2( 0.264, 20.822 )
 shape = SubResource( 2 )
 
 [node name="Audio" type="Node2D" parent="."]
@@ -244,6 +244,11 @@ color = Color( 1, 1, 1, 0.501961 )
 color_initial_ramp = SubResource( 7 )
 
 [node name="gui" parent="." instance=ExtResource( 2 )]
+
+[node name="characterRaycast" type="RayCast2D" parent="."]
+scale = Vector2( 1.884, 1 )
+enabled = true
+cast_to = Vector2( 0, 108.148 )
 
 [connection signal="body_entered" from="." to="." method="_on_RigidBody2D_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_RigidBody2D_body_exited"]

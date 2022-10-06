@@ -2,11 +2,12 @@ extends RigidBody2D
 
 #Declare Booleans
 var isJumping = false;
-var isOnFloor = true;
+var isOnFloor = false;
 var isonPlatform = false;
 var isonPlatform2 = false;
 var isonPlatform3 = false;
 var isonExit = false;
+var isHittingBody = false;
 
 #Declare Audio Variables
 onready var jumpImpact = [$Audio/JumpImpact1, $Audio/JumpImpact2];
@@ -87,6 +88,14 @@ func _ready():
 	stateMachine = IDLE
 
 func _process(_delta):
+	if $characterRaycast.is_colliding():
+		var getCollidingBody = $characterRaycast.get_collider();
+		if getCollidingBody.is_in_group("floor") || getCollidingBody.is_in_group("shape"):
+			isOnFloor = true;
+			isJumping = false;
+	elif !isHittingBody && !$characterRaycast.is_colliding():
+		isOnFloor = false; 
+		isJumping = true;
 	if Global.movementEnabled:
 		$Light2D/AnimationPlayer.stop();
 		$Light2D.energy = 0;
@@ -101,7 +110,7 @@ func _process(_delta):
 				stateMachine = JUMPING;
 	else:
 		$Light2D/AnimationPlayer.play("light");
-		mode = 1;
+		mode = 3;
 
 func _physics_process(_delta):
 	pass;
@@ -307,32 +316,29 @@ func _integrate_forces(state):
 				state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x, vertvel));
 	
 func _on_RigidBody2D_body_entered(body):
-	isJumping = false;
-	isOnFloor = true;
+	isHittingBody = true;
 	playLandSound(0, 0.05);
 	if body.is_in_group("platform"):
 		stateMachine = ONPLATFORM;
 		isonPlatform = true;
-		isOnFloor = true;
 	elif body.is_in_group("platform2"):
 		stateMachine = ONPLATFORM2;
 		isonPlatform2 = true;
-		isOnFloor = true;
 	elif body.is_in_group("platform3"):
 		stateMachine = ONPLATFORM3;
 		isonPlatform3 = true;
-		isOnFloor = true;
 	elif body.is_in_group("exitChapter"):
 		isonExit = true;
 		stateMachine = ONEXITCHAPTER;
-		isOnFloor = true;
 	elif body.is_in_group("cannonball"):
 		playTakeDamageSound();
+	elif !body.is_in_group("wall"):
+		isOnFloor = true;
+		isJumping = false;
 
 
 func _on_RigidBody2D_body_exited(body):
-	if !body.is_in_group("wall"):
-		isOnFloor = false;
+	isHittingBody = false;
 	if body.is_in_group("platform"):
 		isonPlatform = false;
 	elif body.is_in_group("platform2"):
