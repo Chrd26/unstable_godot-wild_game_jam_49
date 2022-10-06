@@ -40,7 +40,7 @@ extents = Vector2( 6.8366, 6.35349 )
 
 [node name="lifeup" type="Node2D"]
 
-[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+[node name="KinematicBody2D" type="KinematicBody2D" parent="." groups=["life"]]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="KinematicBody2D"]

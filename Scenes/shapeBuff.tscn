@@ -39,7 +39,7 @@ tracks/0/keys = {
 
 [node name="shapeBuff" type="Node2D"]
 
-[node name="shapebuffRigid" type="RigidBody2D" parent="."]
+[node name="shapebuffRigid" type="RigidBody2D" parent="." groups=["shapeUp"]]
 mode = 3
 script = ExtResource( 2 )
 

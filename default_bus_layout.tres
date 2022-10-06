@@ -1,4 +1,8 @@
-[gd_resource type="AudioBusLayout" load_steps=16 format=2]
+[gd_resource type="AudioBusLayout" load_steps=17 format=2]
+
+[sub_resource type="AudioEffectAmplify" id=19]
+resource_name = "Amplify"
+volume_db = 5.0
 
 [sub_resource type="AudioEffectReverb" id=4]
 resource_name = "Reverb"
@@ -68,6 +72,8 @@ depth = 0.4
 
 [resource]
 bus/0/volume_db = -0.0327301
+bus/0/effect/0/effect = SubResource( 19 )
+bus/0/effect/0/enabled = true
 bus/1/name = "SFX"
 bus/1/solo = false
 bus/1/mute = false
@@ -82,7 +88,7 @@ bus/2/name = "Music"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
-bus/2/volume_db = -9.42178
+bus/2/volume_db = -3.22095
 bus/2/send = "Master"
 bus/2/effect/0/effect = SubResource( 15 )
 bus/2/effect/0/enabled = true
@@ -114,7 +120,7 @@ bus/6/name = "EnemyCannon"
 bus/6/solo = false
 bus/6/mute = false
 bus/6/bypass_fx = false
-bus/6/volume_db = -21.0931
+bus/6/volume_db = -16.4004
 bus/6/send = "SFX"
 bus/6/effect/0/effect = SubResource( 5 )
 bus/6/effect/0/enabled = true
@@ -168,7 +174,7 @@ bus/13/name = "Atmos"
 bus/13/solo = false
 bus/13/mute = false
 bus/13/bypass_fx = false
-bus/13/volume_db = -6.41537
+bus/13/volume_db = -19.3281
 bus/13/send = "Master"
 bus/14/name = "Checkpoint"
 bus/14/solo = false

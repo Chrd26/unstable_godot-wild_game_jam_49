@@ -19,6 +19,7 @@ func _physics_process(_delta):
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("player"):
 		if !hasStarted:
+			Global.hasPlatform1Started = true;
 			$movingplatform2tween.interpolate_property(self, "position", pos1, pos2, 10, Tween.TRANS_QUAD, Tween.EASE_IN_OUT);
 			$movingplatform2tween.interpolate_property(self, "position", pos2, pos3, 30, Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 10);
 			$movingplatform2tween.start();
@@ -28,6 +29,7 @@ func _on_Area2D_body_entered(body):
 
 func _on_movingplatform2tween_tween_all_completed():
 	Global.hashand1Startedmoving = false;
+	Global.hasPlatform1Started = false;
 	$deletePlatform.start();
 
 

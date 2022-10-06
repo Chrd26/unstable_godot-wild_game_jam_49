@@ -17,3 +17,11 @@ func _ready():
 	tween.interpolate_property(self, "position", startPos,  endPos, 4, Tween.TRANS_QUAD, Tween.EASE_IN_OUT);
 	tween.interpolate_property(self, "position", endPos,  startPos, 4, Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 4);
 	tween.start();
+
+
+func _on_Area2D_area_entered(_area):
+	Global.hasPlatform2Started = true;
+
+
+func _on_Area2D_area_exited(_area):
+	Global.hasPlatform2Started = false;

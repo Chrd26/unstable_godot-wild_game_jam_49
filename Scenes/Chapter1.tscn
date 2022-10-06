@@ -1,4 +1,4 @@
-[gd_scene load_steps=126 format=2]
+[gd_scene load_steps=127 format=2]
 
 [ext_resource path="res://Scenes/movingplatform.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Graphics/BackgroundAnimated/Bavkground1_Anim_Blurred-10.png" type="Texture" id=2]
@@ -640,6 +640,9 @@ polygon = PoolVector2Array( 3909, 572, 4510, 941, 4459, 989, 4310, 964, 4297, 13
 [sub_resource type="PhysicsMaterial" id=25]
 absorbent = true
 
+[sub_resource type="RectangleShape2D" id=67]
+extents = Vector2( 137, 134.5 )
+
 [sub_resource type="PhysicsMaterial" id=40]
 
 [sub_resource type="PhysicsMaterial" id=36]
@@ -766,7 +769,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 8
+frame = 10
 playing = true
 script = ExtResource( 60 )
 
@@ -777,7 +780,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 9
+frame = 3
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -1039,6 +1042,13 @@ polygon = PoolVector2Array( 5938, -626.232, 6204, -627.232, 6206, -482.232, 5933
 repeat = true
 playback_process_mode = 0
 playback/repeat = true
+
+[node name="Area2D" type="Area2D" parent="MapDesign/Chapter1Part3/movingplatform"]
+position = Vector2( 3953, -1040 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MapDesign/Chapter1Part3/movingplatform/Area2D"]
+position = Vector2( 30, -200 )
+shape = SubResource( 67 )
 
 [node name="floor" type="RigidBody2D" parent="MapDesign/Chapter1Part3" groups=["floor"]]
 mode = 1
@@ -1498,8 +1508,8 @@ position = Vector2( 5146.5, 2005.5 )
 shape = SubResource( 2 )
 
 [node name="out of bounds3" type="Area2D" parent="MapDesign/MapBounds" groups=["outofworld"]]
-position = Vector2( -409, -1597 )
-scale = Vector2( 0.408, 0.624 )
+position = Vector2( -129, -1597 )
+scale = Vector2( 0.61, 0.624 )
 
 [node name="bounds2" type="CollisionShape2D" parent="MapDesign/MapBounds/out of bounds3"]
 position = Vector2( 5146.5, 2005.5 )
@@ -2084,6 +2094,8 @@ percent_visible = 0.0
 
 [connection signal="body_entered" from="MapDesign/Tutorial/ReverbArea" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="MapDesign/Tutorial/ReverbArea" to="." method="_on_ReverbArea_body_exited"]
+[connection signal="area_entered" from="MapDesign/Chapter1Part3/movingplatform/Area2D" to="MapDesign/Chapter1Part3/movingplatform" method="_on_Area2D_area_entered"]
+[connection signal="area_exited" from="MapDesign/Chapter1Part3/movingplatform/Area2D" to="MapDesign/Chapter1Part3/movingplatform" method="_on_Area2D_area_exited"]
 [connection signal="tween_all_completed" from="MapDesign/Chapter1part4/platform/movingplatform2tween" to="MapDesign/Chapter1part4/platform" method="_on_movingplatform2tween_tween_all_completed"]
 [connection signal="body_entered" from="MapDesign/Chapter1part4/platform/Area2D" to="MapDesign/Chapter1part4/platform" method="_on_Area2D_body_entered"]
 [connection signal="timeout" from="MapDesign/Chapter1part4/platform/deletePlatform" to="MapDesign/Chapter1part4/platform" method="_on_deletePlatform_timeout"]

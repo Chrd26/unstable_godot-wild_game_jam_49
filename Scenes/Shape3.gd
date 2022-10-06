@@ -11,7 +11,7 @@ var presses = 0;
 
 func _physics_process(_delta):
 	#Change to Kinematic or Rigid Mode
-	if !Global.movementEnabled:
+	if !Global.movementEnabled && !isPlaced:
 		mode = 1;
 	else:
 		mode = 0;
@@ -38,3 +38,8 @@ func _input(event):
 	if event.is_action_pressed("Material1") || event.is_action_pressed("Material2") || event.is_action_pressed("Material3") || event.is_action_pressed("Material4") || event.is_action_pressed("stacking_mode_enable"):
 		if !isPlaced:
 			queue_free();
+
+
+func _on_Shape3_body_entered(body):
+	if !isPlaced:
+		body.add_collision_exception_with("player");

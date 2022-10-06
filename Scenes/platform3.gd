@@ -24,6 +24,7 @@ func _physics_process(_delta):
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("player"):
 		if !hasStartedMoving:
+			Global.hasPlatform3Started = true;
 			$platform3Tween.interpolate_property(self, "position", pos1, pos2, 15, Tween.TRANS_QUAD, Tween.EASE_IN_OUT);
 			$platform3Tween.interpolate_property(self, "position", pos2, pos3, 6,Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 15);
 			$platform3Tween.start();
@@ -31,6 +32,7 @@ func _on_Area2D_body_entered(body):
 
 
 func _on_platform3Tween_tween_all_completed():
+	Global.hasPlatform3Started = false;
 	$platform3Timer.start();
 
 

@@ -48,7 +48,7 @@ func playTakeDamageSound():
 		takeDamageSound.play();
 
 
-#Declare Functions
+#Declare Functions for audio
 func stopWalkSound():
 	randomPitch.randomize();
 	var randomPitchNumber = randomPitch.randf_range(0.95, 1);
@@ -88,9 +88,31 @@ func _ready():
 	stateMachine = IDLE
 
 func _process(_delta):
+	if Global.hasPlatform1Started:
+		stateMachine = ONPLATFORM
+	elif Global.hasPlatform2Started:
+		stateMachine = ONPLATFORM2;
+	elif Global.hasPlatform3Started:
+		stateMachine = ONPLATFORM3;
+	elif  Global.hasExitPlatformStarted:
+		stateMachine = ONEXITCHAPTER;
+	#Check if Raycast is Colliding
 	if $characterRaycast.is_colliding():
 		var getCollidingBody = $characterRaycast.get_collider();
 		if getCollidingBody.is_in_group("floor") || getCollidingBody.is_in_group("shape"):
+			isOnFloor = true;
+			isJumping = false;
+		if getCollidingBody.is_in_group("platform"):
+			isOnFloor = true;
+			isJumping = false;
+		elif getCollidingBody.is_in_group("platform2"):
+
+			isOnFloor = true;
+			isJumping = false;
+		elif getCollidingBody.is_in_group("platform3"):
+			isOnFloor = true;
+			isJumping = false;
+		elif getCollidingBody.is_in_group("exitChapter"):
 			isOnFloor = true;
 			isJumping = false;
 	elif !isHittingBody && !$characterRaycast.is_colliding():
@@ -99,7 +121,7 @@ func _process(_delta):
 	if Global.movementEnabled:
 		$Light2D/AnimationPlayer.stop();
 		$Light2D.energy = 0;
-		mode = 2;
+		#mode = 2;
 		if Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left"):
 			if !isonPlatform && !isonPlatform2 && !isonPlatform3 && !isonExit:
 				stateMachine = WALKING;
@@ -110,7 +132,16 @@ func _process(_delta):
 				stateMachine = JUMPING;
 	else:
 		$Light2D/AnimationPlayer.play("light");
-		mode = 3;
+		animations.play("Idle");
+		#mode = 3;
+#		if isonPlatform:
+#			self.global_position = Vector2(Global.getPlatformPOS.x, Global.getPlatformPOS.y - 122);
+#		elif isonPlatform2:
+#			self.global_position = Vector2(Global.getPlatform2POS.x + global_position.x + 850, Global.getPlatform2POS.y - 122);
+#		elif isonPlatform3:
+#			self.global_position = Vector2(Global.getPlatform3POS.x + global_position.x + 850, Global.getPlatform3POS.y - 122);
+#		elif isonExit:
+#			self.global_position = Vector2(Global.getExitChapterPOS.x + global_position.x + 850, Global.getExitChapterPOS.y - 122);
 
 func _physics_process(_delta):
 	pass;
@@ -164,159 +195,183 @@ func _integrate_forces(state):
 					state.set_linear_velocity(Vector2(-1 * walkingSpeed, vertvel));
 				else:
 					#While on air, change from setting the linear velocity to applying central impulse
-					state.apply_central_impulse(Vector2(-1 * walkingSpeed, vertvel));
+					state.set_linear_velocity(Vector2(-1 * walkingSpeed, vertvel));
 			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
 				animations.flip_h = 0;
 				if !isJumping || isOnFloor:
 					state.set_linear_velocity(Vector2(walkingSpeed, vertvel));
 				else:
 					#While on air, change from setting the linear velocity to applying central impulse
-					state.apply_central_impulse(Vector2(walkingSpeed, vertvel));
+					state.set_linear_velocity(Vector2(walkingSpeed, vertvel));
 			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
 				stateMachine = IDLE;
+				stopWalkSound();
+				animations.play("Idle");
 		ONPLATFORM:
-						#While on Platform change apply platform velocity to the main character
-			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
-				#While moving left
-				animations.flip_h = 1;
-				# if the player is not jumping logic
-				if !isJumping:
-					playWalkSound();
-					animations.play("Walk")
-					state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + - 1 * walkingSpeed, vertvel));
-				else:
-				#if the playr is jumping logic 
-					animations.play("Idle");
-					stopWalkSound();
-					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + - 1 * walkingSpeed, vertvel));
-			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
-				#While moving right
-				animations.flip_h = 0;
-				if !isJumping:
+			if Global.movementEnabled:
+				#While on Platform change apply platform velocity to the main character
+				if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+					#While moving left
+					animations.flip_h = 1;
 					# if the player is not jumping logic
-					playWalkSound();
-					animations.play("Walk")
-					state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + walkingSpeed,vertvel));
-				else:
+					if !isJumping:
+						playWalkSound();
+						animations.play("Walk")
+						state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + - 1 * walkingSpeed, vertvel));
+					else:
 					#if the playr is jumping logic 
+						animations.play("Idle");
+						stopWalkSound();
+						#While on air, change from setting the linear velocity to applying central impulse
+						state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + - 1 * walkingSpeed, vertvel));
+				elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+					#While moving right
+					animations.flip_h = 0;
+					if !isJumping:
+						# if the player is not jumping logic
+						playWalkSound();
+						animations.play("Walk")
+						state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + walkingSpeed,vertvel));
+					else:
+						#if the playr is jumping logic 
+						animations.play("Idle");
+						stopWalkSound();
+						#While on air, change from setting the linear velocity to applying central impulse
+						state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + walkingSpeed, vertvel));
+				elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
+					#If the player is not pressing any buttons
 					animations.play("Idle");
 					stopWalkSound();
-					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x + walkingSpeed, vertvel));
-			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
-				#If the player is not pressing any buttons
+					state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x, vertvel));
+			else:
 				animations.play("Idle");
 				stopWalkSound();
 				state.set_linear_velocity(Vector2(Global.getPlatformVelocity.x, vertvel));
 		ONPLATFORM2:
-			#While on Platform change apply platform velocity to the main character
-			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
-				#While moving left
-				animations.flip_h = 1;
-				# if the player is not jumping logic
-				if !isJumping:
-					animations.play("Walk")
-					playWalkSound();
-					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + - 1 * walkingSpeed, vertvel));
-				else:
-				#if the playr is jumping logic 
-					animations.play("Idle");
-					stopWalkSound();
-					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + - 1 * walkingSpeed, vertvel));
-			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
-				#While moving right
-				animations.flip_h = 0;
-				if !isJumping:
+			if Global.movementEnabled:
+				#While on Platform change apply platform velocity to the main character
+				if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+					#While moving left
+					animations.flip_h = 1;
 					# if the player is not jumping logic
-					animations.play("Walk")
-					playWalkSound();
-					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + walkingSpeed,vertvel));
-				else:
+					if !isJumping:
+						playWalkSound();
+						animations.play("Walk")
+						state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + - 1 * walkingSpeed, vertvel));
+					else:
 					#if the playr is jumping logic 
+						animations.play("Idle");
+						stopWalkSound();
+						#While on air, change from setting the linear velocity to applying central impulse
+						state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + - 1 * walkingSpeed, vertvel));
+				elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+					#While moving right
+					animations.flip_h = 0;
+					if !isJumping:
+						# if the player is not jumping logic
+						playWalkSound();
+						animations.play("Walk")
+						state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + walkingSpeed,vertvel));
+					else:
+						#if the playr is jumping logic 
+						animations.play("Idle");
+						stopWalkSound();
+						#While on air, change from setting the linear velocity to applying central impulse
+						state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + walkingSpeed, vertvel));
+				elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
+					#If the player is not pressing any buttons
 					animations.play("Idle");
 					stopWalkSound();
-					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x + walkingSpeed, vertvel));
-			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
-				#If the player is not pressing any buttons
+					state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x, vertvel));
+			else:
 				animations.play("Idle");
-				stopWalkSound()
+				stopWalkSound();
 				state.set_linear_velocity(Vector2(Global.getPlatform2Velocity.x, vertvel));
 		ONPLATFORM3:
-			#While on Platform change apply platform velocity to the main character
-			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
-				#While moving left
-				animations.flip_h = 1;
-				# if the player is not jumping logic
-				if !isJumping:
-					animations.play("Walk")
-					playWalkSound()
-					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + - 1 * walkingSpeed, vertvel));
-				else:
-				#if the playr is jumping logic 
-					animations.play("Idle");
-					stopWalkSound();
-					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + - 1 * walkingSpeed, vertvel));
-			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
-				#While moving right
-				animations.flip_h = 0;
-				if !isJumping:
+			if Global.movementEnabled:
+				#While on Platform change apply platform velocity to the main character
+				if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+					#While moving left
+					animations.flip_h = 1;
 					# if the player is not jumping logic
-					animations.play("Walk")
-					playWalkSound();
-					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + walkingSpeed,vertvel));
-				else:
+					if !isJumping:
+						playWalkSound();
+						animations.play("Walk")
+						state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + - 1 * walkingSpeed, vertvel));
+					else:
 					#if the playr is jumping logic 
+						animations.play("Idle");
+						stopWalkSound();
+						#While on air, change from setting the linear velocity to applying central impulse
+						state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + - 1 * walkingSpeed, vertvel));
+				elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+					#While moving right
+					animations.flip_h = 0;
+					if !isJumping:
+						# if the player is not jumping logic
+						playWalkSound();
+						animations.play("Walk")
+						state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + walkingSpeed,vertvel));
+					else:
+						#if the playr is jumping logic 
+						animations.play("Idle");
+						stopWalkSound();
+						#While on air, change from setting the linear velocity to applying central impulse
+						state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + walkingSpeed, vertvel));
+				elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
+					#If the player is not pressing any buttons
 					animations.play("Idle");
 					stopWalkSound();
-					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x + walkingSpeed, vertvel));
-			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
-				#If the player is not pressing any buttons
+					state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x, vertvel));
+			else:
 				animations.play("Idle");
-				stopWalkSound()
+				stopWalkSound();
 				state.set_linear_velocity(Vector2(Global.getPlatform3Velocity.x, vertvel));
 		ONEXITCHAPTER:
-			#While on Platform change apply platform velocity to the main character
-			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
-				#While moving left
-				animations.flip_h = 1;
-				# if the player is not jumping logic
-				if !isJumping:
-					animations.play("Walk")
-					playWalkSound();
-					state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + - 1 * walkingSpeed, vertvel));
-				else:
-				#if the playr is jumping logic 
-					animations.play("Idle");
-					stopWalkSound();
-					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + - 1 * walkingSpeed, vertvel));
-			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
-				#While moving right
-				animations.flip_h = 0;
-				if !isJumping:
+			if Global.movementEnabled:
+				#While on Platform change apply platform velocity to the main character
+				if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
+					#While moving left
+					animations.flip_h = 1;
 					# if the player is not jumping logic
-					animations.play("Walk")
-					playWalkSound();
-					state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + walkingSpeed,vertvel));
-				else:
+					if !isJumping:
+						playWalkSound();
+						animations.play("Walk")
+						state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + - 1 * walkingSpeed, vertvel));
+					else:
 					#if the playr is jumping logic 
+						animations.play("Idle");
+						stopWalkSound();
+						#While on air, change from setting the linear velocity to applying central impulse
+						state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + - 1 * walkingSpeed, vertvel));
+				elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
+					#While moving right
+					animations.flip_h = 0;
+					if !isJumping:
+						# if the player is not jumping logic
+						playWalkSound();
+						animations.play("Walk")
+						state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + walkingSpeed,vertvel));
+					else:
+						#if the playr is jumping logic 
+						animations.play("Idle");
+						stopWalkSound();
+						#While on air, change from setting the linear velocity to applying central impulse
+						state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + walkingSpeed, vertvel));
+				elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
+					#If the player is not pressing any buttons
 					animations.play("Idle");
 					stopWalkSound();
-					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x + walkingSpeed, vertvel));
-			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
-				#If the player is not pressing any buttons
+					state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x, vertvel));
+			else:
 				animations.play("Idle");
 				stopWalkSound();
 				state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x, vertvel));
 	
 func _on_RigidBody2D_body_entered(body):
-	isHittingBody = true;
+	if body.is_in_group("shape") || body.is_in_group("floor"):
+		$Particles2D.restart();
+		isHittingBody = true;
 	playLandSound(0, 0.05);
 	if body.is_in_group("platform"):
 		stateMachine = ONPLATFORM;
