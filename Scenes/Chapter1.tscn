@@ -713,14 +713,14 @@ animations = [ {
 "name": "Activated",
 "speed": 24.0
 }, {
-"frames": [ ExtResource( 52 ) ],
-"loop": false,
-"name": "Default-Deactivated",
-"speed": 24.0
-}, {
 "frames": [ ExtResource( 46 ), ExtResource( 45 ), ExtResource( 54 ), ExtResource( 53 ), ExtResource( 49 ), ExtResource( 51 ), ExtResource( 50 ), ExtResource( 47 ), ExtResource( 48 ) ],
 "loop": false,
 "name": "Activation",
+"speed": 24.0
+}, {
+"frames": [ ExtResource( 52 ) ],
+"loop": false,
+"name": "Default-Deactivated",
 "speed": 24.0
 } ]
 
@@ -767,7 +767,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 6
+frame = 9
 playing = true
 script = ExtResource( 60 )
 
@@ -778,7 +778,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 1
+frame = 5
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -1691,6 +1691,9 @@ position = Vector2( 13106, 1236 )
 
 [node name="shapeBuff13" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 12328, 703 )
+
+[node name="shapeBuff16" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 11805, 1357 )
 
 [node name="lifeup6" parent="Collectables" instance=ExtResource( 24 )]
 position = Vector2( 9806, 208 )
