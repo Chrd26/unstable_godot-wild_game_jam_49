@@ -77,16 +77,17 @@ func _physics_process(_delta):
 func _input(event):
 	#Activate Input Events if Player is in building mode
 	if Global.hasActivatedBuilding:
-		if event.is_action_pressed("Material1"):
-			state = shape1;
-			isInstanciated = false;
-		elif event.is_action_pressed("Material2"):
-			state = shape2;
-			isInstanciated = false;
-		elif event.is_action_pressed("Material3"):
-			state = shape3;
-			isInstanciated = false;
-		elif event.is_action_pressed("Material4"):
-			state = shape4;
-			isInstanciated = false;
+		if Global.materials > 0:
+			if event.is_action_pressed("Material1"):
+				state = shape1;
+				isInstanciated = false;
+			elif event.is_action_pressed("Material2"):
+				state = shape2;
+				isInstanciated = false;
+			elif event.is_action_pressed("Material3"):
+				state = shape3;
+				isInstanciated = false;
+			elif event.is_action_pressed("Material4"):
+				state = shape4;
+				isInstanciated = false;
 

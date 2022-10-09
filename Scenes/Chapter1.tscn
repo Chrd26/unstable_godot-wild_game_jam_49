@@ -678,7 +678,6 @@ polygon = PoolVector2Array( 88, -312, 95, -14, 52, -23, -184, -14, -301, -4, -34
 
 [sub_resource type="PhysicsMaterial" id=56]
 friction = 0.0
-bounce = 1.0
 
 [sub_resource type="PhysicsMaterial" id=57]
 
@@ -687,7 +686,7 @@ cull_mode = 1
 polygon = PoolVector2Array( -277, 224, 146, 238, 146, 16, 359, -14, 330, -211, 584, -253, 568, -369, 571, -406, 831, -440, 830, -272, 1120, -295, 1141, -66, 1453, -80, 1472, -69, 1472, -52, 1458, -5, 1722, -7, 1731, -517, 2265, -530, 2252, -363, 2627, -400, 2629, -360, 2250, -329, 2279, 6, 2669, -12, 2710, 392, 2278, 481, 2293, 1390, -239, 1370 )
 
 [sub_resource type="PhysicsMaterial" id=53]
-rough = true
+friction = 0.0
 bounce = 1.0
 
 [sub_resource type="PhysicsMaterial" id=58]
@@ -699,7 +698,6 @@ load_path = "res://.import/Chapter1prt3-3 2.png-588fa70c8598570bbf0ccd188566b97e
 
 [sub_resource type="PhysicsMaterial" id=54]
 friction = 0.0
-bounce = 1.0
 
 [sub_resource type="PhysicsMaterial" id=55]
 
@@ -715,14 +713,14 @@ animations = [ {
 "name": "Activated",
 "speed": 24.0
 }, {
-"frames": [ ExtResource( 46 ), ExtResource( 45 ), ExtResource( 54 ), ExtResource( 53 ), ExtResource( 49 ), ExtResource( 51 ), ExtResource( 50 ), ExtResource( 47 ), ExtResource( 48 ) ],
-"loop": false,
-"name": "Activation",
-"speed": 24.0
-}, {
 "frames": [ ExtResource( 52 ) ],
 "loop": false,
 "name": "Default-Deactivated",
+"speed": 24.0
+}, {
+"frames": [ ExtResource( 46 ), ExtResource( 45 ), ExtResource( 54 ), ExtResource( 53 ), ExtResource( 49 ), ExtResource( 51 ), ExtResource( 50 ), ExtResource( 47 ), ExtResource( 48 ) ],
+"loop": false,
+"name": "Activation",
 "speed": 24.0
 } ]
 
@@ -769,7 +767,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 10
+frame = 6
 playing = true
 script = ExtResource( 60 )
 
@@ -780,7 +778,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 3
+frame = 1
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -1635,7 +1633,7 @@ bus = "CheckpointLoop"
 [node name="Collectables" type="Node2D" parent="."]
 
 [node name="lifeup4" parent="Collectables" instance=ExtResource( 24 )]
-position = Vector2( 2697, -291 )
+position = Vector2( -501, -295 )
 
 [node name="lifeup" parent="Collectables" instance=ExtResource( 24 )]
 position = Vector2( 2596, 1332 )
@@ -1662,10 +1660,16 @@ position = Vector2( 6216, -320 )
 position = Vector2( 4815, -690 )
 
 [node name="shapeBuff8" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( 2093, -288 )
+position = Vector2( 1491, -275 )
 
 [node name="shapeBuff9" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 75, -288 )
+
+[node name="shapeBuff15" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( -354, -305 )
+
+[node name="shapeBuff14" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 2771, -284 )
 
 [node name="lifeup2" parent="Collectables" instance=ExtResource( 24 )]
 position = Vector2( 5943, -48 )

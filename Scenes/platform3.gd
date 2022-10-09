@@ -26,7 +26,7 @@ func _on_Area2D_body_entered(body):
 		if !hasStartedMoving:
 			Global.hasPlatform3Started = true;
 			$platform3Tween.interpolate_property(self, "position", pos1, pos2, 15, Tween.TRANS_QUAD, Tween.EASE_IN_OUT);
-			$platform3Tween.interpolate_property(self, "position", pos2, pos3, 6,Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 15);
+			$platform3Tween.interpolate_property(self, "position", pos2, pos3, 10,Tween.TRANS_QUAD, Tween.EASE_IN_OUT, 15);
 			$platform3Tween.start();
 			hasStartedMoving = true;
 

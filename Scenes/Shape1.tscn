@@ -9,7 +9,7 @@ absorbent = true
 [sub_resource type="RectangleShape2D" id=1]
 
 [node name="Shape1" type="RigidBody2D" groups=["shape"]]
-mode = 3
+mode = 1
 mass = 100.0
 physics_material_override = SubResource( 2 )
 gravity_scale = 5.0
@@ -23,5 +23,3 @@ texture = ExtResource( 1 )
 position = Vector2( -1, 8.912 )
 scale = Vector2( 6.988, 1.774 )
 shape = SubResource( 1 )
-
-[connection signal="body_entered" from="." to="." method="_on_Shape1_body_entered"]

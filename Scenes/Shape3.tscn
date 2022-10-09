@@ -7,7 +7,7 @@
 absorbent = true
 
 [node name="Shape3" type="RigidBody2D" groups=["shape"]]
-mode = 3
+mode = 1
 mass = 100.0
 physics_material_override = SubResource( 1 )
 gravity_scale = 5.0

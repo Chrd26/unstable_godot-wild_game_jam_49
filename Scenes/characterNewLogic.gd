@@ -23,7 +23,7 @@ var randomSound = RandomNumberGenerator.new();
 onready var stateMachine;
 const walkingSpeed = 250;
 const stopForce = 300;
-const jumpForce = - 10000;
+const jumpForce = - 12000;
 onready var animations = $AnimatedSprite;
 
 #Declare Enum
@@ -99,29 +99,29 @@ func _process(_delta):
 	#Check if Raycast is Colliding
 	if $characterRaycast.is_colliding():
 		var getCollidingBody = $characterRaycast.get_collider();
-		if getCollidingBody.is_in_group("floor") || getCollidingBody.is_in_group("shape"):
-			isOnFloor = true;
-			isJumping = false;
-		if getCollidingBody.is_in_group("platform"):
-			isOnFloor = true;
-			isJumping = false;
-		elif getCollidingBody.is_in_group("platform2"):
-
-			isOnFloor = true;
-			isJumping = false;
-		elif getCollidingBody.is_in_group("platform3"):
-			isOnFloor = true;
-			isJumping = false;
-		elif getCollidingBody.is_in_group("exitChapter"):
-			isOnFloor = true;
-			isJumping = false;
+		if getCollidingBody != null:
+			if getCollidingBody.is_in_group("floor") || getCollidingBody.is_in_group("shape"):
+				isOnFloor = true;
+				isJumping = false;
+			if getCollidingBody.is_in_group("platform"):
+				isOnFloor = true;
+				isJumping = false;
+			elif getCollidingBody.is_in_group("platform2"):
+				isOnFloor = true;
+				isJumping = false;
+			elif getCollidingBody.is_in_group("platform3"):
+				isOnFloor = true;
+				isJumping = false;
+			elif getCollidingBody.is_in_group("exitChapter"):
+				isOnFloor = true;
+				isJumping = false;
 	elif !isHittingBody && !$characterRaycast.is_colliding():
 		isOnFloor = false; 
 		isJumping = true;
 	if Global.movementEnabled:
 		$Light2D/AnimationPlayer.stop();
 		$Light2D.energy = 0;
-		#mode = 2;
+		mode = 2;
 		if Input.is_action_pressed("move_right") || Input.is_action_pressed("move_left"):
 			if !isonPlatform && !isonPlatform2 && !isonPlatform3 && !isonExit:
 				stateMachine = WALKING;
@@ -131,17 +131,9 @@ func _process(_delta):
 			if Input.is_action_just_pressed("jump"):
 				stateMachine = JUMPING;
 	else:
+		mode = 1;
 		$Light2D/AnimationPlayer.play("light");
 		animations.play("Idle");
-		#mode = 3;
-#		if isonPlatform:
-#			self.global_position = Vector2(Global.getPlatformPOS.x, Global.getPlatformPOS.y - 122);
-#		elif isonPlatform2:
-#			self.global_position = Vector2(Global.getPlatform2POS.x + global_position.x + 850, Global.getPlatform2POS.y - 122);
-#		elif isonPlatform3:
-#			self.global_position = Vector2(Global.getPlatform3POS.x + global_position.x + 850, Global.getPlatform3POS.y - 122);
-#		elif isonExit:
-#			self.global_position = Vector2(Global.getExitChapterPOS.x + global_position.x + 850, Global.getExitChapterPOS.y - 122);
 
 func _physics_process(_delta):
 	pass;
@@ -157,14 +149,6 @@ func _integrate_forces(state):
 				animations.play("Idle");
 			else:
 				animations.play("In the Air");
-			if Input.is_action_just_pressed("jump"):
-				stateMachine = JUMPING;
-			if horVel > 0:
-					state.apply_central_impulse(Vector2(horVel - stopForce , vertvel));
-			elif horVel < 0:
-					state.apply_central_impulse(Vector2(horVel + stopForce, vertvel));
-			else: 
-					state.apply_central_impulse(Vector2(horVel, vertvel));
 		JUMPING:
 			#JUMPING State Logic and Platform Logic
 			if isOnFloor:
@@ -191,18 +175,10 @@ func _integrate_forces(state):
 				stopWalkSound();
 			if Input.is_action_pressed("move_left") && !Input.is_action_pressed("move_right"):
 				animations.flip_h = 1;
-				if !isJumping || isOnFloor:
-					state.set_linear_velocity(Vector2(-1 * walkingSpeed, vertvel));
-				else:
-					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(-1 * walkingSpeed, vertvel));
+				state.set_linear_velocity(Vector2(-1 * walkingSpeed, vertvel));
 			elif Input.is_action_pressed("move_right") && !Input.is_action_pressed("move_left"):
 				animations.flip_h = 0;
-				if !isJumping || isOnFloor:
-					state.set_linear_velocity(Vector2(walkingSpeed, vertvel));
-				else:
-					#While on air, change from setting the linear velocity to applying central impulse
-					state.set_linear_velocity(Vector2(walkingSpeed, vertvel));
+				state.set_linear_velocity(Vector2(walkingSpeed, vertvel));
 			elif Input.is_action_just_released("move_left") || Input.is_action_just_released("move_right"):
 				stateMachine = IDLE;
 				stopWalkSound();
@@ -372,6 +348,10 @@ func _on_RigidBody2D_body_entered(body):
 	if body.is_in_group("shape") || body.is_in_group("floor"):
 		$Particles2D.restart();
 		isHittingBody = true;
+		if Input.is_action_pressed("move_left") || Input.is_action_just_pressed("move_right"):
+			stateMachine = WALKING;
+		else:
+			stateMachine = IDLE;
 	playLandSound(0, 0.05);
 	if body.is_in_group("platform"):
 		stateMachine = ONPLATFORM;
