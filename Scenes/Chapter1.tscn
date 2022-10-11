@@ -778,7 +778,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 5
+frame = 1
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -1860,7 +1860,7 @@ shadow_enabled = true
 script = ExtResource( 65 )
 
 [node name="Light2D7" type="Light2D" parent="Checkpoints"]
-position = Vector2( 8934, 654 )
+position = Vector2( 8930, 658 )
 texture = ExtResource( 25 )
 texture_scale = 0.14
 color = Color( 0, 1, 0, 1 )
@@ -1869,7 +1869,7 @@ shadow_enabled = true
 script = ExtResource( 66 )
 
 [node name="Light2D8" type="Light2D" parent="Checkpoints"]
-position = Vector2( 12059, 1131 )
+position = Vector2( 12057, 1129 )
 texture = ExtResource( 25 )
 texture_scale = 0.14
 color = Color( 0, 1, 0, 1 )
@@ -1914,13 +1914,13 @@ frames = SubResource( 47 )
 animation = "Activated"
 
 [node name="CheckpointAnim7" type="AnimatedSprite" parent="Checkpoints"]
-position = Vector2( 8931, 648 )
+position = Vector2( 8928, 651 )
 scale = Vector2( 0.196, 0.272 )
 frames = SubResource( 47 )
 animation = "Activated"
 
 [node name="CheckpointAnim8" type="AnimatedSprite" parent="Checkpoints"]
-position = Vector2( 12056, 1122 )
+position = Vector2( 12053, 1122 )
 scale = Vector2( 0.196, 0.272 )
 frames = SubResource( 47 )
 animation = "Activated"
@@ -1980,7 +1980,7 @@ scale = Vector2( 6.61, 18.99 )
 shape = SubResource( 8 )
 
 [node name="checkpoint7" type="Area2D" parent="Checkpoints"]
-position = Vector2( 8938, 810 )
+position = Vector2( 8938, 811 )
 scale = Vector2( 0.14, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints/checkpoint7"]

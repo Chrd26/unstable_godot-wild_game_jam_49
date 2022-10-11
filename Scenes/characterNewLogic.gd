@@ -345,7 +345,7 @@ func _integrate_forces(state):
 				state.set_linear_velocity(Vector2(Global.getExitChapterVelocity.x, vertvel));
 	
 func _on_RigidBody2D_body_entered(body):
-	if body.is_in_group("shape") || body.is_in_group("floor"):
+	if body.is_in_group("floor"):
 		$Particles2D.restart();
 		isHittingBody = true;
 		if Input.is_action_pressed("move_left") || Input.is_action_just_pressed("move_right"):
