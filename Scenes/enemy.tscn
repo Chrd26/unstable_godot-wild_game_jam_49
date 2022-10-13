@@ -180,7 +180,7 @@ func _on_Area2D_body_entered(body):
 			Global.lostLife = true;
 	#if body.is_in_group(\"floor\"):
 		#istouchingFloor = true;
-	if body.is_in_group(\"wall\") || body.is_in_group(\"shape\"):
+	if body.is_in_group(\"wall\") || body.is_in_group(\"shape\") || body.is_in_group(\"life\") || body.is_in_group(\"shapeUp\"):
 		istouchingwall = true;
 		if changeSide:
 			changeSide = false;

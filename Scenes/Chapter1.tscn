@@ -767,7 +767,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 9
+frame = 3
 playing = true
 script = ExtResource( 60 )
 
@@ -778,7 +778,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 1
+frame = 7
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -1694,6 +1694,9 @@ position = Vector2( 12328, 703 )
 
 [node name="shapeBuff16" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 11805, 1357 )
+
+[node name="shapeBuff17" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 12734, 1819 )
 
 [node name="lifeup6" parent="Collectables" instance=ExtResource( 24 )]
 position = Vector2( 9806, 208 )

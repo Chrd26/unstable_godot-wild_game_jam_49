@@ -16,7 +16,7 @@ var enemyGetPOS;
 var hasActivatedBuilding = false;
 var haspickedUpShape = false;
 var chapterNumber = 0;
-export var checkpointIndex = 0;
+export var checkpointIndex = 8;
 var hasgameStarted = false;
 var haspressedBegin = false;
 var getPlatformVelocity;
