@@ -767,7 +767,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 3
+frame = 2
 playing = true
 script = ExtResource( 60 )
 
@@ -778,7 +778,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 7
+frame = 5
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -925,14 +925,14 @@ position = Vector2( -88, -88 )
 polygon = PoolVector2Array( 4615, 1496, 4615, 1472, 4911, 1473, 4908, 1497 )
 
 [node name="floor3" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/floor"]
-polygon = PoolVector2Array( 4965, 1098, 4965, 1136, 4801, 1138, 4800, 1101 )
+polygon = PoolVector2Array( 4965, 1098, 4965, 1136, 4801, 1144, 4798, 1100 )
 
 [node name="floor4" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/floor"]
 position = Vector2( 53, -113 )
 polygon = PoolVector2Array( 3897, 659, 3911, 636, 4509, 993, 4462, 993 )
 
 [node name="floor5" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/floor"]
-polygon = PoolVector2Array( 4350, 445, 5505, 447, 5501, 466, 4349, 465 )
+polygon = PoolVector2Array( 4347, 445, 5505, 447, 5501, 466, 4342, 493 )
 
 [node name="floor6" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/floor"]
 position = Vector2( 64, -16 )
@@ -961,7 +961,7 @@ position = Vector2( 64, -64 )
 polygon = PoolVector2Array( 4496, 949, 4447, 994, 4378, 987, 4304, 973, 4294, 1034, 4296, 1219, 4284, 1324, 3902, 1293, 3882, 611, 4464, 942 )
 
 [node name="wall6" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/walls"]
-polygon = PoolVector2Array( 4374, 552, 5002, 541, 5005, 482, 4346, 494 )
+polygon = PoolVector2Array( 4370, 549, 5002, 541, 5005, 482, 4343, 494 )
 disabled = true
 
 [node name="wall7" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part2/walls"]
@@ -1457,7 +1457,7 @@ mode = 1
 physics_material_override = SubResource( 54 )
 
 [node name="wall1" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/wall"]
-polygon = PoolVector2Array( 10298, 2195, 10297, 489, 10846, 477, 10853.7, 612.215, 11220, 619, 11220, 652, 10856.9, 669.218, 10872.4, 942.04, 11264, 944, 11308, 1362, 10870, 1448, 10948, 2277, 11010, 2274, 11206, 2265, 11464, 2230, 11826, 2199, 12064, 2203, 12281, 2211, 12295, 2187, 12310, 1876, 12286, 1646, 12328, 1627, 12492, 1598, 12614, 1578, 12709, 1578, 12708, 1475, 12698, 1240, 12660, 1012, 12643, 893, 12475, 890, 12408, 898, 12292, 859, 12123, 821, 12040, 773, 12075, 754, 12353, 759, 12647, 743, 12741, 738, 13083, 742, 13127, 1245, 13224, 2129, 13234, 2216, 13235, 2229, 13227, 2240, 13229, 2261, 13250, 2274, 13321, 2264, 13517, 2266, 13768, 2289, 14010, 2291, 14017, 2312, 14044, 2297, 14046, 2639, 10269, 2622 )
+polygon = PoolVector2Array( 10298, 2195, 10297, 489, 10846, 477, 10853.7, 612.215, 11220, 619, 11220, 652, 10856.9, 669.218, 10872.4, 942.04, 11264, 944, 11308, 1362, 10870, 1448, 10948, 2277, 11010, 2274, 11206, 2265, 11464, 2230, 11826, 2199, 12064, 2203, 12281, 2211, 12295, 2187, 12310, 1876, 12286, 1646, 12328, 1627, 12492, 1598, 12614, 1578, 12709, 1578, 12708, 1475, 12698, 1240, 12660, 1012, 12643, 893, 12475, 890, 12292, 859, 12053, 807, 12046, 749, 12353, 759, 12647, 743, 12741, 738, 13083, 742, 13127, 1245, 13224, 2129, 13234, 2216, 13235, 2229, 13227, 2240, 13229, 2261, 13250, 2274, 13321, 2264, 13517, 2266, 13768, 2289, 14010, 2291, 14017, 2312, 14044, 2297, 14046, 2639, 10269, 2622 )
 
 [node name="wall2" type="CollisionPolygon2D" parent="MapDesign/Chapter1Part7/wall"]
 polygon = PoolVector2Array( 11595, 1004, 11597, 303, 12983, 299, 13001, 306, 13020, 319, 13023, 341, 12087, 367, 11786, 398, 11719, 519, 11708, 975, 11690, 1026, 11728, 1037, 11860, 1050, 11934, 1056, 12011, 1114, 12127, 1223, 12226, 1270, 12288, 1274, 12294, 1339, 11974, 1402, 12011, 1698, 11215, 1805, 11169, 1801, 11151, 1686, 11602, 1689, 11605, 1647 )
