@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-12.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Graphics/Enemy/walking/Enemy_Walking-10.png" type="Texture" id=2]
@@ -63,13 +63,8 @@ animations = [ {
 "speed": 60.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 9.95198
-height = 18.9189
-
-[sub_resource type="CapsuleShape2D" id=4]
-radius = 9.95198
-height = 18.9189
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 8.78554, 17.2065 )
 
 [sub_resource type="OccluderPolygon2D" id=3]
 polygon = PoolVector2Array( -73, 10, -70, 13, -61, 14, -43, 13, -35, 13, -33, 10, -25, 18, -18, 23, -6, 28, 11, 32, 23, 32, 39, 28, 51, 23, 57, 18, 58, 14, 59, 11, 51, -1, 37, -13, 33, -15, 24, -20, 16, -22, 6, -24, -4, -24, -12, -24, -19, -24, -27, -20, -33, -22, -47, -33, -56, -40, -58, -41, -60, -34, -65, -14, -64, -11, -62, -7, -62, -3, -62, 1, -64, 6, -69, 7 )
@@ -87,12 +82,6 @@ position = Vector2( 0, -56 )
 scale = Vector2( 0.1, 0.1 )
 frames = SubResource( 1 )
 animation = "shoot"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-position = Vector2( -6.286, -2.842 )
-rotation = -1.5708
-scale = Vector2( 5.04, 3.952 )
-shape = SubResource( 2 )
 
 [node name="RayCast2D" type="RayCast2D" parent="RigidBody2D"]
 rotation = 1.5708
@@ -138,10 +127,16 @@ bus = "EnemyMovement"
 [node name="Area2D" type="Area2D" parent="RigidBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/Area2D"]
-position = Vector2( -6.286, -2.842 )
+position = Vector2( -7.99991, 3.27888 )
 rotation = -1.5708
 scale = Vector2( 5.04, 3.952 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2( -7.99991, 3.27888 )
+rotation = -1.5708
+scale = Vector2( 5.04, 3.952 )
+shape = SubResource( 5 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource( 3 )

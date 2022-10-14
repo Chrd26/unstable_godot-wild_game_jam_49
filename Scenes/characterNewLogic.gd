@@ -153,7 +153,7 @@ func _integrate_forces(state):
 		JUMPING:
 			#JUMPING State Logic and Platform Logic
 			if isOnFloor:
-				if !isJumping:
+				if !isJumping && !Global.hasExitPlatformStarted:
 					playJumpSound();
 					state.apply_central_impulse(Vector2(horVel, jumpForce));
 					isJumping = true;
@@ -366,7 +366,7 @@ func _on_RigidBody2D_body_entered(body):
 	elif body.is_in_group("exitChapter"):
 		isonExit = true;
 		stateMachine = ONEXITCHAPTER;
-	elif body.is_in_group("cannonball"):
+	elif body.is_in_group("cannonball") || body.is_in_group("enemy"):
 		playTakeDamageSound();
 	elif !body.is_in_group("wall"):
 		isOnFloor = true;

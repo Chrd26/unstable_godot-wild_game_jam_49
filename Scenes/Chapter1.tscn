@@ -599,7 +599,7 @@ friction = 0.0
 [sub_resource type="OccluderPolygon2D" id=6]
 closed = false
 cull_mode = 2
-polygon = PoolVector2Array( 1589, 1852, 1646, 1331, 2514, 1346, 3086, 2853, 2250, 1778, 2168, 1735, 2097, 1762, 1416, 2671, 1588, 1851 )
+polygon = PoolVector2Array( 1589, 1852, 1646, 1331, 2514, 1346, 3086, 2853, 2200, 1686, 1416, 2671, 1588, 1851 )
 
 [sub_resource type="PhysicsMaterial" id=33]
 friction = 0.0
@@ -687,7 +687,6 @@ polygon = PoolVector2Array( -277, 224, 146, 238, 146, 16, 359, -14, 330, -211, 5
 
 [sub_resource type="PhysicsMaterial" id=53]
 friction = 0.0
-bounce = 1.0
 
 [sub_resource type="PhysicsMaterial" id=58]
 absorbent = true
@@ -732,8 +731,8 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 69 )
 
-[sub_resource type="DynamicFont" id=61]
-size = 50
+[sub_resource type="DynamicFont" id=68]
+size = 37
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 69 )
@@ -767,7 +766,7 @@ position = Vector2( 6894, -934 )
 scale = Vector2( 4, 4 )
 frames = SubResource( 1 )
 animation = "Background"
-frame = 2
+frame = 7
 playing = true
 script = ExtResource( 60 )
 
@@ -778,7 +777,7 @@ modulate = Color( 1, 1, 1, 0.0784314 )
 position = Vector2( 4942, 424 )
 scale = Vector2( 3.522, 3.132 )
 frames = SubResource( 12 )
-frame = 5
+frame = 3
 playing = true
 
 [node name="Tutorial" type="Node2D" parent="MapDesign"]
@@ -1641,8 +1640,14 @@ position = Vector2( 2596, 1332 )
 [node name="shapeBuff" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 2776, 1325 )
 
+[node name="shapeBuff15" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 2073, 912 )
+
 [node name="shapeBuff2" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 4696, 1322 )
+
+[node name="shapeBuff13" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 4371, 1538 )
 
 [node name="shapeBuff3" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 4520, 364 )
@@ -1662,14 +1667,11 @@ position = Vector2( 4815, -690 )
 [node name="shapeBuff8" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 1491, -275 )
 
+[node name="shapeBuff14" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 2770, -279 )
+
 [node name="shapeBuff9" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 75, -288 )
-
-[node name="shapeBuff15" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( -354, -305 )
-
-[node name="shapeBuff14" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( 2771, -284 )
 
 [node name="lifeup2" parent="Collectables" instance=ExtResource( 24 )]
 position = Vector2( 5943, -48 )
@@ -1689,11 +1691,14 @@ position = Vector2( 9049, 839 )
 [node name="shapeBuff12" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 13106, 1236 )
 
-[node name="shapeBuff13" parent="Collectables" instance=ExtResource( 32 )]
-position = Vector2( 12328, 703 )
+[node name="shapeBuff19" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 12369, 674 )
 
 [node name="shapeBuff16" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 11805, 1357 )
+
+[node name="shapeBuff18" parent="Collectables" instance=ExtResource( 32 )]
+position = Vector2( 10749, 608 )
 
 [node name="shapeBuff17" parent="Collectables" instance=ExtResource( 32 )]
 position = Vector2( 12734, 1819 )
@@ -2023,84 +2028,20 @@ script = ExtResource( 70 )
 [node name="tutorialText" type="Node2D" parent="."]
 script = ExtResource( 78 )
 
-[node name="Label1" type="Label" parent="tutorialText"]
-margin_left = -697.0
-margin_top = 1299.0
-margin_right = 7.0
-margin_bottom = 1462.0
+[node name="Label" type="Label" parent="tutorialText"]
+margin_left = -702.0
+margin_top = 1332.0
+margin_right = 236.0
+margin_bottom = 1817.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 61 )
-text = "Welcome friend. 
-Let Me tell you how to play the game."
-percent_visible = 0.0
+custom_fonts/font = SubResource( 68 )
+text = "Welcome Friend! Here are the instructions:
 
-[node name="Label2" type="Label" parent="tutorialText"]
-margin_left = -697.0
-margin_top = 1267.0
-margin_right = 7.0
-margin_bottom = 1471.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 61 )
-text = "Press A to move to the left.
-Press D to move to the right.
-Press Space to jump."
-percent_visible = 0.0
+Move Buttons: A & D              Jump: Space
+Build Mode On/Off: F             Reset : R
+Shape Rotation: A & D           Place Shape: Left Mouse Button"
 
-[node name="Label3" type="Label" parent="tutorialText"]
-margin_left = -697.0
-margin_top = 1267.0
-margin_right = 7.0
-margin_bottom = 1471.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 61 )
-text = "Press F to enable Build Mode.
-Press 1,2,3 or 4 to change shapes.
-Press A or D to rotate the shape."
-percent_visible = 0.0
-
-[node name="Label4" type="Label" parent="tutorialText"]
-margin_left = -697.0
-margin_top = 1267.0
-margin_right = 7.0
-margin_bottom = 1609.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 61 )
-text = "Press the Left Mouse Button to place shape.
-Press F again to exit Build Mode.
-Press R to reset to the latest checkpoint.
-
-"
-percent_visible = 0.0
-
-[node name="Label5" type="Label" parent="tutorialText"]
-margin_left = -697.0
-margin_top = 1267.0
-margin_right = 110.0
-margin_bottom = 1609.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 61 )
-text = "Use the shapes to block the vision of the enemies.
-Use the shapes to change the direction of the enemies.
-Push the shape to change their position.
-
-"
-percent_visible = 0.0
-
-[node name="Label6" type="Label" parent="tutorialText"]
-margin_left = -697.0
-margin_top = 1267.0
-margin_right = 7.0
-margin_bottom = 1471.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 61 )
-text = "Try building a platform to get out of the cave.
-Your resources are unlimited for now.
-Good Luck!"
-percent_visible = 0.0
-
-[node name="tutorial" type="Tween" parent="tutorialText"]
-
-[node name="Shapes" parent="tutorialText" instance=ExtResource( 73 )]
+[node name="Shapes" parent="." instance=ExtResource( 73 )]
 
 [connection signal="body_entered" from="MapDesign/Tutorial/ReverbArea" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_exited" from="MapDesign/Tutorial/ReverbArea" to="." method="_on_ReverbArea_body_exited"]
@@ -2149,4 +2090,3 @@ percent_visible = 0.0
 [connection signal="body_entered" from="Checkpoints/checkpoint8" to="." method="_on_checkpoint8_body_entered"]
 [connection signal="timeout" from="cannonBallTimer" to="." method="_on_cannonBallTimer_timeout"]
 [connection signal="tween_completed" from="Label/labelTween" to="Label" method="_on_labelTween_tween_completed"]
-[connection signal="tween_completed" from="tutorialText/tutorial" to="tutorialText" method="_on_tutorial_tween_completed"]
